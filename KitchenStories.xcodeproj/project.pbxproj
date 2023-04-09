@@ -9,23 +9,65 @@
 /* Begin PBXBuildFile section */
 		7ABA0F6E29DD53F500E58FBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F6D29DD53F500E58FBA /* AppDelegate.swift */; };
 		7ABA0F7029DD53F500E58FBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F6F29DD53F500E58FBA /* SceneDelegate.swift */; };
-		7ABA0F7229DD53F500E58FBA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F7129DD53F500E58FBA /* ViewController.swift */; };
 		7ABA0F7529DD53F500E58FBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ABA0F7329DD53F500E58FBA /* Main.storyboard */; };
 		7ABA0F7829DD53F500E58FBA /* KitchenStories.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F7629DD53F500E58FBA /* KitchenStories.xcdatamodeld */; };
 		7ABA0F7A29DD53F700E58FBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ABA0F7929DD53F700E58FBA /* Assets.xcassets */; };
 		7ABA0F7D29DD53F700E58FBA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ABA0F7B29DD53F700E58FBA /* LaunchScreen.storyboard */; };
+		7ABA0F8D29DE50FA00E58FBA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F8C29DE50FA00E58FBA /* TabBarController.swift */; };
+		7ABA0F9029DE55E400E58FBA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F8F29DE55E400E58FBA /* HomeViewController.swift */; };
+		7ABA0F9329DE574700E58FBA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F9229DE574700E58FBA /* ProfileViewController.swift */; };
+		7ABA0F9529DE583B00E58FBA /* GoogleService-Info-2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7ABA0F9429DE583B00E58FBA /* GoogleService-Info-2.plist */; };
+		7ABA0F9829DE5A1600E58FBA /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F9729DE5A1600E58FBA /* Constant.swift */; };
+		7ABA0F9B29DE5BA300E58FBA /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F9929DE5BA300E58FBA /* RegisterViewController.swift */; };
+		7ABA0F9C29DE5BA300E58FBA /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ABA0F9A29DE5BA300E58FBA /* RegisterViewController.xib */; };
+		7ABA0FA229DE6D4A00E58FBA /* FetchDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FA129DE6D4A00E58FBA /* FetchDataService.swift */; };
+		7ABA0FA429DE787700E58FBA /* ParseDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FA329DE787700E58FBA /* ParseDataService.swift */; };
+		7ABA0FA629DE7AAA00E58FBA /* GetAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FA529DE7AAA00E58FBA /* GetAPIService.swift */; };
+		7ABA0FA829DE81C900E58FBA /* GetNetworkImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FA729DE81C900E58FBA /* GetNetworkImageService.swift */; };
+		7ABA0FAB29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FAA29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift */; };
+		7ABA0FAE29DE8BF000E58FBA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABA0FAD29DE8BF000E58FBA /* FirebaseAuth */; };
+		7ABA0FB029DE8BF000E58FBA /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABA0FAF29DE8BF000E58FBA /* FirebaseDatabase */; };
+		7ABA0FB229DE8BF000E58FBA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABA0FB129DE8BF000E58FBA /* FirebaseFirestore */; };
+		7ABA0FB529DE8C6600E58FBA /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABA0FB429DE8C6600E58FBA /* SkeletonView */; };
+		7ABA0FB829DEABCF00E58FBA /* BottomBorderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FB729DEABCF00E58FBA /* BottomBorderTextField.swift */; };
+		7AC5933A29E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933929E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift */; };
+		7AC5933C29E309A000667F3E /* RoundedCornersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */; };
+		7AC5AB3829E1553A00C30433 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5AB3629E1553A00C30433 /* WelcomeViewController.swift */; };
+		7AC5AB3929E1553A00C30433 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC5AB3729E1553A00C30433 /* WelcomeViewController.xib */; };
+		7AE178C129E2661D00706D64 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE178BF29E2661D00706D64 /* LoginViewController.swift */; };
+		7AE178C229E2661D00706D64 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE178C029E2661D00706D64 /* LoginViewController.xib */; };
+		7AE178C429E2664100706D64 /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE178C329E2664100706D64 /* BackgroundImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7ABA0F6A29DD53F500E58FBA /* KitchenStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KitchenStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ABA0F6D29DD53F500E58FBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7ABA0F6F29DD53F500E58FBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7ABA0F7129DD53F500E58FBA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7ABA0F7429DD53F500E58FBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7ABA0F7729DD53F500E58FBA /* KitchenStories.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KitchenStories.xcdatamodel; sourceTree = "<group>"; };
 		7ABA0F7929DD53F700E58FBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7ABA0F7C29DD53F700E58FBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7ABA0F7E29DD53F700E58FBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7ABA0F8C29DE50FA00E58FBA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		7ABA0F8F29DE55E400E58FBA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		7ABA0F9229DE574700E58FBA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		7ABA0F9429DE583B00E58FBA /* GoogleService-Info-2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-2.plist"; sourceTree = "<group>"; };
+		7ABA0F9729DE5A1600E58FBA /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		7ABA0F9929DE5BA300E58FBA /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		7ABA0F9A29DE5BA300E58FBA /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		7ABA0FA129DE6D4A00E58FBA /* FetchDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDataService.swift; sourceTree = "<group>"; };
+		7ABA0FA329DE787700E58FBA /* ParseDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseDataService.swift; sourceTree = "<group>"; };
+		7ABA0FA529DE7AAA00E58FBA /* GetAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAPIService.swift; sourceTree = "<group>"; };
+		7ABA0FA729DE81C900E58FBA /* GetNetworkImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNetworkImageService.swift; sourceTree = "<group>"; };
+		7ABA0FAA29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+loadImageFromUrl.swift"; sourceTree = "<group>"; };
+		7ABA0FB729DEABCF00E58FBA /* BottomBorderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBorderTextField.swift; sourceTree = "<group>"; };
+		7AC5933929E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeGreetingCollectionViewCell.swift; sourceTree = "<group>"; };
+		7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersButton.swift; sourceTree = "<group>"; };
+		7AC5AB3629E1553A00C30433 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		7AC5AB3729E1553A00C30433 /* WelcomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeViewController.xib; sourceTree = "<group>"; };
+		7AE178BF29E2661D00706D64 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		7AE178C029E2661D00706D64 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		7AE178C329E2664100706D64 /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +75,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ABA0FB529DE8C6600E58FBA /* SkeletonView in Frameworks */,
+				7ABA0FB029DE8BF000E58FBA /* FirebaseDatabase in Frameworks */,
+				7ABA0FAE29DE8BF000E58FBA /* FirebaseAuth in Frameworks */,
+				7ABA0FB229DE8BF000E58FBA /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,16 +104,179 @@
 		7ABA0F6C29DD53F500E58FBA /* KitchenStories */ = {
 			isa = PBXGroup;
 			children = (
-				7ABA0F6D29DD53F500E58FBA /* AppDelegate.swift */,
-				7ABA0F6F29DD53F500E58FBA /* SceneDelegate.swift */,
-				7ABA0F7129DD53F500E58FBA /* ViewController.swift */,
-				7ABA0F7329DD53F500E58FBA /* Main.storyboard */,
-				7ABA0F7929DD53F700E58FBA /* Assets.xcassets */,
-				7ABA0F7B29DD53F700E58FBA /* LaunchScreen.storyboard */,
+				7ABA0F8429DDCC7F00E58FBA /* MainDelegate */,
+				7ABA0F9629DE5A0A00E58FBA /* Constant */,
+				7ABA0FA929DE845900E58FBA /* Extension */,
+				7ABA0F8B29DDCCF600E58FBA /* Networking */,
+				7ABA0FB629DEAB7800E58FBA /* SharedComponent */,
+				7ABA0F8729DDCCB200E58FBA /* Module */,
+				7ABA0F8529DDCC9100E58FBA /* Storyboard */,
+				7ABA0F8629DDCCA200E58FBA /* Asset */,
 				7ABA0F7E29DD53F700E58FBA /* Info.plist */,
+				7ABA0F9429DE583B00E58FBA /* GoogleService-Info-2.plist */,
 				7ABA0F7629DD53F500E58FBA /* KitchenStories.xcdatamodeld */,
 			);
 			path = KitchenStories;
+			sourceTree = "<group>";
+		};
+		7ABA0F8429DDCC7F00E58FBA /* MainDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0F6D29DD53F500E58FBA /* AppDelegate.swift */,
+				7ABA0F6F29DD53F500E58FBA /* SceneDelegate.swift */,
+			);
+			path = MainDelegate;
+			sourceTree = "<group>";
+		};
+		7ABA0F8529DDCC9100E58FBA /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0F7329DD53F500E58FBA /* Main.storyboard */,
+				7ABA0F7B29DD53F700E58FBA /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		7ABA0F8629DDCCA200E58FBA /* Asset */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0F7929DD53F700E58FBA /* Assets.xcassets */,
+			);
+			path = Asset;
+			sourceTree = "<group>";
+		};
+		7ABA0F8729DDCCB200E58FBA /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0F9129DE573900E58FBA /* Profile */,
+				7ABA0F8E29DE55A200E58FBA /* Home */,
+				7ABA0F8A29DDCCE600E58FBA /* TabBar */,
+				7AC5AB3529E1539900C30433 /* Welcome */,
+				7ABA0F8929DDCCCF00E58FBA /* Register */,
+				7ABA0F8829DDCCBD00E58FBA /* Login */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		7ABA0F8829DDCCBD00E58FBA /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7AC5AB3C29E2653C00C30433 /* New Group */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		7ABA0F8929DDCCCF00E58FBA /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				7AC5AB3B29E1A89E00C30433 /* View */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		7ABA0F8A29DDCCE600E58FBA /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0F8C29DE50FA00E58FBA /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		7ABA0F8B29DDCCF600E58FBA /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0FA129DE6D4A00E58FBA /* FetchDataService.swift */,
+				7ABA0FA329DE787700E58FBA /* ParseDataService.swift */,
+				7ABA0FA529DE7AAA00E58FBA /* GetAPIService.swift */,
+				7ABA0FA729DE81C900E58FBA /* GetNetworkImageService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		7ABA0F8E29DE55A200E58FBA /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0F8F29DE55E400E58FBA /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		7ABA0F9129DE573900E58FBA /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0F9229DE574700E58FBA /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		7ABA0F9629DE5A0A00E58FBA /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0F9729DE5A1600E58FBA /* Constant.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		7ABA0FA929DE845900E58FBA /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0FAA29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		7ABA0FB629DEAB7800E58FBA /* SharedComponent */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0FB729DEABCF00E58FBA /* BottomBorderTextField.swift */,
+				7AE178C329E2664100706D64 /* BackgroundImageView.swift */,
+				7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */,
+			);
+			path = SharedComponent;
+			sourceTree = "<group>";
+		};
+		7AC5933829E3004000667F3E /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				7AC5933929E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		7AC5AB3529E1539900C30433 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				7AC5933829E3004000667F3E /* Component */,
+				7AC5AB3A29E1A89600C30433 /* View */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		7AC5AB3A29E1A89600C30433 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7AC5AB3629E1553A00C30433 /* WelcomeViewController.swift */,
+				7AC5AB3729E1553A00C30433 /* WelcomeViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7AC5AB3B29E1A89E00C30433 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA0F9929DE5BA300E58FBA /* RegisterViewController.swift */,
+				7ABA0F9A29DE5BA300E58FBA /* RegisterViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7AC5AB3C29E2653C00C30433 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				7AE178BF29E2661D00706D64 /* LoginViewController.swift */,
+				7AE178C029E2661D00706D64 /* LoginViewController.xib */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +295,12 @@
 			dependencies = (
 			);
 			name = KitchenStories;
+			packageProductDependencies = (
+				7ABA0FAD29DE8BF000E58FBA /* FirebaseAuth */,
+				7ABA0FAF29DE8BF000E58FBA /* FirebaseDatabase */,
+				7ABA0FB129DE8BF000E58FBA /* FirebaseFirestore */,
+				7ABA0FB429DE8C6600E58FBA /* SkeletonView */,
+			);
 			productName = KitchenStories;
 			productReference = 7ABA0F6A29DD53F500E58FBA /* KitchenStories.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +329,10 @@
 				Base,
 			);
 			mainGroup = 7ABA0F6129DD53F500E58FBA;
+			packageReferences = (
+				7ABA0FAC29DE8BF000E58FBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7ABA0FB329DE8C6600E58FBA /* XCRemoteSwiftPackageReference "SkeletonView" */,
+			);
 			productRefGroup = 7ABA0F6B29DD53F500E58FBA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -129,7 +348,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7ABA0F7D29DD53F700E58FBA /* LaunchScreen.storyboard in Resources */,
+				7AC5AB3929E1553A00C30433 /* WelcomeViewController.xib in Resources */,
+				7ABA0F9C29DE5BA300E58FBA /* RegisterViewController.xib in Resources */,
 				7ABA0F7A29DD53F700E58FBA /* Assets.xcassets in Resources */,
+				7ABA0F9529DE583B00E58FBA /* GoogleService-Info-2.plist in Resources */,
+				7AE178C229E2661D00706D64 /* LoginViewController.xib in Resources */,
 				7ABA0F7529DD53F500E58FBA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,10 +364,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7ABA0F7229DD53F500E58FBA /* ViewController.swift in Sources */,
+				7ABA0FB829DEABCF00E58FBA /* BottomBorderTextField.swift in Sources */,
+				7AC5AB3829E1553A00C30433 /* WelcomeViewController.swift in Sources */,
+				7ABA0FA629DE7AAA00E58FBA /* GetAPIService.swift in Sources */,
+				7ABA0FA829DE81C900E58FBA /* GetNetworkImageService.swift in Sources */,
+				7ABA0FA429DE787700E58FBA /* ParseDataService.swift in Sources */,
+				7ABA0F9B29DE5BA300E58FBA /* RegisterViewController.swift in Sources */,
 				7ABA0F6E29DD53F500E58FBA /* AppDelegate.swift in Sources */,
 				7ABA0F7829DD53F500E58FBA /* KitchenStories.xcdatamodeld in Sources */,
+				7AE178C429E2664100706D64 /* BackgroundImageView.swift in Sources */,
+				7ABA0F9829DE5A1600E58FBA /* Constant.swift in Sources */,
+				7ABA0F8D29DE50FA00E58FBA /* TabBarController.swift in Sources */,
+				7ABA0FA229DE6D4A00E58FBA /* FetchDataService.swift in Sources */,
+				7ABA0FAB29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift in Sources */,
+				7AC5933C29E309A000667F3E /* RoundedCornersButton.swift in Sources */,
+				7AE178C129E2661D00706D64 /* LoginViewController.swift in Sources */,
+				7ABA0F9329DE574700E58FBA /* ProfileViewController.swift in Sources */,
 				7ABA0F7029DD53F500E58FBA /* SceneDelegate.swift in Sources */,
+				7AC5933A29E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift in Sources */,
+				7ABA0F9029DE55E400E58FBA /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +600,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7ABA0FAC29DE8BF000E58FBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+		7ABA0FB329DE8C6600E58FBA /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7ABA0FAD29DE8BF000E58FBA /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ABA0FAC29DE8BF000E58FBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		7ABA0FAF29DE8BF000E58FBA /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ABA0FAC29DE8BF000E58FBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		7ABA0FB129DE8BF000E58FBA /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ABA0FAC29DE8BF000E58FBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		7ABA0FB429DE8C6600E58FBA /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ABA0FB329DE8C6600E58FBA /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		7ABA0F7629DD53F500E58FBA /* KitchenStories.xcdatamodeld */ = {
