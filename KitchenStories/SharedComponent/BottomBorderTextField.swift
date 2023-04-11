@@ -38,6 +38,17 @@ class BottomBorderTextField: UITextField {
         setupTextField()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        for view in subviews {
+            if let button = view as? UIButton {
+                button.setImage(button.image(for: .normal)?.withRenderingMode(.alwaysTemplate), for: .normal)
+                button.tintColor = .white
+            }
+        }
+    }
+    
     func setPlaceholder(_ value: String) {
         self.attributedPlaceholder = NSAttributedString(
             string: value,
@@ -49,7 +60,9 @@ class BottomBorderTextField: UITextField {
         textFieldHeight = 35
         setPlaceholder("")
         self.textColor = .white
+        self.tintColor = .white
         self.font = .systemFont(ofSize: 13)
+        self.clearButtonMode = .whileEditing
     }
     
     private func setBottomBorder() {

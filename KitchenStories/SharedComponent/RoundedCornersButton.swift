@@ -20,7 +20,7 @@ class RoundedCornersButton: UIButton {
             string: buttonTitle,
             attributes: [
                 .foregroundColor : UIColor.white,
-                .font: UIFont.systemFont(ofSize: 14, weight: .semibold)
+                .font: UIFont.systemFont(ofSize: 16, weight: .semibold)
             ]
         )
     }
@@ -45,7 +45,7 @@ class RoundedCornersButton: UIButton {
     }
     
     private func setupButton() {
-        buttonHeight = 35
+        buttonHeight = 40
         self.backgroundColor = .systemGreen.withAlphaComponent(0.9)
         self.layer.cornerRadius = self.bounds.size.height * 0.5
         self.setAttributedTitle(buttonAttributedTitle(), for: .normal)

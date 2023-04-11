@@ -10,6 +10,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="KitchenStories" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundImageView" destination="uHW-nS-cba" id="iD1-QO-Av9"/>
+                <outlet property="errorMessageLabel" destination="hE1-z8-Bhs" id="8z3-ZJ-GfC"/>
+                <outlet property="forgotPasswordButton" destination="Qg5-uk-9uS" id="ONN-lL-9VK"/>
+                <outlet property="forgotPasswordLabel" destination="Jdp-fR-0jZ" id="VlR-rx-luF"/>
+                <outlet property="loginButton" destination="xJ1-s3-doK" id="aeL-Yv-aVg"/>
+                <outlet property="loginEmailTextField" destination="wnB-Q4-JHH" id="aGp-a3-Gpi"/>
+                <outlet property="loginFormContainerView" destination="jDi-tv-re1" id="31v-XZ-7Oi"/>
+                <outlet property="loginPasswordTextField" destination="se5-2P-2qk" id="xkd-mb-baS"/>
+                <outlet property="loginSecondSubtitleTextView" destination="bQy-SS-kMS" id="cnZ-3g-ZkH"/>
+                <outlet property="loginSubitleLabel" destination="MUr-Z7-C3R" id="Nlg-QK-uWa"/>
+                <outlet property="loginTitleLabel" destination="BaJ-06-JrB" id="Z4L-ru-oCA"/>
+                <outlet property="registerButton" destination="bhL-ak-Z9p" id="N5K-xW-stj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,25 +40,25 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jDi-tv-re1">
-                                    <rect key="frame" x="20" y="167" width="353" height="425"/>
+                                    <rect key="frame" x="20" y="149.66666666666666" width="353" height="459.66666666666674"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="KIM-FQ-l7c">
-                                            <rect key="frame" x="20" y="20" width="313" height="385"/>
+                                            <rect key="frame" x="20" y="20" width="313" height="419.66666666666669"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaJ-06-JrB" userLabel="Sign In">
-                                                    <rect key="frame" x="0.0" y="0.0" width="313" height="36.333333333333336"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="313" height="35.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="to discover all our tastebud tickling recipes and features." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUr-Z7-C3R">
-                                                    <rect key="frame" x="0.0" y="51.333333333333314" width="313" height="40.666666666666657"/>
+                                                    <rect key="frame" x="0.0" y="50.666666666666657" width="313" height="40.666666666666657"/>
                                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="iKg-Ii-0Or">
-                                                    <rect key="frame" x="0.0" y="106.99999999999999" width="313" height="45.333333333333329"/>
+                                                    <rect key="frame" x="0.0" y="106.33333333333333" width="313" height="45.333333333333329"/>
                                                     <subviews>
                                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wnB-Q4-JHH" customClass="BottomBorderTextField" customModule="KitchenStories" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="313" height="18.666666666666668"/>
@@ -60,8 +72,14 @@
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJ1-s3-doK" userLabel="Log In">
-                                                    <rect key="frame" x="0.0" y="167.33333333333331" width="313" height="40"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hE1-z8-Bhs">
+                                                    <rect key="frame" x="0.0" y="166.66666666666666" width="313" height="20.333333333333343"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJ1-s3-doK" userLabel="Log In" customClass="RoundedCornersButton" customModule="KitchenStories" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="202.00000000000003" width="313" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="IIa-Eb-Ml9"/>
                                                     </constraints>
@@ -70,7 +88,7 @@
                                                     <buttonConfiguration key="configuration" style="plain" title="Sign In"/>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aDc-hd-Bav">
-                                                    <rect key="frame" x="0.0" y="222.33333333333329" width="313" height="79.666666666666657"/>
+                                                    <rect key="frame" x="0.0" y="257" width="313" height="79.666666666666686"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="By signing in I accept the terms of use and the data privacy policy" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQy-SS-kMS">
                                                             <rect key="frame" x="0.0" y="0.0" width="313" height="49.666666666666664"/>
@@ -102,7 +120,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fXC-Tw-EWy">
-                                                    <rect key="frame" x="0.0" y="317" width="313" height="68"/>
+                                                    <rect key="frame" x="0.0" y="351.66666666666674" width="313" height="68"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Already have an account but forgot your password?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdp-fR-0jZ">
                                                             <rect key="frame" x="0.0" y="0.0" width="313" height="33.666666666666664"/>

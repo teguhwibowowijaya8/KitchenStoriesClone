@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController" customModule="KitchenStories" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundImageView" destination="FaD-4L-wb1" id="Ugz-4E-cPb"/>
+                <outlet property="errorMessageLabel" destination="kqG-KV-8sh" id="jsx-nm-SOX"/>
                 <outlet property="loginButton" destination="8rB-nQ-7fN" id="jiC-Fl-dVJ"/>
                 <outlet property="registerButton" destination="rQA-df-JSy" id="3ae-hd-bYN"/>
                 <outlet property="registerEmailTextField" destination="wnK-kp-7Jz" id="U3T-kn-8vO"/>
@@ -38,25 +39,25 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4k-TN-5KW">
-                                    <rect key="frame" x="20" y="199" width="353" height="361"/>
+                                    <rect key="frame" x="20" y="181.66666666666666" width="353" height="395.66666666666674"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="drg-WQ-IDh">
-                                            <rect key="frame" x="20" y="20" width="313" height="321"/>
+                                            <rect key="frame" x="20" y="20.000000000000028" width="313" height="355.66666666666674"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Up" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnN-Ns-U0K">
-                                                    <rect key="frame" x="0.0" y="0.0" width="313" height="34.333333333333336"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="313" height="33.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="to discover all our tastebud tickling recipes and features." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ztg-qr-dto">
-                                                    <rect key="frame" x="0.0" y="49.333333333333314" width="313" height="40.666666666666657"/>
+                                                    <rect key="frame" x="0.0" y="48.666666666666629" width="313" height="40.666666666666657"/>
                                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ipv-da-N8g">
-                                                    <rect key="frame" x="0.0" y="105" width="313" height="72"/>
+                                                    <rect key="frame" x="0.0" y="104.33333333333331" width="313" height="72"/>
                                                     <subviews>
                                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wnK-kp-7Jz" customClass="BottomBorderTextField" customModule="KitchenStories" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="313" height="18.666666666666668"/>
@@ -75,14 +76,20 @@
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kqG-KV-8sh">
+                                                    <rect key="frame" x="0.0" y="191.33333333333331" width="313" height="20.333333333333343"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQA-df-JSy" customClass="RoundedCornersButton" customModule="KitchenStories" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="192" width="313" height="34.333333333333343"/>
+                                                    <rect key="frame" x="0.0" y="226.66666666666663" width="313" height="34.333333333333314"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" title="Join Kitchen Stories"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="Join Kitchen Stories"/>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8tM-P8-YTV">
-                                                    <rect key="frame" x="0.0" y="241.33333333333334" width="313" height="79.666666666666657"/>
+                                                    <rect key="frame" x="0.0" y="275.99999999999994" width="313" height="79.666666666666686"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="By signing up I accept the terms of use and the data privacy policy" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dKi-MP-Pje">
                                                             <rect key="frame" x="0.0" y="0.0" width="313" height="49.666666666666664"/>
@@ -92,7 +99,7 @@
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                         <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="TGg-ZA-3Nz">
-                                                            <rect key="frame" x="0.0" y="49.666666666666629" width="313" height="30"/>
+                                                            <rect key="frame" x="0.0" y="49.666666666666742" width="313" height="30"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8rB-nQ-7fN">
                                                                     <rect key="frame" x="0.0" y="0.0" width="313" height="30"/>

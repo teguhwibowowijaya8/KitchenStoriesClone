@@ -11,9 +11,43 @@ enum Constant {
     static let mainOrangeColor = UIColor.orange
     
     static let invalidUrlMessage = "URL is invalid. Please update your application to the latest version or contact our Customer Service."
+}
+
+enum BackgroundImage {
+    case background1
+    case background2
+    case background3
+    case background4
     
-    static let kitchenBackgroundImage1 = UIImage(named: "background1")
-    static let kitchenBackgroundImage2 = UIImage(named: "background2")
-    static let kitchenBackgroundImage3 = UIImage(named: "background3")
-    static let kitchenBackgroundImage4 = UIImage(named: "background4")
+    var name: String {
+        switch self {
+        case .background1:
+            return "background1"
+        case .background2:
+            return "background2"
+        case .background3:
+            return "background3"
+        case .background4:
+            return "background4"
+        }
+    }
+    
+    var image: UIImage? {
+        return UIImage(named: self.name)
+    }
+    
+    static func getBy(index: Int) -> BackgroundImage? {
+        switch index {
+        case 0:
+            return BackgroundImage.background1
+        case 1:
+            return BackgroundImage.background2
+        case 2:
+            return BackgroundImage.background3
+        case 3:
+            return BackgroundImage.background4
+        default:
+            return nil
+        }
+    }
 }

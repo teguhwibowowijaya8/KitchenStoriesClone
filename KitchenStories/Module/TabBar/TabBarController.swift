@@ -39,11 +39,11 @@ class TabBarController: UITabBarController {
     
     private func setTabBarAppearence() {
         let tabBarAppearence = UITabBarAppearance()
-        tabBarAppearence.stackedLayoutAppearance.normal.iconColor = Constant.mainOrangeColor
-        tabBarAppearence.stackedLayoutAppearance.normal.titleTextAttributes = [
+        tabBarAppearence.stackedLayoutAppearance.selected.iconColor = Constant.mainOrangeColor
+        tabBarAppearence.stackedLayoutAppearance.selected.titleTextAttributes = [
             .foregroundColor: Constant.mainOrangeColor
         ]
-        
+        tabBarAppearence.backgroundColor = .systemBackground
         tabBar.tintColor = .gray
         tabBar.standardAppearance = tabBarAppearence
         tabBar.scrollEdgeAppearance = tabBarAppearence

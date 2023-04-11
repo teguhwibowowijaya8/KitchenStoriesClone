@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum SignButtonTag: Int {
+    case signUp
+    case signIn
+}
+
 class WelcomeViewController: UIViewController {
     
     private let greetingsTitle = [
@@ -21,11 +26,7 @@ class WelcomeViewController: UIViewController {
         "With our international community"
     ]
     
-    @IBOutlet weak var backgroundImageView: BackgroundImageView! {
-        didSet {
-            backgroundImageView.image = Constant.kitchenBackgroundImage2
-        }
-    }
+    @IBOutlet weak var backgroundImageView: BackgroundImageView!
     
     @IBOutlet weak var welcomeTitleLabel: UILabel! {
         didSet {
@@ -52,6 +53,8 @@ class WelcomeViewController: UIViewController {
             welcomeGreetingsPageControl.numberOfPages = greetingsTitle.count
             welcomeGreetingsPageControl.currentPage = 0
             
+            backgroundImageView.image = BackgroundImage.getBy(index: welcomeGreetingsPageControl.currentPage)?.image
+            
             welcomeGreetingsPageControl.addTarget(self, action: #selector(onPageControlValueChanged), for: .valueChanged)
         }
     }
@@ -59,12 +62,16 @@ class WelcomeViewController: UIViewController {
     @IBOutlet weak var signUpButton: RoundedCornersButton! {
         didSet {
             signUpButton.buttonTitle = "Sign Up"
+            signUpButton.tag = SignButtonTag.signUp.rawValue
+            signUpButton.addTarget(self, action: #selector(onSignButtonSelected), for: .touchUpInside)
         }
     }
     
     @IBOutlet weak var signInButton: RoundedCornersButton! {
         didSet {
             signInButton.buttonTitle = "Sign In"
+            signInButton.tag = SignButtonTag.signIn.rawValue
+            signInButton.addTarget(self, action: #selector(onSignButtonSelected), for: .touchUpInside)
         }
     }
     
@@ -72,13 +79,53 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        navigationController?.isNavigationBarHidden = true
         setupCollectionView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     @objc func onPageControlValueChanged(_ sender: UIPageControl) {
-        let selectedIndexPath = IndexPath(row: sender.currentPage, section: 0)
+        let index = sender.currentPage
+        let selectedIndexPath = IndexPath(row: index, section: 0)
         welcomeGreetingsCollectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .centeredHorizontally)
+        
+        changeBackgroundImage(to: index)
+    }
+    
+    private func changeBackgroundImage(to index: Int) {
+        let backgroundImage: UIImage?
+        if let image = BackgroundImage.getBy(index: index % 3)?.image {
+            backgroundImage = image
+        } else {
+            backgroundImage = BackgroundImage.background1.image
+        }
+        
+        backgroundTransition(to: backgroundImage)
+    }
+    
+    private func backgroundTransition(to image: UIImage?) {
+        if backgroundImageView.image == image { return }
+        UIView.transition(with: backgroundImageView, duration: 0.5, options: .transitionCrossDissolve) {
+            self.backgroundImageView.image = image
+        }
+    }
+    
+    @objc func onSignButtonSelected(_ sender: UIButton) {
+        let nextViewController: UIViewController
+        
+        switch SignButtonTag(rawValue: sender.tag) {
+        case .signIn:
+            nextViewController = LoginViewController()
+        case .signUp:
+            nextViewController = RegisterViewController()
+        case .none:
+            return
+        }
+        
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 
     private func setupCollectionView() {
@@ -142,6 +189,8 @@ extension WelcomeViewController: UICollectionViewDataSource {
         let width = scrollView.frame.width
         let horizontalCenter = width / 2
 
-        welcomeGreetingsPageControl.currentPage = Int(offSet + horizontalCenter) / Int(width)
+        let currPage = Int(offSet + horizontalCenter) / Int(width)
+        welcomeGreetingsPageControl.currentPage = currPage
+        changeBackgroundImage(to: currPage)
     }
 }

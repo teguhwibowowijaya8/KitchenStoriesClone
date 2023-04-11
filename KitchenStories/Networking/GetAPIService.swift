@@ -9,7 +9,7 @@ import Foundation
 
 protocol GetAPIProtocol {
     func getAPI<T: Decodable>(
-        from urlString: String,
+        from url: URL?,
         withModel model: T.Type,
         onCompletion: @escaping (_ apiData: T?, _ errorMessage: String?) -> Void
     )
@@ -29,12 +29,12 @@ class GetAPIService: GetAPIProtocol {
     }
     
     func getAPI<T>(
-        from urlString: String,
+        from url: URL?,
         withModel model: T.Type,
         onCompletion: @escaping (T?, String?) -> Void
     ) where T : Decodable {
         
-        guard let url = URL(string: urlString)
+        guard let url = url
         else { return onCompletion(nil, Constant.invalidUrlMessage)}
             
         dataTask = fetchService.fetch(url: url) { [weak self] result in
