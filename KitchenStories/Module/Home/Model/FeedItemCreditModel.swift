@@ -8,12 +8,12 @@
 import Foundation
 
 enum CreditType: String, Codable {
-    case brand
+    case brand = "brand"
     case typeInternal = "internal"
 }
 
 struct FeedItemCreditModel: Codable {
-    let type: CreditType
+    let type: CreditType?
     let imageUrlString: String?
     let name: String?
     let id: Int?

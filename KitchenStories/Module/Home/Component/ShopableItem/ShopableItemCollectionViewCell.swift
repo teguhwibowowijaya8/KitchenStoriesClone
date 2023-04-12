@@ -16,7 +16,7 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var containerView: UIView! {
         didSet {
-            containerView.backgroundColor = .lightGray
+            containerView.backgroundColor = .gray.withAlphaComponent(0.2)
             containerView.layer.cornerRadius = 10
         }
     }
@@ -30,7 +30,7 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemNameLabel: UILabel! {
         didSet {
-            itemNameLabel.font = .boldSystemFont(ofSize: 18)
+            itemNameLabel.font = .boldSystemFont(ofSize: 16)
             itemNameLabel.numberOfLines = 4
         }
     }

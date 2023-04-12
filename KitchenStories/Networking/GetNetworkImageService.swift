@@ -7,6 +7,8 @@
 
 import UIKit
 
+var imageCache = NSCache<NSURL, UIImage>()
+
 protocol GetNetworkImageProtocol {
     func getImage(
         _ urlString: String,
@@ -33,10 +35,24 @@ class GetNetworkImageService: GetNetworkImageProtocol {
         guard let url = URL(string: urlString)
         else { return onCompletion(nil, Constant.invalidUrlMessage)}
         
+        let nsUrl = url as NSURL
+        if let cachedImage = imageCache.object(forKey: nsUrl) {
+            return onCompletion(cachedImage, nil)
+        }
+        
         task = fetchService.fetch(url: url, onCompletion: { result in
             switch result {
             case .success(let fetchedData):
-                return onCompletion(UIImage(data: fetchedData), nil)
+                if let fetchedImage = UIImage(data: fetchedData) {
+                    imageCache.setObject(fetchedImage, forKey: nsUrl)
+                    return onCompletion(fetchedImage, nil)
+                }
+                
+                return onCompletion(
+                    nil,
+                    "Network Image is broken. Please try again later or contact Our Customer Service."
+                )
+                
             case .failure(let fetchedError):
                 return onCompletion(nil, fetchedError.getErrorMessage())
             }

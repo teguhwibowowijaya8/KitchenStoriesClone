@@ -29,6 +29,7 @@ class HomeViewModel {
             if let errorMessage = errorMessage {
                 self?.errorMessage = errorMessage
             } else if let feedResult = feedResult {
+                print(feedResult.results.count)
                 self?.feeds = feedResult
             }
             self?.isLoading = false

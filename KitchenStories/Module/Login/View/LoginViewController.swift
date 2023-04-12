@@ -165,7 +165,7 @@ class LoginViewController: UIViewController {
         guard let email = loginEmailTextField.text,
               let password = loginPasswordTextField.text
         else { return }
-        print("here")
+
         disableForm()
         loginViewModel?.userSignIn(email: email, password: password)
     }

@@ -8,9 +8,9 @@
 import Foundation
 
 enum FeedType: String, Codable {
-    case carousel
-    case featured
-    case item
+    case carousel = "carousel"
+    case featured = "featured"
+    case item = "item"
     case shoppableCarousel = "shoppable_carousel"
 }
 
@@ -21,6 +21,24 @@ struct FeedModel: Codable {
     let minItems: Int?
     let item: FeedItemModel?
     let items: [FeedItemModel]?
+    
+    var itemList: [FeedItemModel] {
+        if let items = items {
+            return items
+        } else if let item = item {
+            return [item]
+        }
+        return [FeedItemModel]()
+    }
+    
+    var minimumShowItems: Int {
+        return minItems ?? 6
+    }
+    
+    var showItemsCount: Int {
+        if itemList.count > minimumShowItems { return minimumShowItems }
+        return itemList.count
+    }
     
     enum CodingKeys: String, CodingKey {
         case type

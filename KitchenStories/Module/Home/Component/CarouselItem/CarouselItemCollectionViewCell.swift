@@ -1,14 +1,14 @@
 //
-//  FeaturedItemCollectionViewCell.swift
+//  CarouselItemCollectionViewCell.swift
 //  KitchenStories
 //
-//  Created by Teguh Wibowo Wijaya on 11/04/23.
+//  Created by Teguh Wibowo Wijaya on 12/04/23.
 //
 
 import UIKit
 
-class FeaturedItemCollectionViewCell: UICollectionViewCell {
-    static let identifier = "FeaturedItemCollectionViewCell"
+class CarouselItemCollectionViewCell: UICollectionViewCell {
+    static let identifier = "CarouselItemCollectionViewCell"
     
     private let itemIsLikedImage = UIImage(systemName: "heart.fill")
     private let itemIsNotLikedImage = UIImage(systemName: "heart")
@@ -19,7 +19,6 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
         didSet {
             containerView.layer.cornerRadius = 10
             containerView.clipsToBounds = true
-            containerView.backgroundColor = .blue.withAlphaComponent(0.4)
         }
     }
     
@@ -43,7 +42,7 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
         didSet {
             itemNameLabel.numberOfLines = 0
             itemNameLabel.textAlignment = .center
-            itemNameLabel.font = .boldSystemFont(ofSize: 25)
+            itemNameLabel.font = .boldSystemFont(ofSize: 15)
         }
     }
     

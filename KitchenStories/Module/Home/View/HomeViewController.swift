@@ -32,6 +32,7 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
         setupViewModel()
+        setupTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,12 +46,19 @@ class HomeViewController: UIViewController {
         homeViewModel?.fetchFeeds()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        homeTableView.reloadData()
+    }
+    
     private func setupTableView() {
         self.view.addSubview(homeTableView)
         setComponentConstraints()
         
         homeTableView.delegate = self
         homeTableView.dataSource = self
+        homeTableView.separatorStyle = .none
         
         homeTableView.register(HomeItemHeaderTableViewCell.self, forCellReuseIdentifier: HomeItemHeaderTableViewCell.identifier)
         
@@ -93,12 +101,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         guard let feed = homeViewModel?.feeds?.results[indexPath.section]
         else { return UITableViewCell() }
         
-        switch HomeTableRowType(rawValue: indexPath.section) {
+        switch HomeTableRowType(rawValue: indexPath.row) {
         case .itemsHeader:
             guard let itemsHeaderCell = tableView.dequeueReusableCell(withIdentifier: HomeItemHeaderTableViewCell.identifier) as? HomeItemHeaderTableViewCell
             else { return UITableViewCell() }
             
             let headerTitle: String
+            
             if let title = feed.name {
                 headerTitle = title
             } else {
@@ -106,7 +115,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 headerTitle = type.capitalized(with: .current)
             }
             
-            itemsHeaderCell.setupCell(title: headerTitle)
+            itemsHeaderCell.setupCell(
+                title: headerTitle,
+                showSeeAllButton: feed.itemList.count > feed.minimumShowItems
+            )
                     
             return itemsHeaderCell
                     
@@ -114,10 +126,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let itemsBodyCell = tableView.dequeueReusableCell(withIdentifier: HomeItemsTableViewCell.identifier) as? HomeItemsTableViewCell
             else { return UITableViewCell() }
             
-            let screenHeight = view.safeAreaLayoutGuide.layoutFrame.height
+            let screenSize = view.safeAreaLayoutGuide.layoutFrame.size
             itemsBodyCell.setupCell(
                 feed: feed,
-                screenHeight: screenHeight
+                screenSize: screenSize
             )
                     
             return itemsBodyCell
@@ -126,5 +138,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         case .none:
             return UITableViewCell()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
 }

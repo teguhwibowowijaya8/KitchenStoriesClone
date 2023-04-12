@@ -10,7 +10,7 @@ import Foundation
 struct FeedItemRatingModel: Codable {
     let countPositive: Int
     let countNegative: Int
-    let score: Double
+    let score: Double?
     
     enum CodingKeys: String, CodingKey {
         case countPositive = "count_positive"

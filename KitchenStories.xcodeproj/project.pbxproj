@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A06F64829E68947004FE00F /* CarouselItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A06F64629E68947004FE00F /* CarouselItemCollectionViewCell.swift */; };
+		7A06F64929E68947004FE00F /* CarouselItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A06F64729E68947004FE00F /* CarouselItemCollectionViewCell.xib */; };
 		7ABA0F6E29DD53F500E58FBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F6D29DD53F500E58FBA /* AppDelegate.swift */; };
 		7ABA0F7029DD53F500E58FBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F6F29DD53F500E58FBA /* SceneDelegate.swift */; };
 		7ABA0F7529DD53F500E58FBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ABA0F7329DD53F500E58FBA /* Main.storyboard */; };
@@ -56,6 +58,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A06F64629E68947004FE00F /* CarouselItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		7A06F64729E68947004FE00F /* CarouselItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		7ABA0F6A29DD53F500E58FBA /* KitchenStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KitchenStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ABA0F6D29DD53F500E58FBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7ABA0F6F29DD53F500E58FBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +121,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7A06F64029E686E7004FE00F /* CarouselItem */ = {
+			isa = PBXGroup;
+			children = (
+				7A06F64629E68947004FE00F /* CarouselItemCollectionViewCell.swift */,
+				7A06F64729E68947004FE00F /* CarouselItemCollectionViewCell.xib */,
+			);
+			path = CarouselItem;
+			sourceTree = "<group>";
+		};
 		7ABA0F6129DD53F500E58FBA = {
 			isa = PBXGroup;
 			children = (
@@ -341,6 +354,7 @@
 				7AC5935C29E514A000667F3E /* HomeItemsTableViewCell.swift */,
 				7AC5936629E51BF000667F3E /* FeaturedItem */,
 				7AC5936729E51DE000667F3E /* ShopableItem */,
+				7A06F64029E686E7004FE00F /* CarouselItem */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -468,6 +482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7ABA0F7D29DD53F700E58FBA /* LaunchScreen.storyboard in Resources */,
+				7A06F64929E68947004FE00F /* CarouselItemCollectionViewCell.xib in Resources */,
 				7AC5AB3929E1553A00C30433 /* WelcomeViewController.xib in Resources */,
 				7ABA0F9C29DE5BA300E58FBA /* RegisterViewController.xib in Resources */,
 				7ABA0F7A29DD53F700E58FBA /* Assets.xcassets in Resources */,
@@ -487,6 +502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7ABA0FB829DEABCF00E58FBA /* BottomBorderTextField.swift in Sources */,
+				7A06F64829E68947004FE00F /* CarouselItemCollectionViewCell.swift in Sources */,
 				7AC5934629E4EEF300667F3E /* HomeViewModel.swift in Sources */,
 				7AC5AB3829E1553A00C30433 /* WelcomeViewController.swift in Sources */,
 				7ABA0FA629DE7AAA00E58FBA /* GetAPIService.swift in Sources */,

@@ -19,12 +19,11 @@ class RegisterViewModel {
     
     func registerUser(email: String, password: String) {
         errorMessage = nil
-        print("here")
+
         Auth.auth().createUser(withEmail: email, password: password) {
             [weak self] result, error in
             if let error = error {
                 self?.errorMessage = error.localizedDescription
-                print(self?.errorMessage)
             }
             if let result = result {
                 print(result.user.uid)

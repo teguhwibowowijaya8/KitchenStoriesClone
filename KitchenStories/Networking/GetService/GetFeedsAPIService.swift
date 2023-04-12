@@ -34,7 +34,7 @@ struct GetFeedAPIService: GetFeedAPIProtocol {
     ) {
         var url = URL(string: urlString)
         url?.append(queryItems: [
-            URLQueryItem(name: "size", value: "10"),
+            URLQueryItem(name: "size", value: "20"),
             URLQueryItem(name: "from", value: "0"),
             URLQueryItem(name: "vegetarian", value: "\(isVegetarian)"),
             URLQueryItem(name: "timezone", value: "+0700")

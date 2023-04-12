@@ -18,11 +18,10 @@ class LoginViewModel {
     
     func userSignIn(email: String, password: String) {
         errorMessage = nil
-        print("here2")
+
         Auth.auth().signIn(withEmail: email, password: password) {
             [weak self] result, error in
             if let error = error {
-                print(error.localizedDescription)
                 self?.errorMessage = error.localizedDescription
             } else {
                 print(result?.user.uid)

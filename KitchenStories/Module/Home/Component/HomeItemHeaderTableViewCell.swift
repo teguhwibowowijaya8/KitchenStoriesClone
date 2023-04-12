@@ -21,7 +21,8 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
        let headerTitleLabel = UILabel()
         
         headerTitleLabel.font = .boldSystemFont(ofSize: 18)
-        headerTitleLabel.numberOfLines = 0
+        headerTitleLabel.numberOfLines = 1
+        headerTitleLabel.adjustsFontSizeToFitWidth = true
         
         return headerTitleLabel
     }()
@@ -52,7 +53,7 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
         
         headerStackContainerView.axis = .horizontal
         headerStackContainerView.distribution = .fill
-        headerStackContainerView.alignment = .top
+        headerStackContainerView.alignment = .center
         headerStackContainerView.spacing = 8
         
         return headerStackContainerView
@@ -63,8 +64,9 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func setupCell(title: String) {
+    func setupCell(title: String, showSeeAllButton: Bool) {
         headerTitleLabel.text = title
+        headerSeeAllButton.isHidden = !showSeeAllButton
         
         addSubviews()
         setComponentsConstraints()
@@ -82,10 +84,10 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
     
     private func setComponentsConstraints() {
         NSLayoutConstraint.activate([
-            headerStackContainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
-            headerStackContainerView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 20),
-            headerStackContainerView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20),
-            headerStackContainerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+            headerStackContainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 20),
+            headerStackContainerView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 10),
+            headerStackContainerView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -10),
+            headerStackContainerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
         ])
     }
 }

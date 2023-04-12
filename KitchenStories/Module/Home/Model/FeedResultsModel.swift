@@ -9,5 +9,4 @@ import Foundation
 
 struct FeedResultsModel: Codable {
     let results: [FeedModel]
-    
 }

@@ -12,7 +12,7 @@ struct FeedItemModel: Codable {
     let userRatings: FeedItemRatingModel?
     let name: String
     let thumbnailUrlString: String
-    let credits: [FeedItemCreditModel]
+    let credits: [FeedItemCreditModel]?
     let brand: FeedItemCreditModel?
     let price: FeedItemPriceModel?
     
