@@ -12,7 +12,7 @@ enum CreditType: String, Codable {
     case typeInternal = "internal"
 }
 
-struct FeedItemCreditModel: Codable {
+struct FeedItemCreditModel: Codable, Hashable {
     let type: CreditType?
     let imageUrlString: String?
     let name: String?

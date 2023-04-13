@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class HomeItemsTableViewCell: UITableViewCell {
     
@@ -17,14 +18,14 @@ class HomeItemsTableViewCell: UITableViewCell {
     private var feed: FeedModel?
     private var screenSize: CGSize?
     private var cellSize: CGSize = .zero
-    
-    private var collectionViewHeightConstraint: NSLayoutConstraint?
-    
-    private lazy var itemsCollectionView: UICollectionView = {
+    private var isLoading: Bool = false
+        
+    lazy var itemsCollectionView: DynamicHeightCollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         
-        let itemsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        let itemsCollectionView = DynamicHeightCollectionView(frame: .zero, collectionViewLayout: flowLayout)
+//        itemsCollectionView.isSkeletonable = true
         itemsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
         itemsCollectionView.collectionViewLayout = flowLayout
@@ -42,6 +43,12 @@ class HomeItemsTableViewCell: UITableViewCell {
         itemsCollectionView.register(carouselCell, forCellWithReuseIdentifier: CarouselItemCollectionViewCell.identifier)
         
         return itemsCollectionView
+    }()
+    
+    lazy var itemCollectionViewHeight: NSLayoutConstraint = {
+        let itemCollectionViewHeight = itemsCollectionView.heightAnchor.constraint(equalToConstant: 20)
+        itemCollectionViewHeight.isActive = true
+        return itemCollectionViewHeight
     }()
     
     override func awakeFromNib() {
@@ -62,16 +69,37 @@ class HomeItemsTableViewCell: UITableViewCell {
             getCellSizeForType(type)
             setCollectionViewHeightConstraint()
         }
+        
+        setCollectionScrollDirection()
+        layoutIfNeeded()
         itemsCollectionView.reloadData()
     }
     
-    func setupCell(feed: FeedModel, screenSize: CGSize) {
+    func setupCell(
+        feed: FeedModel,
+        screenSize: CGSize,
+        isLoading: Bool = false
+    ) {
         self.feed = feed
         self.screenSize = screenSize
+        self.isLoading = isLoading
         getCellSizeForType(feed.type)
         
         addSubviews()
         setComponentsConstraints()
+        setCollectionScrollDirection()
+        layoutIfNeeded()
+    }
+    
+    private func setCollectionScrollDirection() {
+        guard let layout = itemsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        else { return }
+        
+        if feed?.type == .recent {
+            layout.scrollDirection = .vertical
+        } else {
+            layout.scrollDirection = .horizontal
+        }
     }
     
     private func addSubviews() {
@@ -90,10 +118,14 @@ class HomeItemsTableViewCell: UITableViewCell {
     }
     
     private func setCollectionViewHeightConstraint() {
+        if feed?.type == .recent {
+            itemCollectionViewHeight.isActive = false
+            return
+        }
+
         let collectionViewHeight = cellSize.height + (verticalSpacing * 2)
-        collectionViewHeightConstraint?.isActive = false
-        collectionViewHeightConstraint = itemsCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight)
-        collectionViewHeightConstraint?.isActive = true
+        itemCollectionViewHeight.constant = collectionViewHeight
+        itemCollectionViewHeight.isActive = true
     }
 }
 
@@ -112,10 +144,16 @@ extension HomeItemsTableViewCell: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if feed?.type == .recent {
+            return .zero
+        }
         return horizontalSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        if feed?.type == .recent {
+            return horizontalSpacing
+        }
         return .zero
     }
     
@@ -142,7 +180,19 @@ extension HomeItemsTableViewCell: UICollectionViewDelegateFlowLayout {
             let itemWidth = availableWidth * 0.7
             cellSize = CGSize(width: itemWidth, height: itemHeight)
             
-        case .carousel, .item:
+        case .recent:
+            var minColEachRow: CGFloat = 2
+            let cellMinWidth: CGFloat = 200
+            let idealColEachRow = round(availableWidth / cellMinWidth)
+            
+            if idealColEachRow > minColEachRow {
+                minColEachRow = idealColEachRow
+            }
+            
+            let finalWidth = availableWidth - ((minColEachRow - 1) * horizontalSpacing)
+            cellSize = CGSize(width: finalWidth / minColEachRow, height: 250)
+            
+        case .carousel:
             let itemHeight: CGFloat = 250
             let suggestedItemWidth: CGFloat = 180
             let minimumCellPerRow = 2
@@ -169,12 +219,32 @@ extension HomeItemsTableViewCell: UICollectionViewDelegateFlowLayout {
             }
             
             cellSize = CGSize(width: finalCellWidth, height: itemHeight)
+            
+        default:
+            cellSize = .zero
         }
     }
 }
 
-extension HomeItemsTableViewCell: UICollectionViewDataSource {
+extension HomeItemsTableViewCell: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        guard let feedType = feed?.type else { return "" }
+        
+        switch feedType {
+        case .featured:
+            return FeaturedItemCollectionViewCell.identifier
+        case .shoppableCarousel:
+            return ShopableItemCollectionViewCell.identifier
+        default:
+            return CarouselItemCollectionViewCell.identifier
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if isLoading == true { return feed?.minItems ?? 0 }
+        if feed?.type == .recent {
+            return feed?.items?.count ?? 0
+        }
         return feed?.showItemsCount ?? 0
     }
     
@@ -182,7 +252,7 @@ extension HomeItemsTableViewCell: UICollectionViewDataSource {
         guard let feed = feed
         else { return UICollectionViewCell() }
         
-        let feedItem = feed.itemList[indexPath.row]
+        let feedItem: FeedItemModel? = isLoading ? nil : feed.itemList[indexPath.row]
         
         switch feed.type {
         case .shoppableCarousel:
@@ -190,9 +260,9 @@ extension HomeItemsTableViewCell: UICollectionViewDataSource {
             else { return UICollectionViewCell() }
             
             shopableCell.setupCell(
-                imageUrlString: feedItem.thumbnailUrlString,
-                itemName: feedItem.name,
-                recipesCount: 5
+                imageUrlString: feedItem?.thumbnailUrlString,
+                itemName: feedItem?.name,
+                recipesCount: feedItem?.recipes?.count ?? 0
             )
             
             return shopableCell
@@ -200,26 +270,29 @@ extension HomeItemsTableViewCell: UICollectionViewDataSource {
         case .featured:
             guard let featuredCell = collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedItemCollectionViewCell.identifier, for: indexPath) as? FeaturedItemCollectionViewCell
             else { return UICollectionViewCell() }
-            
+
             featuredCell.setupCell(
-                imageUrlString: feedItem.thumbnailUrlString,
-                itemName: feedItem.name
+                imageUrlString: feedItem?.thumbnailUrlString,
+                itemName: feedItem?.name,
+                itemFeedCredits: feedItem?.creditsNames
             )
             
             return featuredCell
             
             
-        case .carousel, .item:
+        case .carousel, .recent:
             guard let carouselCell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselItemCollectionViewCell.identifier, for: indexPath) as? CarouselItemCollectionViewCell
             else { return UICollectionViewCell() }
             
             carouselCell.setupCell(
-                imageUrlString: feedItem.thumbnailUrlString,
-                itemName: feedItem.name
+                imageUrlString: feedItem?.thumbnailUrlString,
+                itemName: feedItem?.name
             )
             
             return carouselCell
             
+        default:
+            return UICollectionViewCell()
         }
     }
 }

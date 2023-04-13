@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 enum HomeTableRowType: Int {
     case itemsHeader
@@ -20,15 +21,16 @@ class HomeViewController: UIViewController {
     private var homeViewModel: HomeViewModel?
     
     private lazy var homeTableView: UITableView = {
-       let homeTableView = UITableView()
+        let homeTableView = UITableView()
+        homeTableView.isSkeletonable = true
         homeTableView.translatesAutoresizingMaskIntoConstraints = false
         
         return homeTableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
         setupViewModel()
@@ -43,7 +45,18 @@ class HomeViewController: UIViewController {
     private func setupViewModel() {
         homeViewModel = HomeViewModel()
         homeViewModel?.delegate = self
+        
+        showSkeleton()
         homeViewModel?.fetchFeeds()
+    }
+    
+    private func showSkeleton() {
+        homeTableView.showSkeleton()
+    }
+    
+    private func hideSkeleton() {
+        homeTableView.stopSkeletonAnimation()
+        homeTableView.hideSkeleton()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -58,6 +71,8 @@ class HomeViewController: UIViewController {
         
         homeTableView.delegate = self
         homeTableView.dataSource = self
+        homeTableView.rowHeight = UITableView.automaticDimension
+        homeTableView.estimatedRowHeight = 100
         homeTableView.separatorStyle = .none
         
         homeTableView.register(HomeItemHeaderTableViewCell.self, forCellReuseIdentifier: HomeItemHeaderTableViewCell.identifier)
@@ -82,24 +97,49 @@ extension HomeViewController: HomeViewModelDelegate {
             print(errorMessage)
         } else {
             DispatchQueue.main.async {
+                self.hideSkeleton()
                 self.homeTableView.reloadData()
             }
         }
     }
 }
 
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return homeViewModel?.feeds?.results.count ?? 0
+        guard let sectionCount = homeViewModel?.feeds?.results.count
+        else { return homeViewModel?.dummyFeeds.results.count ?? 0 }
+        return sectionCount + 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        switch HomeTableRowType(rawValue: indexPath.row) {
+        case .itemsHeader:
+            return HomeItemHeaderTableViewCell.identifier
+        default:
+            return HomeItemsTableViewCell.identifier
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let feed = homeViewModel?.feeds?.results[indexPath.section]
+        guard let viewModel = homeViewModel
         else { return UITableViewCell() }
+        
+        let feed: FeedModel
+        
+        if let feeds = viewModel.feeds?.results {
+            if indexPath.section < feeds.count {
+                feed = feeds[indexPath.section]
+            } else {
+                feed = viewModel.recentFeeds
+                print(feed)
+            }
+        } else {
+            feed = viewModel.dummyFeeds.results[indexPath.section]
+        }
         
         switch HomeTableRowType(rawValue: indexPath.row) {
         case .itemsHeader:
@@ -117,21 +157,24 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             itemsHeaderCell.setupCell(
                 title: headerTitle,
-                showSeeAllButton: feed.itemList.count > feed.minimumShowItems
+                showSeeAllButton: feed.itemList.count > feed.minimumShowItems,
+                isLoading: viewModel.isLoading
             )
-                    
+            
             return itemsHeaderCell
-                    
+            
         case .itemsBody:
             guard let itemsBodyCell = tableView.dequeueReusableCell(withIdentifier: HomeItemsTableViewCell.identifier) as? HomeItemsTableViewCell
             else { return UITableViewCell() }
             
             let screenSize = view.safeAreaLayoutGuide.layoutFrame.size
+            
             itemsBodyCell.setupCell(
                 feed: feed,
-                screenSize: screenSize
+                screenSize: screenSize,
+                isLoading: viewModel.isLoading
             )
-                    
+            
             return itemsBodyCell
             
             
@@ -142,5 +185,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }

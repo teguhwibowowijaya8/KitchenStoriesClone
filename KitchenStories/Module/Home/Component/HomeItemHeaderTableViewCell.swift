@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 protocol HomeItemHeaderCellDelegate {
     func handleOnSeeAllButtonSelected()
@@ -20,6 +21,7 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
     private lazy var headerTitleLabel: UILabel = {
        let headerTitleLabel = UILabel()
         
+        headerTitleLabel.isSkeletonable = true
         headerTitleLabel.font = .boldSystemFont(ofSize: 18)
         headerTitleLabel.numberOfLines = 1
         headerTitleLabel.adjustsFontSizeToFitWidth = true
@@ -29,10 +31,12 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
     
     private lazy var headerSeeAllButton: UIButton = {
         let headerSeeAllButton = UIButton(type: .system)
+        headerSeeAllButton.isSkeletonable = true
         
         let arrowRightImage = UIImage(systemName: "arrow.right")
         headerSeeAllButton.setImage(arrowRightImage, for: .normal)
-        headerSeeAllButton.tintColor = .orange
+        headerSeeAllButton.tintColor = Constant.secondaryColor
+        headerSeeAllButton.isHidden = true
         
         NSLayoutConstraint.activate([
             headerSeeAllButton.heightAnchor.constraint(equalToConstant: 30),
@@ -64,12 +68,23 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func setupCell(title: String, showSeeAllButton: Bool) {
-        headerTitleLabel.text = title
-        headerSeeAllButton.isHidden = !showSeeAllButton
-        
+    func setupCell(
+        title: String? = nil,
+        showSeeAllButton: Bool = true,
+        isLoading: Bool = false
+    ) {
         addSubviews()
         setComponentsConstraints()
+        
+        guard isLoading == false
+        else {
+            showLoadingView()
+            return
+        }
+        
+        removeLoadingView()
+        headerTitleLabel.text = title
+        headerSeeAllButton.isHidden = !showSeeAllButton
     }
     
     @objc func onSeeAllButtonSelected(_ sender: UIButton) {
@@ -84,10 +99,28 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
     
     private func setComponentsConstraints() {
         NSLayoutConstraint.activate([
-            headerStackContainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 20),
+            headerStackContainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
             headerStackContainerView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 10),
             headerStackContainerView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -10),
             headerStackContainerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
         ])
+    }
+    
+    private func showLoadingView() {
+        headerTitleLabel.backgroundColor = Constant.loadingColor
+        headerSeeAllButton.backgroundColor = Constant.loadingColor
+        
+        headerTitleLabel.text = Constant.placholderText1
+        
+        headerTitleLabel.textColor = .clear
+        headerSeeAllButton.tintColor = .clear
+    }
+    
+    private func removeLoadingView() {
+        headerTitleLabel.backgroundColor = .clear
+        headerSeeAllButton.backgroundColor = .clear
+        
+        headerTitleLabel.textColor = .label
+        headerSeeAllButton.tintColor = Constant.secondaryColor
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class FeaturedItemCollectionViewCell: UICollectionViewCell {
     static let identifier = "FeaturedItemCollectionViewCell"
@@ -14,19 +15,21 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
     private let itemIsNotLikedImage = UIImage(systemName: "heart")
     
     private var getNetworkImageService = GetNetworkImageService()
+    private let containerBackgroundColor: UIColor = .blue.withAlphaComponent(0.5)
     
     @IBOutlet weak var containerView: UIView! {
         didSet {
+            containerView.isSkeletonable = true
             containerView.layer.cornerRadius = 10
             containerView.clipsToBounds = true
-            containerView.backgroundColor = .blue.withAlphaComponent(0.4)
+            containerView.backgroundColor = containerBackgroundColor
         }
     }
     
     @IBOutlet weak var itemImageView: UIImageView! {
         didSet {
+            itemImageView.isSkeletonable = true
             itemImageView.contentMode = .scaleAspectFill
-            itemImageView.layer.cornerRadius = 10
         }
     }
     
@@ -42,8 +45,15 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var itemNameLabel: UILabel! {
         didSet {
             itemNameLabel.numberOfLines = 0
-            itemNameLabel.textAlignment = .center
             itemNameLabel.font = .boldSystemFont(ofSize: 25)
+        }
+    }
+    
+    @IBOutlet weak var itemFeedCreditsLabel: UILabel! {
+        didSet {
+            itemFeedCreditsLabel.font = .systemFont(ofSize: 12)
+            itemFeedCreditsLabel.numberOfLines = 0
+            itemFeedCreditsLabel.isHidden = true
         }
     }
     
@@ -59,20 +69,69 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
     }
     
     func setupCell(
-        imageUrlString: String,
-        itemName: String,
-        isLiked: Bool = false
+        imageUrlString: String? = nil,
+        itemName: String? = nil,
+        isLiked: Bool = false,
+        itemFeedCredits: String?
     ) {
+        guard let imageUrlString = imageUrlString,
+              let itemName = itemName
+        else {
+            showLoadingView()
+            return
+        }
+        
+        removeLoadingView()
         itemImageView.loadImageFromUrl(
             imageUrlString,
             defaultImage: nil,
             getImageNetworkService: getNetworkImageService
         )
         
+        itemNameLabel.text = itemName
+        
         let isLikedButtonImage = isLiked ? itemIsLikedImage : itemIsNotLikedImage
         itemIsLikedButton.setImage(isLikedButtonImage, for: .normal)
         
-        itemNameLabel.text = itemName
+        if let itemFeedCredits = itemFeedCredits {
+            itemFeedCreditsLabel.text = "Created by \(itemFeedCredits)"
+            itemFeedCreditsLabel.isHidden = false
+        }
     }
 
+    private func showLoadingView() {
+        containerView.backgroundColor = .clear
+        containerView.layer.borderWidth = 0.5
+        containerView.layer.borderColor = Constant.loadingColor.cgColor
+        
+        itemImageView.backgroundColor = Constant.loadingColor
+        itemNameLabel.backgroundColor = Constant.loadingColor
+        itemFeedCreditsLabel.backgroundColor = Constant.loadingColor
+        itemIsLikedButton.backgroundColor = .clear
+        
+        itemNameLabel.text = Constant.placholderText1
+        itemFeedCreditsLabel.text = Constant.placholderText2
+        
+        itemNameLabel.textColor = .clear
+        itemFeedCreditsLabel.textColor = .clear
+        itemIsLikedButton.tintColor = .clear
+        itemIsLikedButton.isUserInteractionEnabled = false
+    }
+    
+    private func removeLoadingView() {
+        containerView.backgroundColor = containerBackgroundColor
+        containerView.layer.borderWidth = 0
+        containerView.layer.borderColor = UIColor.clear.cgColor
+        
+        itemImageView.backgroundColor = .clear
+        itemNameLabel.backgroundColor = .clear
+        itemFeedCreditsLabel.backgroundColor = .clear
+        itemIsLikedButton.backgroundColor = .white
+        
+        itemNameLabel.textColor = .label
+        itemFeedCreditsLabel.textColor = .label
+        
+        itemIsLikedButton.tintColor = Constant.secondaryColor
+        itemIsLikedButton.isUserInteractionEnabled = true
+    }
 }

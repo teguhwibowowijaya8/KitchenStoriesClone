@@ -9,8 +9,14 @@ import UIKit
 
 enum Constant {
     static let mainOrangeColor = UIColor.orange
+    static let secondaryColor = UIColor.orange
     
     static let invalidUrlMessage = "URL is invalid. Please update your application to the latest version or contact our Customer Service."
+    
+    static let loadingColor: UIColor = UIColor.gray.withAlphaComponent(0.4)
+    
+    static let placholderText1 = "This is placholder Text 1"
+    static let placholderText2 = "This is placholder Text 2, this one is a bit longer than placeholder Text 1"
 }
 
 enum BackgroundImage {

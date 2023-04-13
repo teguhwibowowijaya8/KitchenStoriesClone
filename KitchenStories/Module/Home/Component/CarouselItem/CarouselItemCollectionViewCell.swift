@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class CarouselItemCollectionViewCell: UICollectionViewCell {
     static let identifier = "CarouselItemCollectionViewCell"
@@ -17,6 +18,7 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var containerView: UIView! {
         didSet {
+            containerView.isSkeletonable = true
             containerView.layer.cornerRadius = 10
             containerView.clipsToBounds = true
         }
@@ -24,6 +26,7 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemImageView: UIImageView! {
         didSet {
+            itemImageView.isSkeletonable = true
             itemImageView.contentMode = .scaleAspectFill
             itemImageView.layer.cornerRadius = 10
         }
@@ -40,6 +43,7 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemNameLabel: UILabel! {
         didSet {
+            itemNameLabel.isSkeletonable = true
             itemNameLabel.numberOfLines = 0
             itemNameLabel.textAlignment = .center
             itemNameLabel.font = .boldSystemFont(ofSize: 15)
@@ -58,10 +62,19 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
     }
     
     func setupCell(
-        imageUrlString: String,
-        itemName: String,
+        imageUrlString: String? = nil,
+        itemName: String? = nil,
         isLiked: Bool = false
     ) {
+        guard let imageUrlString = imageUrlString,
+              let itemName = itemName
+        else {
+            showLoadingView()
+            return
+        }
+        
+        removeLoadingView()
+        
         itemImageView.loadImageFromUrl(
             imageUrlString,
             defaultImage: nil,
@@ -74,4 +87,25 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
         itemNameLabel.text = itemName
     }
 
+    private func showLoadingView() {
+        itemImageView.backgroundColor = Constant.loadingColor
+        itemNameLabel.backgroundColor = Constant.loadingColor
+        itemIsLikedButton.backgroundColor = .clear
+        
+        itemNameLabel.text = Constant.placholderText1
+        
+        itemNameLabel.textColor = .clear
+        itemIsLikedButton.tintColor = .clear
+        itemIsLikedButton.isUserInteractionEnabled = false
+    }
+    
+    private func removeLoadingView() {
+        itemImageView.backgroundColor = .clear
+        itemNameLabel.backgroundColor = .clear
+        itemIsLikedButton.backgroundColor = .white
+        
+        itemNameLabel.textColor = .label
+        itemIsLikedButton.tintColor = Constant.secondaryColor
+        itemIsLikedButton.isUserInteractionEnabled = true
+    }
 }

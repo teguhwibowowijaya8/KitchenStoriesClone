@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		7A06F64829E68947004FE00F /* CarouselItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A06F64629E68947004FE00F /* CarouselItemCollectionViewCell.swift */; };
 		7A06F64929E68947004FE00F /* CarouselItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A06F64729E68947004FE00F /* CarouselItemCollectionViewCell.xib */; };
+		7A06F64B29E7B2B1004FE00F /* DynamicHeightCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A06F64A29E7B2B1004FE00F /* DynamicHeightCollectionView.swift */; };
+		7A06F64E29E7BB6A004FE00F /* RecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A06F64D29E7BB6A004FE00F /* RecipeDetailViewController.swift */; };
+		7A06F65129E7BFB8004FE00F /* LoadingFeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A06F65029E7BFB8004FE00F /* LoadingFeeds.swift */; };
 		7ABA0F6E29DD53F500E58FBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F6D29DD53F500E58FBA /* AppDelegate.swift */; };
 		7ABA0F7029DD53F500E58FBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0F6F29DD53F500E58FBA /* SceneDelegate.swift */; };
 		7ABA0F7529DD53F500E58FBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ABA0F7329DD53F500E58FBA /* Main.storyboard */; };
@@ -60,6 +63,9 @@
 /* Begin PBXFileReference section */
 		7A06F64629E68947004FE00F /* CarouselItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		7A06F64729E68947004FE00F /* CarouselItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		7A06F64A29E7B2B1004FE00F /* DynamicHeightCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionView.swift; sourceTree = "<group>"; };
+		7A06F64D29E7BB6A004FE00F /* RecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewController.swift; sourceTree = "<group>"; };
+		7A06F65029E7BFB8004FE00F /* LoadingFeeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFeeds.swift; sourceTree = "<group>"; };
 		7ABA0F6A29DD53F500E58FBA /* KitchenStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KitchenStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ABA0F6D29DD53F500E58FBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7ABA0F6F29DD53F500E58FBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +136,22 @@
 			path = CarouselItem;
 			sourceTree = "<group>";
 		};
+		7A06F64C29E7BA7E004FE00F /* RecipeDetail */ = {
+			isa = PBXGroup;
+			children = (
+				7A06F64F29E7BB74004FE00F /* View */,
+			);
+			path = RecipeDetail;
+			sourceTree = "<group>";
+		};
+		7A06F64F29E7BB74004FE00F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7A06F64D29E7BB6A004FE00F /* RecipeDetailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7ABA0F6129DD53F500E58FBA = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +220,7 @@
 				7ABA0F8829DDCCBD00E58FBA /* Login */,
 				7ABA0F8A29DDCCE600E58FBA /* TabBar */,
 				7ABA0F8E29DE55A200E58FBA /* Home */,
+				7A06F64C29E7BA7E004FE00F /* RecipeDetail */,
 				7ABA0F9129DE573900E58FBA /* Profile */,
 			);
 			path = Module;
@@ -264,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				7ABA0F9729DE5A1600E58FBA /* Constant.swift */,
+				7A06F65029E7BFB8004FE00F /* LoadingFeeds.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -282,6 +306,7 @@
 				7ABA0FB729DEABCF00E58FBA /* BottomBorderTextField.swift */,
 				7AE178C329E2664100706D64 /* BackgroundImageView.swift */,
 				7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */,
+				7A06F64A29E7B2B1004FE00F /* DynamicHeightCollectionView.swift */,
 			);
 			path = SharedComponent;
 			sourceTree = "<group>";
@@ -508,16 +533,19 @@
 				7ABA0FA629DE7AAA00E58FBA /* GetAPIService.swift in Sources */,
 				7ABA0FA829DE81C900E58FBA /* GetNetworkImageService.swift in Sources */,
 				7ABA0FA429DE787700E58FBA /* ParseDataService.swift in Sources */,
+				7A06F64E29E7BB6A004FE00F /* RecipeDetailViewController.swift in Sources */,
 				7AC5935029E4F41B00667F3E /* FeedItemModel.swift in Sources */,
 				7ABA0F9B29DE5BA300E58FBA /* RegisterViewController.swift in Sources */,
 				7ABA0F6E29DD53F500E58FBA /* AppDelegate.swift in Sources */,
 				7AC5935429E4F5B100667F3E /* FeedItemRatingModel.swift in Sources */,
 				7ABA0F7829DD53F500E58FBA /* KitchenStories.xcdatamodeld in Sources */,
+				7A06F65129E7BFB8004FE00F /* LoadingFeeds.swift in Sources */,
 				7AE178C429E2664100706D64 /* BackgroundImageView.swift in Sources */,
 				7ABA0F9829DE5A1600E58FBA /* Constant.swift in Sources */,
 				7AC5935229E4F49000667F3E /* FeedItemPriceModel.swift in Sources */,
 				7AC5935D29E514A000667F3E /* HomeItemsTableViewCell.swift in Sources */,
 				7ABA0F8D29DE50FA00E58FBA /* TabBarController.swift in Sources */,
+				7A06F64B29E7B2B1004FE00F /* DynamicHeightCollectionView.swift in Sources */,
 				7AC5933F29E3B43A00667F3E /* RegisterViewModel.swift in Sources */,
 				7AC5935B29E50E4000667F3E /* HomeItemHeaderTableViewCell.swift in Sources */,
 				7ABA0FA229DE6D4A00E58FBA /* FetchDataService.swift in Sources */,

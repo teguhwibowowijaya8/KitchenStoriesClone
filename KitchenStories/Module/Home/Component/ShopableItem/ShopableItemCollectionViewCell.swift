@@ -13,16 +13,19 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     private let defaultItemImage = UIImage(systemName: "fork.knife.circle")
     
     private var getNetworkImageService = GetNetworkImageService()
+    private let containerBackgroundColor: UIColor = .gray.withAlphaComponent(0.2)
     
     @IBOutlet weak var containerView: UIView! {
         didSet {
-            containerView.backgroundColor = .gray.withAlphaComponent(0.2)
+            containerView.isSkeletonable = true
+            containerView.backgroundColor = containerBackgroundColor
             containerView.layer.cornerRadius = 10
         }
     }
     
     @IBOutlet weak var itemImageView: UIImageView! {
         didSet {
+            itemImageView.isSkeletonable = true
             itemImageView.contentMode = .scaleAspectFill
             itemImageView.layer.cornerRadius = 10
         }
@@ -30,6 +33,7 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemNameLabel: UILabel! {
         didSet {
+            itemNameLabel.isSkeletonable = true
             itemNameLabel.font = .boldSystemFont(ofSize: 16)
             itemNameLabel.numberOfLines = 4
         }
@@ -38,6 +42,7 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemRecipesCountLabel: UILabel! {
         didSet {
+            itemRecipesCountLabel.isSkeletonable = true
             itemRecipesCountLabel.font = .systemFont(ofSize: 12)
             itemRecipesCountLabel.textColor = .darkGray
             itemRecipesCountLabel.adjustsFontSizeToFitWidth = true
@@ -47,6 +52,7 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var shopIngredientsButton: UIButton! {
         didSet {
+            shopIngredientsButton.isSkeletonable = true
             shopIngredientsButton.tintColor = .white
             shopIngredientsButton.backgroundColor = .red.withAlphaComponent(0.5)
             shopIngredientsButton.layer.cornerRadius = 10
@@ -75,10 +81,20 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     }
     
     func setupCell(
-        imageUrlString: String,
-        itemName: String,
-        recipesCount: Int
+        imageUrlString: String? = nil,
+        itemName: String? = nil,
+        recipesCount: Int? = nil
     ) {
+        guard let imageUrlString = imageUrlString,
+              let itemName = itemName,
+              let recipesCount = recipesCount
+        else {
+            showLoadingView()
+            return
+        }
+        
+        removeLoadingView()
+        
         itemImageView.loadImageFromUrl(
             imageUrlString,
             defaultImage: defaultItemImage,
@@ -87,6 +103,39 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
         
         itemNameLabel.text = itemName
         itemRecipesCountLabel.text = "\(recipesCount) recipes"
+    }
+    
+    private func showLoadingView() {
+        containerView.backgroundColor = .clear
+        containerView.layer.borderColor = Constant.loadingColor.cgColor
+        containerView.layer.borderWidth = 0.5
+        itemImageView.backgroundColor = Constant.loadingColor
+        itemNameLabel.backgroundColor = Constant.loadingColor
+        itemRecipesCountLabel.backgroundColor = Constant.loadingColor
+        shopIngredientsButton.backgroundColor = Constant.loadingColor
+        
+        itemNameLabel.text = Constant.placholderText2
+        itemRecipesCountLabel.text = Constant.placholderText1
+        itemImageView.image = nil
+        
+        itemNameLabel.textColor = .clear
+        itemRecipesCountLabel.textColor = .clear
+        shopIngredientsButton.tintColor = .clear
+        shopIngredientsButton.isUserInteractionEnabled = false
+    }
+    
+    private func removeLoadingView() {
+        containerView.layer.borderColor = UIColor.clear.cgColor
+        containerView.layer.borderWidth = 0
+        itemImageView.backgroundColor = containerBackgroundColor
+        itemNameLabel.backgroundColor = .clear
+        itemRecipesCountLabel.backgroundColor = .clear
+        shopIngredientsButton.backgroundColor = Constant.secondaryColor
+        
+        itemNameLabel.textColor = .label
+        itemRecipesCountLabel.textColor = .label
+        shopIngredientsButton.tintColor = .white
+        shopIngredientsButton.isUserInteractionEnabled = true
     }
 
 }

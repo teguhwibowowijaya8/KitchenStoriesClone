@@ -12,6 +12,7 @@ enum FeedType: String, Codable {
     case featured = "featured"
     case item = "item"
     case shoppableCarousel = "shoppable_carousel"
+    case recent = "recent"
 }
 
 struct FeedModel: Codable {
@@ -20,7 +21,7 @@ struct FeedModel: Codable {
     let category: String?
     let minItems: Int?
     let item: FeedItemModel?
-    let items: [FeedItemModel]?
+    var items: [FeedItemModel]?
     
     var itemList: [FeedItemModel] {
         if let items = items {
