@@ -135,3 +135,16 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
         itemIsLikedButton.isUserInteractionEnabled = true
     }
 }
+
+extension FeaturedItemCollectionViewCell {
+    static func cellSize(availableWidth: CGFloat, screenHeight: CGFloat) -> CGSize {
+        var itemHeight: CGFloat = 500
+        
+        let height = screenHeight * 0.6
+        if height <= itemHeight {
+            itemHeight = height
+        }
+        
+        return CGSize(width: availableWidth, height: itemHeight)
+    }
+}

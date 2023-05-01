@@ -139,3 +139,11 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     }
 
 }
+
+extension ShopableItemCollectionViewCell {
+    static func cellSize(availableWidth: CGFloat) -> CGSize {
+        let itemHeight: CGFloat = 145
+        let itemWidth = availableWidth * 0.7
+        return CGSize(width: itemWidth, height: itemHeight)
+    }
+}

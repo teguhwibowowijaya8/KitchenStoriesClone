@@ -10,6 +10,7 @@ import Foundation
 enum CreditType: String, Codable {
     case brand = "brand"
     case typeInternal = "internal"
+    case community = "community"
 }
 
 struct FeedItemCreditModel: Codable, Hashable {

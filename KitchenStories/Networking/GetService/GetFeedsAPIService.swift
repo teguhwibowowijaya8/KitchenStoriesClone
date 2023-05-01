@@ -21,7 +21,7 @@ protocol GetFeedAPIProtocol {
 }
 
 struct GetFeedAPIService: GetFeedAPIProtocol {
-    private let urlString = "https://tasty.p.rapidapi.com/feeds/list"
+    private let feedsUrlString = "\(Constant.baseUrlString)feeds/list"
     private var getAPIService: GetAPIProtocol
     
     init(getAPIService: GetAPIProtocol = GetAPIService()) {
@@ -38,7 +38,7 @@ struct GetFeedAPIService: GetFeedAPIProtocol {
             _ errorMessage: String?
         ) -> Void
     ) {
-        var url = URL(string: urlString)
+        var url = URL(string: feedsUrlString)
         url?.append(queryItems: [
             URLQueryItem(name: "size", value: "\(sizeEachFetch)"),
             URLQueryItem(name: "from", value: "\(from)"),

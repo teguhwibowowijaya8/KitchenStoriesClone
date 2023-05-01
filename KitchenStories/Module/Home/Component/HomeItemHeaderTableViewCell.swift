@@ -21,7 +21,6 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
     private lazy var headerTitleLabel: UILabel = {
        let headerTitleLabel = UILabel()
         
-        headerTitleLabel.isSkeletonable = true
         headerTitleLabel.font = .boldSystemFont(ofSize: 18)
         headerTitleLabel.numberOfLines = 1
         headerTitleLabel.adjustsFontSizeToFitWidth = true
@@ -31,7 +30,6 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
     
     private lazy var headerSeeAllButton: UIButton = {
         let headerSeeAllButton = UIButton(type: .system)
-        headerSeeAllButton.isSkeletonable = true
         
         let arrowRightImage = UIImage(systemName: "arrow.right")
         headerSeeAllButton.setImage(arrowRightImage, for: .normal)
@@ -83,7 +81,7 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
         }
         
         removeLoadingView()
-        headerTitleLabel.text = title
+        if title != nil { headerTitleLabel.text = title }
         headerSeeAllButton.isHidden = !showSeeAllButton
     }
     

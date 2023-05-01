@@ -135,7 +135,6 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
                 feed = feeds[indexPath.section]
             } else {
                 feed = viewModel.recentFeeds
-                print(feed)
             }
         } else {
             feed = viewModel.dummyFeeds.results[indexPath.section]

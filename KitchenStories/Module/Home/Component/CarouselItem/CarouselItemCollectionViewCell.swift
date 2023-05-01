@@ -109,3 +109,48 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
         itemIsLikedButton.isUserInteractionEnabled = true
     }
 }
+
+extension CarouselItemCollectionViewCell {
+    static func carouselCellSize(availableWidth: CGFloat) -> CGSize {
+        let itemHeight: CGFloat = 250
+        let suggestedItemWidth: CGFloat = 180
+        let minimumCellPerRow = 2
+        
+        let newAvailableWidth = availableWidth - (suggestedItemWidth * 0.5)
+        
+        var cellPerRow = Int(ceil(newAvailableWidth / suggestedItemWidth))
+        if cellPerRow < minimumCellPerRow {
+            cellPerRow = minimumCellPerRow
+        }
+        
+        let widthCell = availableWidth / CGFloat(cellPerRow)
+        
+        var finalCellWidth = suggestedItemWidth
+        if widthCell > suggestedItemWidth {
+            let overflow = widthCell - suggestedItemWidth
+            
+            finalCellWidth = suggestedItemWidth - (overflow * CGFloat(cellPerRow)) - Constant.horizontalSpacing * CGFloat(cellPerRow)
+            
+        } else if widthCell < suggestedItemWidth {
+            let overflow = suggestedItemWidth - widthCell
+
+            finalCellWidth = suggestedItemWidth + (overflow * CGFloat(cellPerRow)) - Constant.horizontalSpacing * (CGFloat(cellPerRow) - 0.5)
+        }
+        
+        return CGSize(width: finalCellWidth, height: itemHeight)
+    }
+    
+    static func recentCellSize(availableWidth: CGFloat) -> CGSize {
+        var minColEachRow: CGFloat = 2
+        let cellMinWidth: CGFloat = 200
+        let idealColEachRow = round(availableWidth / cellMinWidth)
+        
+        if idealColEachRow > minColEachRow {
+            minColEachRow = idealColEachRow
+        }
+        
+        let finalWidth = availableWidth - ((minColEachRow - 1) * Constant.horizontalSpacing)
+        
+        return CGSize(width: finalWidth / minColEachRow, height: 250)
+    }
+}

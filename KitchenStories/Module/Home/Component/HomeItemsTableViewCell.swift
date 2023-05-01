@@ -11,8 +11,6 @@ import SkeletonView
 class HomeItemsTableViewCell: UITableViewCell {
     
     static let identifier = "HomeItemsTableViewCell"
-    
-    private let horizontalSpacing: CGFloat = 10
     private let verticalSpacing: CGFloat = 5
     
     private var feed: FeedModel?
@@ -47,6 +45,7 @@ class HomeItemsTableViewCell: UITableViewCell {
     
     lazy var itemCollectionViewHeight: NSLayoutConstraint = {
         let itemCollectionViewHeight = itemsCollectionView.heightAnchor.constraint(equalToConstant: 20)
+        itemCollectionViewHeight.priority = .init(rawValue: 999)
         itemCollectionViewHeight.isActive = true
         return itemCollectionViewHeight
     }()
@@ -65,11 +64,8 @@ class HomeItemsTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        if let type = feed?.type {
-            getCellSizeForType(type)
-            setCollectionViewHeightConstraint()
-        }
-        
+        getCellSizeForType()
+        setCollectionViewHeightConstraint()
         setCollectionScrollDirection()
         layoutIfNeeded()
         itemsCollectionView.reloadData()
@@ -83,12 +79,12 @@ class HomeItemsTableViewCell: UITableViewCell {
         self.feed = feed
         self.screenSize = screenSize
         self.isLoading = isLoading
-        getCellSizeForType(feed.type)
+        getCellSizeForType()
         
         addSubviews()
         setComponentsConstraints()
         setCollectionScrollDirection()
-        layoutIfNeeded()
+//        layoutIfNeeded()
     }
     
     private func setCollectionScrollDirection() {
@@ -133,9 +129,9 @@ extension HomeItemsTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(
             top: verticalSpacing,
-            left: horizontalSpacing,
+            left: Constant.horizontalSpacing,
             bottom: verticalSpacing,
-            right: horizontalSpacing
+            right: Constant.horizontalSpacing
         )
     }
     
@@ -147,78 +143,35 @@ extension HomeItemsTableViewCell: UICollectionViewDelegateFlowLayout {
         if feed?.type == .recent {
             return .zero
         }
-        return horizontalSpacing
+        return Constant.horizontalSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         if feed?.type == .recent {
-            return horizontalSpacing
+            return Constant.horizontalSpacing
         }
         return .zero
     }
     
-    private func getCellSizeForType(_ type: FeedType) {
+    private func getCellSizeForType() {
         guard let feed = feed,
               let screenSize = screenSize
         else { return }
         
-        let availableWidth = screenSize.width - (horizontalSpacing * 2)
+        let availableWidth = screenSize.width - (Constant.horizontalSpacing * 2)
         
         switch feed.type {
         case .featured:
-            var itemHeight: CGFloat = 500
-            
-            let height = screenSize.height * 0.6
-            if height <= itemHeight {
-                itemHeight = height
-            }
-            
-            cellSize = CGSize(width: availableWidth, height: itemHeight)
+            cellSize = FeaturedItemCollectionViewCell.cellSize(availableWidth: availableWidth, screenHeight: screenSize.height)
             
         case .shoppableCarousel:
-            let itemHeight: CGFloat = 145
-            let itemWidth = availableWidth * 0.7
-            cellSize = CGSize(width: itemWidth, height: itemHeight)
+            cellSize = ShopableItemCollectionViewCell.cellSize(availableWidth: availableWidth)
             
         case .recent:
-            var minColEachRow: CGFloat = 2
-            let cellMinWidth: CGFloat = 200
-            let idealColEachRow = round(availableWidth / cellMinWidth)
-            
-            if idealColEachRow > minColEachRow {
-                minColEachRow = idealColEachRow
-            }
-            
-            let finalWidth = availableWidth - ((minColEachRow - 1) * horizontalSpacing)
-            cellSize = CGSize(width: finalWidth / minColEachRow, height: 250)
+            cellSize = CarouselItemCollectionViewCell.recentCellSize(availableWidth: availableWidth)
             
         case .carousel:
-            let itemHeight: CGFloat = 250
-            let suggestedItemWidth: CGFloat = 180
-            let minimumCellPerRow = 2
-            
-            let newAvailableWidth = availableWidth - (suggestedItemWidth * 0.5)
-            
-            var cellPerRow = Int(ceil(newAvailableWidth / suggestedItemWidth))
-            if cellPerRow < minimumCellPerRow {
-                cellPerRow = minimumCellPerRow
-            }
-            
-            let widthCell = availableWidth / CGFloat(cellPerRow)
-            
-            var finalCellWidth = suggestedItemWidth
-            if widthCell > suggestedItemWidth {
-                let overflow = widthCell - suggestedItemWidth
-                
-                finalCellWidth = suggestedItemWidth - (overflow * CGFloat(cellPerRow)) - horizontalSpacing * CGFloat(cellPerRow)
-                
-            } else if widthCell < suggestedItemWidth {
-                let overflow = suggestedItemWidth - widthCell
-
-                finalCellWidth = suggestedItemWidth + (overflow * CGFloat(cellPerRow)) - horizontalSpacing * (CGFloat(cellPerRow) - 0.5)
-            }
-            
-            cellSize = CGSize(width: finalCellWidth, height: itemHeight)
+            cellSize = CarouselItemCollectionViewCell.carouselCellSize(availableWidth: availableWidth)
             
         default:
             cellSize = .zero
