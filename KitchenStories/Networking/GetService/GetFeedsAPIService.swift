@@ -8,48 +8,50 @@
 import Foundation
 
 protocol GetFeedAPIProtocol {
+    var getAPIService: GetAPIProtocol { get }
+    
     func feeds(
         isVegetarian: Bool,
-        sizeEachFetch: Int,
+        size: Int,
         from: Int,
         onCompletion: @escaping (
             _ feedResult: FeedResultsModel?,
-            _ recentFeeds: [FeedItemModel]?,
+            _ recentFeeds: [RecipeModel]?,
             _ errorMessage: String?
         ) -> Void
     )
 }
 
 struct GetFeedAPIService: GetFeedAPIProtocol {
-    private let feedsUrlString = "\(Constant.baseUrlString)feeds/list"
-    private var getAPIService: GetAPIProtocol
+    private let feedsUrlString = "\(Constant.baseUrlString)/feeds/list"
+    var getAPIService: GetAPIProtocol
     
     init(getAPIService: GetAPIProtocol = GetAPIService()) {
         self.getAPIService = getAPIService
     }
     
     func feeds(
-        isVegetarian: Bool = false,
-        sizeEachFetch: Int = 20,
-        from: Int = 0,
+        isVegetarian: Bool,
+        size: Int,
+        from: Int,
         onCompletion: @escaping (
             _ feedResult: FeedResultsModel?,
-            _ recentFeeds: [FeedItemModel]?,
+            _ recentFeeds: [RecipeModel]?,
             _ errorMessage: String?
         ) -> Void
     ) {
-        var url = URL(string: feedsUrlString)
-        url?.append(queryItems: [
-            URLQueryItem(name: "size", value: "\(sizeEachFetch)"),
+        var feedUrl = URL(string: feedsUrlString)
+        feedUrl?.append(queryItems: [
+            URLQueryItem(name: "size", value: "\(size)"),
             URLQueryItem(name: "from", value: "\(from)"),
             URLQueryItem(name: "vegetarian", value: "\(isVegetarian)"),
             URLQueryItem(name: "timezone", value: "+0700")
         ])
-        getAPIService.getAPI(from: url, withModel: FeedResultsModel.self) { apiData, errorMessage in
+        getAPIService.getAPI(from: feedUrl, withModel: FeedResultsModel.self) { apiData, errorMessage in
             if let errorMessage = errorMessage {
                 return onCompletion(nil, nil,errorMessage)
             } else if let apiData = apiData {
-                var recentFeeds = [FeedItemModel]()
+                var recentFeeds = [RecipeModel]()
                 var feeds: FeedResultsModel?
                 for feed in apiData.results {
                     if feed.type == .item {

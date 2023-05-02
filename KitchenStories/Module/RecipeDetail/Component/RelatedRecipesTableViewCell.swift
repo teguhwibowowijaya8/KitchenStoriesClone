@@ -8,6 +8,7 @@
 import UIKit
 
 class RelatedRecipesTableViewCell: UITableViewCell {
+    static let identifier = "RelatedRecipesTableViewCell"
     
     private let verticalSpacing: CGFloat = 10
     private let carouselRecipeCellIdentifier = CarouselItemCollectionViewCell.identifier

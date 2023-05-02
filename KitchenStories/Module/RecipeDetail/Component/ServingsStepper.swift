@@ -158,4 +158,26 @@ class ServingStepper: UIView {
         }
         delegate?.didMinButtonSelected(value)
     }
+    
+    func showLoadingView() {
+        minusButton.tintColor = .clear
+        plusButton.tintColor = .clear
+        numberLabel.textColor = .clear
+        
+        minusButton.isUserInteractionEnabled = false
+        plusButton.isUserInteractionEnabled = false
+        
+        containerStackView.backgroundColor = Constant.loadingColor
+    }
+    
+    func removeLoadingView() {
+        minusButton.tintColor = Constant.secondaryColor
+        plusButton.tintColor = Constant.secondaryColor
+        numberLabel.textColor = Constant.secondaryColor
+        
+        minusButton.isUserInteractionEnabled = true
+        plusButton.isUserInteractionEnabled = true
+        
+        containerStackView.backgroundColor = .clear
+    }
 }

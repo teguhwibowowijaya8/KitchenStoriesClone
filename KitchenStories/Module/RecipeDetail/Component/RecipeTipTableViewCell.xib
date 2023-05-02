@@ -83,10 +83,19 @@
                     <constraint firstAttribute="trailing" secondItem="NSK-UY-66Q" secondAttribute="trailing" id="jlm-cQ-ViQ"/>
                     <constraint firstAttribute="trailing" secondItem="E7e-O0-2wh" secondAttribute="trailing" constant="10" id="kF7-UR-1Pl"/>
                     <constraint firstItem="E7e-O0-2wh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="mDF-0q-sDt"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="E7e-O0-2wh" secondAttribute="bottom" priority="750" constant="15" id="stV-QR-1Fl"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="NSK-UY-66Q" secondAttribute="bottom" constant="10" id="tEC-wc-yQD"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="showAllTipsButton" destination="NSK-UY-66Q" id="p8T-Jy-PmP"/>
+                <outlet property="tipsTitleLabel" destination="Fpm-p6-HA6" id="3qV-DD-NLx"/>
+                <outlet property="topTipDescriptionTextView" destination="Qc2-6h-f7a" id="St1-iQ-hWz"/>
+                <outlet property="topTipImageView" destination="hWy-sb-NI6" id="1bN-K7-v7g"/>
+                <outlet property="topTipLabel" destination="ehH-x7-vcj" id="Io7-MR-BTE"/>
+                <outlet property="topTipNameLabel" destination="akW-DE-a2I" id="bQe-OP-dBU"/>
+            </connections>
             <point key="canvasLocation" x="-74.045801526717554" y="124.29577464788733"/>
         </tableViewCell>
     </objects>

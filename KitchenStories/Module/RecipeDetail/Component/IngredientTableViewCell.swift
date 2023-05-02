@@ -8,6 +8,7 @@
 import UIKit
 
 class IngredientTableViewCell: UITableViewCell {
+    static let identifier = "IngredientTableViewCell"
     
     private lazy var ingredientNameLabel: UILabel = {
         let ingredientNameLabel = UILabel()
@@ -53,9 +54,19 @@ class IngredientTableViewCell: UITableViewCell {
     }
     
     func setupCell(
-        ingredientName: String?,
-        ingredientRatio: String?
+        ingredientName: String? = nil,
+        ingredientRatio: String? = nil,
+        isLoading: Bool
     ) {
+        addSubviews()
+        setComponentsConstraints()
+        
+        if isLoading {
+            showLoadingView()
+            return
+        }
+        
+        removeLoadingView()
         if let ingredientName = ingredientName {
             ingredientNameLabel.text = ingredientName
             if let ingredientRatio = ingredientRatio {
@@ -63,13 +74,7 @@ class IngredientTableViewCell: UITableViewCell {
             } else {
                 ingredientRatioLabel.isHidden = true
             }
-            // hide skeleton
-        } else {
-            // show skeleton
         }
-        
-        addSubviews()
-        setComponentsConstraints()
     }
     
     private func addSubviews() {
@@ -85,5 +90,25 @@ class IngredientTableViewCell: UITableViewCell {
             containerStackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -Constant.horizontalSpacing),
             containerStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8),
         ])
+    }
+    
+    private func showLoadingView() {
+        ingredientNameLabel.text = Constant.placholderText1
+        ingredientNameLabel.textColor = .clear
+        ingredientNameLabel.backgroundColor = Constant.loadingColor
+        
+        ingredientRatioLabel.text = Constant.shortPlaceholderText
+        ingredientRatioLabel.textColor = .clear
+        ingredientRatioLabel.backgroundColor = Constant.loadingColor
+    }
+    
+    private func removeLoadingView() {
+        ingredientNameLabel.text = ""
+        ingredientNameLabel.textColor = .label
+        ingredientNameLabel.backgroundColor = .clear
+        
+        ingredientRatioLabel.text = ""
+        ingredientRatioLabel.textColor = .label
+        ingredientRatioLabel.backgroundColor = .clear
     }
 }

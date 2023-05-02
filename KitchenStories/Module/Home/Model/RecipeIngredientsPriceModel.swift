@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct FeedItemPriceModel: Codable {
-    let total: Double?
+struct RecipeIngredientsPriceModel: Codable {
+    let total: Double
 //    let updatedAt: Date?
-    let portion: Double?
-    let consumptionTotal: Double?
-    let consumptionPortion: Double?
+    let portion: Double
+    let consumptionTotal: Double
+    let consumptionPortion: Double
     
     enum CodingKeys: String, CodingKey {
         case total

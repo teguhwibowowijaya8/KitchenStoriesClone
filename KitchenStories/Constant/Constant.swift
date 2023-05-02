@@ -19,8 +19,9 @@ enum Constant {
     
     static let loadingColor: UIColor = UIColor.gray.withAlphaComponent(0.4)
     
-    static let baseUrlString = "https://tasty.p.rapidapi.com/"
+    static let baseUrlString = "https://tasty.p.rapidapi.com"
     
+    static let shortPlaceholderText = "Short"
     static let placholderText1 = "This is placholder Text 1"
     static let placholderText2 = "This is placholder Text 2, this one is a bit longer than placeholder Text 1"
 }

@@ -1,5 +1,5 @@
 //
-//  FeedItemCreditModel.swift
+//  RecipeCreditModel.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 11/04/23.
@@ -13,7 +13,7 @@ enum CreditType: String, Codable {
     case community = "community"
 }
 
-struct FeedItemCreditModel: Codable, Hashable {
+struct RecipeCreditModel: Codable, Hashable {
     let type: CreditType?
     let imageUrlString: String?
     let name: String?

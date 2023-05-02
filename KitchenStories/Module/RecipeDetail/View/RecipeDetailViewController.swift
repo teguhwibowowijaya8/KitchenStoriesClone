@@ -23,6 +23,10 @@ enum RecipeDetailSection: Int {
 
 class RecipeDetailViewController: UIViewController {
     
+    var recipeId: Int!
+    
+    private var recipeDetailViewModel: RecipeDetailViewModel!
+    
     private lazy var recipeDetailTableView: UITableView = {
         let recipeDetailTableView = UITableView()
         recipeDetailTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,12 +42,62 @@ class RecipeDetailViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupViewModel()
+        setupTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
     }
+    
+    private func setupViewModel() {
+        recipeDetailViewModel = RecipeDetailViewModel(recipeId: recipeId)
+        recipeDetailViewModel.delegate = self
+    }
+    
+    private func setupTableView() {
+        registerTableViewCell()
+        
+        self.view.addSubview(recipeDetailTableView)
+        
+        NSLayoutConstraint.activate([
+            recipeDetailTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            recipeDetailTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            recipeDetailTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            recipeDetailTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+    }
+    
+    private func registerTableViewCell() {
+        let detailHeaderNib = UINib(nibName: DetailHeaderTableViewCell.identifier, bundle: nil)
+        recipeDetailTableView.register(detailHeaderNib, forCellReuseIdentifier: DetailHeaderTableViewCell.identifier)
+        
+        recipeDetailTableView.register(ServingsCountTableViewCell.self, forCellReuseIdentifier: ServingsCountTableViewCell.identifier)
+        recipeDetailTableView.register(IngredientTableViewCell.self, forCellReuseIdentifier: IngredientTableViewCell.identifier)
+        recipeDetailTableView.register(NutritionInfoHeaderTableViewCell.self, forCellReuseIdentifier: NutritionInfoHeaderTableViewCell.identifier)
+        recipeDetailTableView.register(AddToGroceryBagTableViewCell.self, forCellReuseIdentifier: AddToGroceryBagTableViewCell.identifier)
+        
+        let recipeTipNib = UINib(nibName: RecipeTipTableViewCell.identifier, bundle: nil)
+        recipeDetailTableView.register(recipeTipNib, forCellReuseIdentifier: RecipeTipTableViewCell.identifier)
+        
+        recipeDetailTableView.register(RelatedRecipesTableViewCell.self, forCellReuseIdentifier: RelatedRecipesTableViewCell.identifier)
+        recipeDetailTableView.register(RecipePreparationTableViewCell.self, forCellReuseIdentifier: RecipePreparationTableViewCell.identifier)
+        
+    }
+}
+
+extension RecipeDetailViewController: RecipeDetailViewModelDelegate {
+    func handleOnDetailsFetchCompleted() {
+        if recipeDetailViewModel.errorMessage.count <= 0 {
+            print(recipeDetailViewModel.errorMessage)
+        } else {
+            DispatchQueue.main.async {
+                self.recipeDetailTableView.reloadData()
+            }
+        }
+    }
+    
 }
 
 extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -86,7 +140,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     private func headerCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let headerCell = tableView.dequeueReusableCell(withIdentifier: <#T##String#>, for: indexPath) as? DetailHeaderTableViewCell
+        guard let headerCell = tableView.dequeueReusableCell(withIdentifier: DetailHeaderTableViewCell.identifier, for: indexPath) as? DetailHeaderTableViewCell
         else { return UITableViewCell() }
         
         return headerCell

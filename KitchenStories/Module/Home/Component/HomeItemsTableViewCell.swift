@@ -205,7 +205,7 @@ extension HomeItemsTableViewCell: SkeletonCollectionViewDataSource {
         guard let feed = feed
         else { return UICollectionViewCell() }
         
-        let feedItem: FeedItemModel? = isLoading ? nil : feed.itemList[indexPath.row]
+        let feedItem: RecipeModel? = isLoading ? nil : feed.itemList[indexPath.row]
         
         switch feed.type {
         case .shoppableCarousel:

@@ -8,6 +8,7 @@
 import UIKit
 
 class RecipePreparationTableViewCell: UITableViewCell {
+    static let identifier = "RecipePreparationTableViewCell"
     
     private lazy var containerView: UIView = {
         let containerView = UIView()
@@ -31,6 +32,10 @@ class RecipePreparationTableViewCell: UITableViewCell {
     
     private lazy var preparationDescriptionTextView: UITextView = {
        let preparationDescriptionTextView = UITextView()
+        
+        preparationDescriptionTextView.isEditable = false
+        preparationDescriptionTextView.isSelectable = false
+        preparationDescriptionTextView.isScrollEnabled = false
         
         preparationDescriptionTextView.font = .systemFont(ofSize: 15)
         preparationDescriptionTextView.contentInset = .zero
@@ -57,14 +62,22 @@ class RecipePreparationTableViewCell: UITableViewCell {
     
     func setupCell(
         preparationNumber: Int?,
-        preparationDescription: String?
+        preparationDescription: String?,
+        isLoading: Bool
     ) {
         addSubviews()
         setComponentConstraints()
         
+        if isLoading {
+            showLoadingView()
+            return
+        }
+        
         guard let preparationNumber = preparationNumber,
               let preparationDescription = preparationDescription
         else { return }
+        
+        removeLoadingView()
         
         preparationNumberLabel.text = "\(preparationNumber)"
         preparationDescriptionTextView.text = preparationDescription
@@ -89,5 +102,25 @@ class RecipePreparationTableViewCell: UITableViewCell {
             preparationStackView.rightAnchor.constraint(equalTo: containerView.rightAnchor),
             preparationStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         ])
+    }
+    
+    private func showLoadingView() {
+        preparationNumberLabel.text = Constant.shortPlaceholderText
+        preparationNumberLabel.textColor = .clear
+        preparationNumberLabel.backgroundColor = Constant.loadingColor
+        
+        preparationDescriptionTextView.text = Constant.placholderText2
+        preparationDescriptionTextView.textColor = .clear
+        preparationDescriptionTextView.backgroundColor = Constant.loadingColor
+    }
+    
+    private func removeLoadingView() {
+        preparationNumberLabel.text = ""
+        preparationNumberLabel.textColor = .label
+        preparationNumberLabel.backgroundColor = .clear
+        
+        preparationDescriptionTextView.text = ""
+        preparationDescriptionTextView.textColor = .label
+        preparationDescriptionTextView.backgroundColor = .clear
     }
 }

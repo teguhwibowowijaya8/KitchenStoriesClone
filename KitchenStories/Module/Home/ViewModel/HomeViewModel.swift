@@ -20,20 +20,24 @@ class HomeViewModel {
     var recentFeeds: FeedModel
     var dummyFeeds: FeedResultsModel
     
+    private var getAPIService: GetAPIProtocol
     private var fetchFrom: Int = 0
     private let sizeEachFetch: Int = 20
+    private let isVegetarian: Bool = false
     
-    private let getFeedsAPIService: GetFeedAPIService
+    private let getFeedsAPIService: GetFeedAPIProtocol
     
-    init() {
-        getFeedsAPIService = GetFeedAPIService()
+    init(getAPIService: GetAPIProtocol = GetAPIService()) {
+        self.getAPIService = getAPIService
+        getFeedsAPIService = GetFeedAPIService(getAPIService: self.getAPIService)
+        
         recentFeeds = FeedModel(
             type: FeedType.recent,
             name: "Recent",
             category: "recent",
             minItems: 0,
             item: nil,
-            items: [FeedItemModel]()
+            items: [RecipeModel]()
         )
         dummyFeeds = LoadingFeeds.feeds
     }
@@ -45,7 +49,8 @@ class HomeViewModel {
         isLoading = true
         
         getFeedsAPIService.feeds(
-            sizeEachFetch: sizeEachFetch,
+            isVegetarian: isVegetarian,
+            size: sizeEachFetch,
             from: fetchFrom
         ) {
             [weak self] feedResult, recentFeedsResult, errorMessage in

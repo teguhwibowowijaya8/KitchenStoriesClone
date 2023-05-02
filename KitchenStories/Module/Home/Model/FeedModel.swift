@@ -20,16 +20,16 @@ struct FeedModel: Codable {
     let name: String?
     let category: String?
     let minItems: Int?
-    let item: FeedItemModel?
-    var items: [FeedItemModel]?
+    let item: RecipeModel?
+    var items: [RecipeModel]?
     
-    var itemList: [FeedItemModel] {
+    var itemList: [RecipeModel] {
         if let items = items {
             return items
         } else if let item = item {
             return [item]
         }
-        return [FeedItemModel]()
+        return [RecipeModel]()
     }
     
     var minimumShowItems: Int {

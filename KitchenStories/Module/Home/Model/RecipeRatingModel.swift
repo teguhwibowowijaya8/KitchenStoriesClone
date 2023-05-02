@@ -1,5 +1,5 @@
 //
-//  FeedItemRatingModel.swift
+//  RecipeRatingModel.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 11/04/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FeedItemRatingModel: Codable {
+struct RecipeRatingModel: Codable {
     let countPositive: Int
     let countNegative: Int
     let score: Double?

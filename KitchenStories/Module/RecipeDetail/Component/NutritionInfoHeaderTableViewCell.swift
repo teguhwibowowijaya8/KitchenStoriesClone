@@ -14,6 +14,7 @@ protocol NutritionInfoHeaderCellDelegate {
 }
 
 class NutritionInfoHeaderTableViewCell: UITableViewCell {
+    static let identifier = "NutritionInfoHeaderTableViewCell"
     
     var delegate: NutritionInfoHeaderCellDelegate?
     
@@ -89,10 +90,17 @@ class NutritionInfoHeaderTableViewCell: UITableViewCell {
         delegate?.handleShowNutritionInfo(showInfo)
     }
     
-    func setupCell(showInfo: Bool = false) {
-        self.showInfo = showInfo
+    func setupCell(showInfo: Bool = false, isLoading: Bool) {
         addSubviews()
         setComponentsConstraints()
+        
+        if isLoading {
+            showLoadingView()
+            return
+        }
+        
+        removeLoadingView()
+        self.showInfo = showInfo
     }
     
     private func addSubviews() {
@@ -108,5 +116,24 @@ class NutritionInfoHeaderTableViewCell: UITableViewCell {
             containerStackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -Constant.horizontalSpacing),
             containerStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -15),
         ])
+    }
+    
+    private func showLoadingView() {
+        nutritionTitleLabel.textColor = .clear
+        nutritionTitleLabel.backgroundColor = Constant.loadingColor
+        
+        showNutritionButton.tintColor = .clear
+        showNutritionButton.setAttributedTitle(nutritionButtonTitle(), for: .normal)
+        showNutritionButton.isUserInteractionEnabled = false
+        showNutritionButton.backgroundColor = Constant.loadingColor
+    }
+    
+    private func removeLoadingView() {
+        nutritionTitleLabel.textColor = .label
+        nutritionTitleLabel.backgroundColor = .clear
+        
+        showNutritionButton.tintColor = Constant.secondaryColor
+        showNutritionButton.isUserInteractionEnabled = true
+        showNutritionButton.backgroundColor = .clear
     }
 }

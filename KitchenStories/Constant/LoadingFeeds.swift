@@ -15,7 +15,7 @@ enum LoadingFeeds {
             category: "featured",
             minItems: 1,
             item: nil,
-            items: [FeedItemModel]()
+            items: [RecipeModel]()
         ),
         FeedModel(
             type: .shoppableCarousel,
@@ -23,7 +23,7 @@ enum LoadingFeeds {
             category: "shoppable-carousel",
             minItems: 3,
             item: nil,
-            items: [FeedItemModel]()
+            items: [RecipeModel]()
         ),
         FeedModel(
             type: .carousel,
@@ -31,7 +31,7 @@ enum LoadingFeeds {
             category: "carousel-1",
             minItems: 5,
             item: nil,
-            items: [FeedItemModel]()
+            items: [RecipeModel]()
         ),
         FeedModel(
             type: .carousel,
@@ -39,7 +39,7 @@ enum LoadingFeeds {
             category: "carousel-2",
             minItems: 5,
             item: nil,
-            items: [FeedItemModel]()
+            items: [RecipeModel]()
         ),
         FeedModel(
             type: .carousel,
@@ -47,7 +47,7 @@ enum LoadingFeeds {
             category: "carousel-3",
             minItems: 5,
             item: nil,
-            items: [FeedItemModel]()
+            items: [RecipeModel]()
         ),
         FeedModel(
             type: .recent,
@@ -55,7 +55,7 @@ enum LoadingFeeds {
             category: "recent",
             minItems: 10,
             item: nil,
-            items: [FeedItemModel]()
+            items: [RecipeModel]()
         ),
     ])
 }

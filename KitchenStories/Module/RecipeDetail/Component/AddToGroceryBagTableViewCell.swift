@@ -12,6 +12,7 @@ protocol AddToGroceryBagCellDelegate {
 }
 
 class AddToGroceryBagTableViewCell: UITableViewCell {
+    static let identifier = "AddToGroceryBagTableViewCell"
     
     var delegate: AddToGroceryBagCellDelegate?
     
@@ -54,9 +55,16 @@ class AddToGroceryBagTableViewCell: UITableViewCell {
         return addToGroceryButton
     }()
     
-    func setupCell() {
+    func setupCell(isLoading: Bool) {
         addSubviews()
         setComponentsConstraints()
+        
+        if isLoading {
+            showLoadingView()
+            return
+        }
+        
+        removeLoadingView()
     }
 
     private func addSubviews() {
@@ -84,5 +92,29 @@ class AddToGroceryBagTableViewCell: UITableViewCell {
     
     @objc func addItemToGroceryBag(_ sender: UIButton) {
         delegate?.handleAddToGroceryBag()
+    }
+    
+    private func showLoadingView() {
+        titleLabel.textColor = .clear
+        titleLabel.backgroundColor = Constant.loadingColor
+        
+        subTitleLabel.textColor = .clear
+        subTitleLabel.backgroundColor = Constant.loadingColor
+        
+        addToGroceryButton.tintColor = .clear
+        addToGroceryButton.backgroundColor = Constant.loadingColor
+        addToGroceryButton.isUserInteractionEnabled = false
+    }
+    
+    private func removeLoadingView() {
+        titleLabel.textColor = .label
+        titleLabel.backgroundColor = .clear
+        
+        subTitleLabel.textColor = .label
+        subTitleLabel.backgroundColor = .clear
+        
+        addToGroceryButton.tintColor = .white
+        addToGroceryButton.backgroundColor = Constant.secondaryColor
+        addToGroceryButton.isUserInteractionEnabled = true
     }
 }

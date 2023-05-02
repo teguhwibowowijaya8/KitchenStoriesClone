@@ -8,6 +8,7 @@
 import UIKit
 
 class ServingsCountTableViewCell: UITableViewCell {
+    static let identifier = "ServingsCountTableViewCell"
     
     var delegate: ServingStepperDelegate?
     
@@ -79,9 +80,16 @@ class ServingsCountTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setupCell() {
+    func setupCell(isLoading: Bool) {
         addSubviews()
         setComponentsConstraints()
+        
+        if isLoading {
+            showLoadingView()
+            return
+        }
+        
+        removeLoadingView()
     }
     
     private func addSubviews() {
@@ -99,6 +107,26 @@ class ServingsCountTableViewCell: UITableViewCell {
             horizontalStackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -Constant.horizontalSpacing),
             horizontalStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10)
         ])
+    }
+    
+    private func showLoadingView() {
+        servingTitleLabel.textColor = .clear
+        servingTitleLabel.backgroundColor = Constant.loadingColor
+        
+        servingCountLabel.textColor = .clear
+        servingCountLabel.backgroundColor = Constant.loadingColor
+        
+        servingStepper.showLoadingView()
+    }
+    
+    private func removeLoadingView() {
+        servingTitleLabel.textColor = .label
+        servingTitleLabel.backgroundColor = .clear
+        
+        servingCountLabel.textColor = .label
+        servingCountLabel.backgroundColor = .clear
+        
+        servingStepper.removeLoadingView()
     }
 }
 

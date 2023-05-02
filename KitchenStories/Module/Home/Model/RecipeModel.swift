@@ -1,5 +1,5 @@
 //
-//  FeedItemModel.swift
+//  RecipeModel.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 11/04/23.
@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct FeedItemModel: Codable {
+struct RecipeModel: Codable {
     let id: Int
-    let userRatings: FeedItemRatingModel?
+    let userRatings: RecipeRatingModel?
     let name: String
     let thumbnailUrlString: String
-    let credits: Set<FeedItemCreditModel>
-    let brand: FeedItemCreditModel?
-    let price: FeedItemPriceModel?
-    let recipes: [FeedItemModel]?
+    let credits: Set<RecipeCreditModel>
+    let brand: RecipeCreditModel?
+    let price: RecipeIngredientsPriceModel?
+    let recipes: [RecipeModel]?
     
     var creditsNames: String? {
         let creditsCount = credits.count
