@@ -19,7 +19,7 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
         didSet {
             containerView.isSkeletonable = true
             containerView.backgroundColor = containerBackgroundColor
-            containerView.layer.cornerRadius = 10
+            containerView.layer.cornerRadius = Constant.cornerRadius
         }
     }
     
@@ -27,7 +27,7 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
         didSet {
             itemImageView.isSkeletonable = true
             itemImageView.contentMode = .scaleAspectFill
-            itemImageView.layer.cornerRadius = 10
+            itemImageView.layer.cornerRadius = Constant.cornerRadius
         }
     }
     
@@ -55,7 +55,7 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
             shopIngredientsButton.isSkeletonable = true
             shopIngredientsButton.tintColor = .white
             shopIngredientsButton.backgroundColor = .red.withAlphaComponent(0.5)
-            shopIngredientsButton.layer.cornerRadius = 10
+            shopIngredientsButton.layer.cornerRadius = Constant.cornerRadius
             shopIngredientsButton.setAttributedTitle(
                 NSAttributedString(
                     string: "Shop Ingredients",

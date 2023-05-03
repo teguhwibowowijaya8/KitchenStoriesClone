@@ -9,6 +9,7 @@ import UIKit
 
 struct DetailHeaderParams {
     let recipeName: String
+    let recipeImageUrlString: String
     var recipeDescription: String?
     var isCommunityRecipe: Bool = false
     var communityMemberName: String?
@@ -19,6 +20,8 @@ class DetailHeaderTableViewCell: UITableViewCell {
     static let identifier = "DetailHeaderTableViewCell"
     
     private let communityWarningText = "This recipe was submited by a Tasty Community Member, and hasn't been tested by the Tasty recipe team."
+    
+    private var getNetworkService = GetNetworkImageService()
     
     @IBOutlet weak var recipeNameLabel: UILabel! {
         didSet {
@@ -94,6 +97,11 @@ class DetailHeaderTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        getNetworkService.cancel()
+    }
+    
     func setupCell(detail: DetailHeaderParams?, isLoading: Bool) {
         recipeNameLabel.isHidden = true
         recipeDescriptionTextView.isHidden = true
@@ -109,6 +117,8 @@ class DetailHeaderTableViewCell: UITableViewCell {
         
         removeLoadingView()
         if let detail = detail {
+            recipeImageView.loadImageFromUrl(detail.recipeImageUrlString, defaultImage: nil, getImageNetworkService: getNetworkService)
+            
             if let recipeDescription = detail.recipeDescription {
                 recipeDescriptionTextView.text = recipeDescription
                 recipeDescriptionTextView.isHidden = false

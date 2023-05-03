@@ -7,6 +7,11 @@
 
 import UIKit
 
+struct IngredientCellParams {
+    let ingredientName: String
+    let ingredientRatio: String?
+}
+
 class IngredientTableViewCell: UITableViewCell {
     static let identifier = "IngredientTableViewCell"
     
@@ -54,8 +59,7 @@ class IngredientTableViewCell: UITableViewCell {
     }
     
     func setupCell(
-        ingredientName: String? = nil,
-        ingredientRatio: String? = nil,
+        ingredient: IngredientCellParams?,
         isLoading: Bool
     ) {
         addSubviews()
@@ -67,9 +71,9 @@ class IngredientTableViewCell: UITableViewCell {
         }
         
         removeLoadingView()
-        if let ingredientName = ingredientName {
-            ingredientNameLabel.text = ingredientName
-            if let ingredientRatio = ingredientRatio {
+        if let ingredient = ingredient {
+            ingredientNameLabel.text = ingredient.ingredientName
+            if let ingredientRatio = ingredient.ingredientRatio {
                 ingredientRatioLabel.text = ingredientRatio
             } else {
                 ingredientRatioLabel.isHidden = true

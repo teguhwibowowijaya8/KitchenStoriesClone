@@ -7,6 +7,11 @@
 
 import UIKit
 
+struct RecipePreparationCellParams {
+    let preparationNumber: Int
+    let preparationDescription: String
+}
+
 class RecipePreparationTableViewCell: UITableViewCell {
     static let identifier = "RecipePreparationTableViewCell"
     
@@ -61,8 +66,7 @@ class RecipePreparationTableViewCell: UITableViewCell {
     }
     
     func setupCell(
-        preparationNumber: Int?,
-        preparationDescription: String?,
+        recipePreparation: RecipePreparationCellParams?,
         isLoading: Bool
     ) {
         addSubviews()
@@ -73,14 +77,13 @@ class RecipePreparationTableViewCell: UITableViewCell {
             return
         }
         
-        guard let preparationNumber = preparationNumber,
-              let preparationDescription = preparationDescription
+        guard let recipePreparation = recipePreparation
         else { return }
         
         removeLoadingView()
         
-        preparationNumberLabel.text = "\(preparationNumber)"
-        preparationDescriptionTextView.text = preparationDescription
+        preparationNumberLabel.text = "\(recipePreparation.preparationNumber)"
+        preparationDescriptionTextView.text = recipePreparation.preparationDescription
     }
     
     private func addSubviews() {

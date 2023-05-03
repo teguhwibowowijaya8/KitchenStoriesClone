@@ -8,6 +8,10 @@
 import UIKit
 import SkeletonView
 
+protocol HomeItemTableCellDelegate {
+    func handleFeedItemSelected(recipeId: Int, recipeName: String)
+}
+
 class HomeItemsTableViewCell: UITableViewCell {
     
     static let identifier = "HomeItemsTableViewCell"
@@ -17,6 +21,8 @@ class HomeItemsTableViewCell: UITableViewCell {
     private var screenSize: CGSize?
     private var cellSize: CGSize = .zero
     private var isLoading: Bool = false
+    
+    var delegate: HomeItemTableCellDelegate?
         
     lazy var itemsCollectionView: DynamicHeightCollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -247,5 +253,11 @@ extension HomeItemsTableViewCell: SkeletonCollectionViewDataSource {
         default:
             return UICollectionViewCell()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let feedItem = feed?.itemList[indexPath.row]
+        else { return }
+        delegate?.handleFeedItemSelected(recipeId: feedItem.id, recipeName: feedItem.name)
     }
 }

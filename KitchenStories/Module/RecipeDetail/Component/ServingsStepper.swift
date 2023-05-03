@@ -90,7 +90,7 @@ class ServingStepper: UIView {
         let containerStackView = UIStackView()
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        containerStackView.layer.cornerRadius = 5
+        containerStackView.layer.cornerRadius = Constant.cornerRadius
         containerStackView.layer.borderWidth = 0.5
         containerStackView.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         containerStackView.clipsToBounds = true

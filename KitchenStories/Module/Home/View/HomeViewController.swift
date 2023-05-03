@@ -173,6 +173,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
                 screenSize: screenSize,
                 isLoading: viewModel.isLoading
             )
+            itemsBodyCell.delegate = self
             
             return itemsBodyCell
             
@@ -188,5 +189,15 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+}
+
+extension HomeViewController: HomeItemTableCellDelegate {
+    func handleFeedItemSelected(recipeId: Int, recipeName: String) {
+        let recipeDetailVC = RecipeDetailViewController()
+        recipeDetailVC.recipeId = recipeId
+        recipeDetailVC.title = recipeName
+        
+        self.navigationController?.pushViewController(recipeDetailVC, animated: true)
     }
 }

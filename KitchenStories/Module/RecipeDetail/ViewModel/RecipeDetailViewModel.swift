@@ -25,12 +25,21 @@ class RecipeDetailViewModel {
     var recipeTips: RecipeTipsModel?
     var relatedRecipes: RelatedRecipesModel?
     var isLoading: Bool = false
-    var errorMessage: [String]
+    var errorMessage: [String] = []
     var delegate: RecipeDetailViewModelDelegate?
     
-    var dummyDetail: RecipeDetailModel
-    var dummyTips: RecipeTipsModel
-    var dummyRelatedRecipe: RelatedRecipesModel
+    var showNutritionInfo: Bool = false
+    
+    var detailsSection: [RecipeDetailSection] = []
+    var dummySection: [RecipeDetailSection]
+    
+    var servingCount: Int = 1
+    
+    var ingredientHeaderSectionIndexes: [Int:Int] = [:]
+    var ingredientBodySectionIndexes: [Int:Int] = [:]
+//    var dummyDetail: RecipeDetailModel
+//    var dummyTips: RecipeTipsModel
+//    var dummyRelatedRecipe: RelatedRecipesModel
     
     init(recipeId: Int, getAPIService: GetAPIProtocol = GetAPIService()) {
         self.recipeId = recipeId
@@ -40,7 +49,19 @@ class RecipeDetailViewModel {
         getRecipeTipsService = GetRecipeTipsAPIService(getAPIService: self.getAPIService)
         getRelatedRecipesService = GetRelatedRecipesAPIService(getAPIService: self.getAPIService)
         
-        setDummyData()
+        dummySection = [
+            .header,
+            .ingredientServing,
+            .ingredientsBody,
+            .nutritionsInfoHeader,
+            .nutritionsBody,
+            .addToGrocery,
+            .topTip,
+            .relatedRecipesHeader,
+            .relatedRecipesBody,
+            .preparationsHeader,
+            .preparationsBody,
+        ]
     }
     
     func getDetail() {
@@ -58,6 +79,7 @@ class RecipeDetailViewModel {
                 self.errorMessage.append(errorMessage)
             } else if let recipeDetail = recipeDetail {
                 self.recipeDetail = recipeDetail
+                self.servingCount = recipeDetail.numServings
             }
         }
         dispatchGroup.leave()
@@ -83,17 +105,56 @@ class RecipeDetailViewModel {
         dispatchGroup.leave()
         
         dispatchGroup.notify(queue: .main) {
+            self.setDetailsSection()
             self.isLoading = false
             self.delegate?.handleOnDetailsFetchCompleted()
             return
         }
     }
     
-    private func setDummyData() {
-        dummyDetail = RecipeDetailModel(id: 1, userRatings: nil, name: "", thumbnailUrlString: "", credits: [], brand: nil, price: nil, recipes: nil, featuredIn: [], numServings: 0, servingsNounSingular: "serving", servingsNounPlural: "servings", videoUrl: nil, description: nil, ingredients: [], nutrition: NutritionModel(calories: 0, carbohydrates: 0, fat: 0, protein: 0, sugar: 0, fiber: 0), instructions: [])
+    func setDetailsSection() {
+        guard let recipeDetail = recipeDetail
+        else { return }
         
-        dummyTips = RecipeTipsModel(count: 1, result: [])
-        
-        dummyRelatedRecipe = RelatedRecipesModel(count: 5, results: [])
+        for (index, section) in dummySection.enumerated() {
+            switch section {
+            case .ingredientsBody:
+                continue
+                
+            case .ingredientServing:
+                let ingredientSectionCount = recipeDetail.ingredientSections.count
+                
+                if ingredientSectionCount > 0 {
+                    for (sectionIndex, ingredientSection) in recipeDetail.ingredientSections.enumerated() {
+                        if ingredientSection.name != nil || ingredientSection.name != "" {
+                            detailsSection.append(.ingredientsHeader)
+                            self.ingredientHeaderSectionIndexes[index] = sectionIndex
+                        }
+                        detailsSection.append(.ingredientsBody)
+                        self.ingredientBodySectionIndexes[index] = sectionIndex
+                    }
+                }
+                
+            case .preparationsBody:
+                continue
+                
+            case .preparationsHeader:
+                if recipeDetail.instructions.count > 0 {
+                    detailsSection.append(.preparationsHeader)
+                    detailsSection.append(.preparationsBody)
+                }
+                
+            default:
+                detailsSection.append(section)
+            }
+        }
     }
+    
+//    private func setDummyData() {
+//        dummyDetail = RecipeDetailModel(id: 1, userRatings: nil, name: "", thumbnailUrlString: "", credits: [], brand: nil, price: nil, recipes: nil, featuredIn: [], numServings: 0, servingsNounSingular: "serving", servingsNounPlural: "servings", videoUrl: nil, description: nil, ingredients: [], nutrition: NutritionModel(calories: 0, carbohydrates: 0, fat: 0, protein: 0, sugar: 0, fiber: 0), instructions: [])
+//
+//        dummyTips = RecipeTipsModel(count: 1, result: [])
+//
+//        dummyRelatedRecipe = RelatedRecipesModel(count: 5, results: [])
+//    }
 }

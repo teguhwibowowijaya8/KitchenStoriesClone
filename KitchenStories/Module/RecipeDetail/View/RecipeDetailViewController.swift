@@ -10,6 +10,7 @@ import UIKit
 enum RecipeDetailSection: Int {
     case header
     case ingredientServing
+    case ingredientsHeader
     case ingredientsBody
     case nutritionsInfoHeader
     case nutritionsBody
@@ -102,51 +103,264 @@ extension RecipeDetailViewController: RecipeDetailViewModelDelegate {
 
 extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 11
+        return recipeDetailViewModel.isLoading ? recipeDetailViewModel.dummySection.count : recipeDetailViewModel.detailsSection.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        switch RecipeDetailSection(rawValue: section) {
+        case .ingredientsBody:
+            if let recipeDetail = recipeDetailViewModel.recipeDetail,
+                let ingredientBodySection = recipeDetailViewModel.ingredientBodySectionIndexes[section] {
+                return recipeDetail.ingredientSections[ingredientBodySection].components.count
+            } else if recipeDetailViewModel.isLoading {
+                return 5
+            }
+            return 0
+            
+        case .nutritionsBody:
+            if recipeDetailViewModel.isLoading || recipeDetailViewModel.showNutritionInfo == false {
+                return 0
+            }
+            return recipeDetailViewModel.recipeDetail?.nutrition.nutritions.count ?? 0
+            
+        case .preparationsBody:
+            return recipeDetailViewModel.isLoading ? 5 : recipeDetailViewModel.recipeDetail?.instructions.count ?? 0
+            
+        default:
+            if recipeDetailViewModel.isLoading || recipeDetailViewModel.recipeDetail != nil {
+                return 1
+            }
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch RecipeDetailSection(rawValue: indexPath.section) {
             
         case .header:
-            return UITableViewCell()
+            return headerCell(of: tableView, cellForRowAt: indexPath)
+            
         case .ingredientServing:
-            return UITableViewCell()
+            return ingredientsServingCell(of: tableView, cellForRowAt: indexPath)
+            
+        case .ingredientsHeader, .relatedRecipesHeader, .preparationsHeader:
+            return headerTitleCell(of: tableView, cellForRowAt: indexPath, section: RecipeDetailSection(rawValue: indexPath.section)!)
+            
         case .ingredientsBody:
-            return UITableViewCell()
+            return ingredientsBodyCell(of: tableView, cellForRowAt: indexPath)
+            
         case .nutritionsInfoHeader:
-            return UITableViewCell()
+            return nutritionInfoHeaderCell(of: tableView, cellForRowAt: indexPath)
+            
         case .nutritionsBody:
             return UITableViewCell()
+            
         case .addToGrocery:
-            return UITableViewCell()
+            return addToGroceryBagCell(of: tableView, cellForRowAt: indexPath)
+            
         case .topTip:
-            return UITableViewCell()
-        case .relatedRecipesHeader:
-            return UITableViewCell()
+            return recipeTipCell(of: tableView, cellForRowAt: indexPath)
+            
         case .relatedRecipesBody:
-            return UITableViewCell()
-        case .preparationsHeader:
-            return UITableViewCell()
+            return relatedRecipesCell(of: tableView, cellForRowAt: indexPath)
+            
         case .preparationsBody:
-            return UITableViewCell()
+            return recipePreparationCell(of: tableView, cellForRowAt: indexPath)
+            
         case .none:
             return UITableViewCell()
         }
     }
     
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+}
+
+// MARK: Recipe Detail Cells
+extension RecipeDetailViewController {
     private func headerCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let headerCell = tableView.dequeueReusableCell(withIdentifier: DetailHeaderTableViewCell.identifier, for: indexPath) as? DetailHeaderTableViewCell
         else { return UITableViewCell() }
         
+        var headerDetail: DetailHeaderParams? = nil
+        
+        if let recipeDetail = recipeDetailViewModel.recipeDetail {
+            headerDetail = DetailHeaderParams(
+                recipeName: recipeDetail.name,
+                recipeImageUrlString: recipeDetail.thumbnailUrlString,
+                recipeDescription: recipeDetail.description,
+                isCommunityRecipe: recipeDetail.isCommunityMemberRecipe,
+                communityMemberName: recipeDetail.creditsNames,
+                wouldMakeAgainPercentage: recipeDetail.userRatings?.percentage
+            )
+        }
+        
+        headerCell.setupCell(detail: headerDetail, isLoading: recipeDetailViewModel.isLoading)
+        
         return headerCell
     }
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
+    private func headerTitleCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath, section: RecipeDetailSection) -> UITableViewCell {
+        guard let headerTitleCell = tableView.dequeueReusableCell(withIdentifier: HomeItemHeaderTableViewCell.identifier, for: indexPath) as? HomeItemHeaderTableViewCell
+        else { return UITableViewCell() }
+        
+        var showSeeAllButton: Bool = false
+        var title: String = "Title"
+        
+        switch section {
+        case .relatedRecipesHeader:
+            title = "Related Recipes"
+        case .preparationsHeader:
+            title = "Preparation"
+        case .ingredientsHeader:
+            if let recipeDetail = recipeDetailViewModel.recipeDetail,
+               let recipeHeaderSection = recipeDetailViewModel.ingredientHeaderSectionIndexes[indexPath.section],
+               let headerTitle = recipeDetail.ingredientSections[recipeHeaderSection].name {
+                title = headerTitle
+            }
+        default:
+            break
+        }
+        
+        headerTitleCell.setupCell(
+            title: title,
+            showSeeAllButton: showSeeAllButton,
+            isLoading: recipeDetailViewModel.isLoading
+        )
+        
+        return headerTitleCell
+    }
+    
+    private func ingredientsServingCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let ingredientsServingCell = tableView.dequeueReusableCell(withIdentifier: ServingsCountTableViewCell.identifier, for: indexPath) as? ServingsCountTableViewCell
+        else { return UITableViewCell() }
+        
+        var serving: ServingsCountCellParams? = nil
+        
+        if let recipeDetail = recipeDetailViewModel.recipeDetail {
+            serving = ServingsCountCellParams(
+                servingCount: recipeDetail.numServings,
+                servingNounSingular: recipeDetail.servingsNounSingular,
+                servingNounPlural: recipeDetail.servingsNounPlural
+            )
+        }
+        
+        ingredientsServingCell.setupCell(serving: serving, isLoading: true)
+        
+        return ingredientsServingCell
+    }
+    
+    private func ingredientsBodyCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let ingredientCell = tableView.dequeueReusableCell(withIdentifier: IngredientTableViewCell.identifier, for: indexPath) as? IngredientTableViewCell
+        else { return UITableViewCell() }
+        
+        var ingredient: IngredientCellParams? = nil
+        if let recipeDetail = recipeDetailViewModel.recipeDetail {
+            let ingredientSection = recipeDetail.ingredientSections[indexPath.section]
+            var ingredientOfIndex = ingredientSection.components[indexPath.row]
+            
+            var ingredientName: String = ingredientOfIndex.ingredient.name
+            if let extraComment = ingredientOfIndex.extraComment, ingredientOfIndex.extraComment != "" {
+                ingredientName = "\(ingredientName), \(extraComment)"
+            }
+            
+            ingredient = IngredientCellParams(
+                ingredientName: ingredientName,
+                ingredientRatio: ingredientOfIndex.measurementString(servingCount: recipeDetailViewModel.servingCount)
+            )
+        }
+        
+        ingredientCell.setupCell(ingredient: ingredient, isLoading: recipeDetailViewModel.isLoading)
+        
+        return ingredientCell
+    }
+    
+    private func nutritionInfoHeaderCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let nutritionInfoHeaderCell = tableView.dequeueReusableCell(withIdentifier: NutritionInfoHeaderTableViewCell.identifier, for: indexPath) as? NutritionInfoHeaderTableViewCell
+        else { return UITableViewCell() }
+        
+        nutritionInfoHeaderCell.setupCell(showInfo: recipeDetailViewModel.showNutritionInfo, isLoading: recipeDetailViewModel.isLoading)
+        
+        return nutritionInfoHeaderCell
+    }
+    
+    private func nutritionBodyCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let nutritionBodyCell = tableView.dequeueReusableCell(withIdentifier: IngredientTableViewCell.identifier, for: indexPath) as? IngredientTableViewCell
+        else { return UITableViewCell() }
+        
+        var ingredient: IngredientCellParams? = nil
+
+        if let nutritions = recipeDetailViewModel.recipeDetail?.nutrition.nutritions,
+           let nutrition = nutritions[indexPath.row+1] {
+//            ingredient = IngredientCellParams(ingredientName: nutrition.key, ingredientRatio: nutrition)
+        }
+        
+        nutritionBodyCell.setupCell(ingredient: <#T##IngredientCellParams?#>, isLoading: <#T##Bool#>)
+        
+        return nutritionBodyCell
+    }
+    
+    private func addToGroceryBagCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let addToGroceryBagCell = tableView.dequeueReusableCell(withIdentifier: AddToGroceryBagTableViewCell.identifier, for: indexPath) as? AddToGroceryBagTableViewCell
+        else { return UITableViewCell() }
+        
+        addToGroceryBagCell.setupCell(isLoading: recipeDetailViewModel.isLoading)
+        
+        return addToGroceryBagCell
+    }
+    
+    private func recipeTipCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let recipeTipCell = tableView.dequeueReusableCell(withIdentifier: RecipeTipTableViewCell.identifier, for: indexPath) as? RecipeTipTableViewCell
+        else { return UITableViewCell() }
+        
+        var recipeTopTip: RecipeTipCellParams? = nil
+        if let recipeTips = recipeDetailViewModel.recipeTips {
+            let topTip = recipeTips.result[indexPath.row]
+            recipeTopTip = RecipeTipCellParams(
+                totalTipsCount: recipeTips.count,
+                topTipImageUrl: topTip.authorAvatarUrlString,
+                topTipName: topTip.authorName,
+                topTipDescription: topTip.tipBody
+            )
+        }
+        
+        recipeTipCell.setupCell(recipeTopTip: recipeTopTip, isLoading: recipeDetailViewModel.isLoading)
+        
+        return recipeTipCell
+    }
+    
+    private func relatedRecipesCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let relatedRecipesCell = tableView.dequeueReusableCell(withIdentifier: RelatedRecipesTableViewCell.identifier, for: indexPath) as? RelatedRecipesTableViewCell
+        else { return UITableViewCell() }
+        
+        relatedRecipesCell.setupCell(
+            relatedRecipes: recipeDetailViewModel.relatedRecipes,
+            screenSize: view.safeAreaLayoutGuide.layoutFrame.size,
+            isLoading: recipeDetailViewModel.isLoading
+        )
+        
+        return relatedRecipesCell
+    }
+    
+    private func recipePreparationCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let recipePreparationCell = tableView.dequeueReusableCell(withIdentifier: RecipePreparationTableViewCell.identifier, for: indexPath) as? RecipePreparationTableViewCell
+        else { return UITableViewCell() }
+        
+        var recipePreparation: RecipePreparationCellParams? = nil
+        if let recipeDetail = recipeDetailViewModel.recipeDetail {
+            let preparationOfIndex = recipeDetail.instructions[indexPath.row]
+            recipePreparation = RecipePreparationCellParams(
+                preparationNumber: preparationOfIndex.position,
+                preparationDescription: preparationOfIndex.displayText
+            )
+        }
+        
+        recipePreparationCell.setupCell(
+            recipePreparation: recipePreparation,
+            isLoading: recipeDetailViewModel.isLoading
+        )
+        
+        return recipePreparationCell
     }
 }

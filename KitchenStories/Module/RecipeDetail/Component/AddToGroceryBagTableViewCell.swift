@@ -46,7 +46,7 @@ class AddToGroceryBagTableViewCell: UITableViewCell {
         addToGroceryButton.setTitle("Add item to grocery bag", for: .normal)
         addToGroceryButton.backgroundColor = Constant.secondaryColor
         addToGroceryButton.tintColor = .white
-        addToGroceryButton.layer.cornerRadius = 5
+        addToGroceryButton.layer.cornerRadius = Constant.cornerRadius
         addToGroceryButton.clipsToBounds = true
         
         addToGroceryButton.heightAnchor.constraint(equalToConstant: 50).isActive = true

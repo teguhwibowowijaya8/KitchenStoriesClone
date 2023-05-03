@@ -23,9 +23,41 @@ struct RecipeDetailModel: Codable {
     let servingsNounPlural: String
     let videoUrl: String?
     let description: String?
-    let ingredients: [IngredientsModel]
+    let ingredientSections: [IngredientSectionModel]
     let nutrition: NutritionModel
     let instructions: [InstructionModel]
+    
+    var isCommunityMemberRecipe: Bool {
+        for credit in credits {
+            if credit.type == .community {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    var creditsNames: String? {
+        let creditsCount = credits.count
+        
+        if creditsCount == 1 { return credits.first?.name }
+        else if creditsCount == 0 { return nil }
+        
+        var fullNames: String = ""
+        for (index, credit) in credits.enumerated() {
+            guard let creditName = credit.name else { continue }
+            
+            if fullNames == "" {
+                fullNames += creditName
+            } else if index == creditsCount - 1 {
+                fullNames += ", and \(creditName)"
+            } else {
+                fullNames += ", \(creditName)"
+            }
+        }
+        
+        return fullNames
+    }
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -43,7 +75,7 @@ struct RecipeDetailModel: Codable {
         case servingsNounPlural = "servings_noun_plural"
         case videoUrl = "video_url"
         case description
-        case ingredients = "sections"
+        case ingredientSections = "sections"
         case nutrition
         case instructions
     }

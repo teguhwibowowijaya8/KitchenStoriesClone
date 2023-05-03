@@ -12,8 +12,11 @@ class RelatedRecipesTableViewCell: UITableViewCell {
     
     private let verticalSpacing: CGFloat = 10
     private let carouselRecipeCellIdentifier = CarouselItemCollectionViewCell.identifier
+    private let relatedRecipeMaxCount = 5
     
     private var screenSize: CGSize!
+    private var isLoading: Bool!
+    private var relatedRecipes: RelatedRecipesModel?
     
     private lazy var relatedRecipesCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -37,8 +40,18 @@ class RelatedRecipesTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setupCell(screenSize: CGSize) {
+    func setupCell(
+        relatedRecipes: RelatedRecipesModel?,
+        screenSize: CGSize,
+        isLoading: Bool
+    ) {
+        self.screenSize = screenSize
+        self.isLoading = isLoading
+        if let relatedRecipes = relatedRecipes {
+            self.relatedRecipes = relatedRecipes
+        }
         
+        setupCollectionView()
     }
     
     
@@ -54,6 +67,10 @@ class RelatedRecipesTableViewCell: UITableViewCell {
             relatedRecipesCollectionView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),
             relatedRecipesCollectionView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
         ])
+    }
+    
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        return relatedRecipesCollectionView.contentSize
     }
     
 }
@@ -84,14 +101,26 @@ extension RelatedRecipesTableViewCell: UICollectionViewDelegateFlowLayout {
 
 extension RelatedRecipesTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if let relatedRecipes = relatedRecipes {
+            let relatedRecipesCount = relatedRecipes.results.count
+            return relatedRecipesCount > relatedRecipeMaxCount ? relatedRecipeMaxCount : relatedRecipesCount
+        }
+        return relatedRecipeMaxCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let carouselRecipeCell = collectionView.dequeueReusableCell(withReuseIdentifier: carouselRecipeCellIdentifier, for: indexPath) as? CarouselItemCollectionViewCell
         else { return UICollectionViewCell() }
         
-        carouselRecipeCell.setupCell()
+        var relatedRecipeOfIndex: RecipeModel? = nil
+        if let relatedRecipes = relatedRecipes?.results {
+            relatedRecipeOfIndex = relatedRecipes[indexPath.row]
+        }
+        
+        carouselRecipeCell.setupCell(
+            imageUrlString: relatedRecipeOfIndex?.thumbnailUrlString,
+            itemName: relatedRecipeOfIndex?.name
+        )
         
         return carouselRecipeCell
     }

@@ -19,7 +19,7 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView! {
         didSet {
             containerView.isSkeletonable = true
-            containerView.layer.cornerRadius = 10
+            containerView.layer.cornerRadius = Constant.cornerRadius
             containerView.clipsToBounds = true
         }
     }
@@ -28,7 +28,7 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
         didSet {
             itemImageView.isSkeletonable = true
             itemImageView.contentMode = .scaleAspectFill
-            itemImageView.layer.cornerRadius = 10
+            itemImageView.layer.cornerRadius = Constant.cornerRadius
         }
     }
     

@@ -20,7 +20,7 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView! {
         didSet {
             containerView.isSkeletonable = true
-            containerView.layer.cornerRadius = 10
+            containerView.layer.cornerRadius = Constant.cornerRadius
             containerView.clipsToBounds = true
             containerView.backgroundColor = containerBackgroundColor
         }

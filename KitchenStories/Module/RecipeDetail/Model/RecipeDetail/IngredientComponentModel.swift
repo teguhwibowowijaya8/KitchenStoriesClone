@@ -14,6 +14,19 @@ struct IngredientComponentModel: Codable {
     let position: Int
     let measurements: [MeasurementModel]
     
+    func measurementString(servingCount: Int) -> String? {
+        var measurementString: String = ""
+        for (index, measurement) in measurements.enumerated() {
+            if index == 0 {
+                measurementString = measurement.measurementString(servingCount: servingCount)
+            } else {
+                measurementString += "(\(measurement.measurementString(servingCount: servingCount)))"
+            }
+        }
+        
+        return measurementString == "" ? nil : measurementString
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case ingredient

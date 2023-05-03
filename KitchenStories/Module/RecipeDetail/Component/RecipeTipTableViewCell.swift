@@ -7,8 +7,17 @@
 
 import UIKit
 
+struct RecipeTipCellParams {
+    let totalTipsCount: Int
+    let topTipImageUrl: String
+    let topTipName: String
+    let topTipDescription: String
+}
+
 class RecipeTipTableViewCell: UITableViewCell {
     static let identifier = "RecipeTipTableViewCell"
+    
+    private let defaultTopTipImage = UIImage(systemName: "person")
     
     private var getNetworkImageService = GetNetworkImageService()
     
@@ -73,27 +82,32 @@ class RecipeTipTableViewCell: UITableViewCell {
         getNetworkImageService.cancel()
     }
     
-    func setupCell(totalTipsCount: Int,
-                   topTipImageUrl: String,
-                   topTipName: String,
-                   topTipDescription: String,
-                   isLoading: Bool
+    func setupCell(
+        recipeTopTip: RecipeTipCellParams?,
+        isLoading: Bool
     ) {
         if isLoading {
             showLoadingView()
             return
         }
         
+        guard let recipeTopTip = recipeTopTip
+        else { return }
+        
         removeLoadingView()
-        if totalTipsCount == 1 {
+        if recipeTopTip.totalTipsCount == 1 {
             showAllTipsButton.isHidden = true
         }
         
-        topTipImageView.loadImageFromUrl(topTipImageUrl, defaultImage: UIImage(systemName: "person"), getImageNetworkService: getNetworkImageService)
+        topTipImageView.loadImageFromUrl(
+            recipeTopTip.topTipImageUrl,
+            defaultImage: defaultTopTipImage,
+            getImageNetworkService: getNetworkImageService
+        )
         
-        tipsTitleLabel.attributedText = tipsTitleText(with: totalTipsCount)
-        topTipNameLabel.text = topTipName
-        topTipDescriptionTextView.text = topTipDescription
+        tipsTitleLabel.attributedText = tipsTitleText(with: recipeTopTip.totalTipsCount)
+        topTipNameLabel.text = recipeTopTip.topTipName
+        topTipDescriptionTextView.text = recipeTopTip.topTipDescription
     }
     
     private func tipsTitleText(with tipsCount: Int) -> NSAttributedString {

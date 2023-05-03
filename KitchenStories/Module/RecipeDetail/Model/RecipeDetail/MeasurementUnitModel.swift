@@ -20,6 +20,13 @@ struct MeasurementUnitModel: Codable {
     let displayPlural: String
     let system: MeasurementSystem
     
+    func unitString(servingCount: Double) -> String? {
+        if system != .none {
+            return servingCount < 2 ? displaySingular : displayPlural
+        }
+        return nil
+    }
+    
     enum CodingKeys: String, CodingKey {
         case name
         case abbreviation

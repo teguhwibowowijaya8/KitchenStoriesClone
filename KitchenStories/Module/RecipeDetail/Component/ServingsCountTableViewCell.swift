@@ -7,17 +7,27 @@
 
 import UIKit
 
+struct ServingsCountCellParams {
+    let servingCount: Int
+    let servingNounSingular: String
+    let servingNounPlural: String
+}
+
 class ServingsCountTableViewCell: UITableViewCell {
     static let identifier = "ServingsCountTableViewCell"
     
     var delegate: ServingStepperDelegate?
     
-    var servingCount: Int = 1 {
+    private var servingCount: Int = 1 {
         didSet {
-            servingCountLabel.text = "\(servingCount) servings"
+            let servingNoun = servingCount > 1 ? servingNounPlural : servingNounSingular
+            servingCountLabel.text = "\(servingCount) \(servingNoun)"
             servingStepper.setValue(servingCount)
         }
     }
+    
+    private var servingNounSingular: String = "serving"
+    private var servingNounPlural: String = "servings"
     
     private lazy var servingTitleLabel: UILabel = {
        let servingTitleLabel = UILabel()
@@ -80,7 +90,10 @@ class ServingsCountTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setupCell(isLoading: Bool) {
+    func setupCell(
+        serving: ServingsCountCellParams?,
+        isLoading: Bool
+    ) {
         addSubviews()
         setComponentsConstraints()
         
@@ -90,6 +103,11 @@ class ServingsCountTableViewCell: UITableViewCell {
         }
         
         removeLoadingView()
+        if let serving = serving {
+            servingNounPlural = serving.servingNounPlural
+            servingNounSingular = serving.servingNounSingular
+            servingCount = serving.servingCount
+        }
     }
     
     private func addSubviews() {

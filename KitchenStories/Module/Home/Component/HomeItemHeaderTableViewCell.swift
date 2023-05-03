@@ -73,6 +73,7 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
     ) {
         addSubviews()
         setComponentsConstraints()
+        self.backgroundColor = .clear
         
         guard isLoading == false
         else {

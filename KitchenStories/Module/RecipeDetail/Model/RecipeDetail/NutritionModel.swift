@@ -14,4 +14,15 @@ struct NutritionModel: Codable {
     let protein: Int
     let sugar: Int
     let fiber: Int
+    
+    var nutritions: [Int:[String: Int]] {
+        return [
+            1: ["calories": calories],
+            2: ["carbohydrates": carbohydrates],
+            3: ["fat": fat],
+            4: ["protein": protein],
+            5: ["sugar": sugar],
+            6: ["fiber": fiber]
+        ]
+    }
 }

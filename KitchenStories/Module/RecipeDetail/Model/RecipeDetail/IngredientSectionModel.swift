@@ -1,5 +1,5 @@
 //
-//  IngredientsModel.swift
+//  IngredientSectionModel.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 02/05/23.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct IngredientsModel: Codable {
-    let components: [String]
+struct IngredientSectionModel: Codable {
+    let components: [IngredientComponentModel]
     let name: String?
     let position: Int
     
