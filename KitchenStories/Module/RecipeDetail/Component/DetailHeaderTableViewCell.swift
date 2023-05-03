@@ -104,6 +104,7 @@ class DetailHeaderTableViewCell: UITableViewCell {
     
     func setupCell(detail: DetailHeaderParams?, isLoading: Bool) {
         recipeNameLabel.isHidden = true
+        recipeFeaturedInLabel.isHidden = true
         recipeDescriptionTextView.isHidden = true
         communityMemberStackView.isHidden = true
         communityMemberNameLabel.isHidden = true

@@ -59,6 +59,28 @@ struct RecipeDetailModel: Codable {
         return fullNames
     }
     
+    var featureInCompilations: String? {
+        let featuredInCount = featuredIn.count
+        
+        if featuredInCount == 1 { return featuredIn.first?.name }
+        else if featuredInCount == 0 { return nil }
+        
+        var fullNames: String = ""
+        for (index, compilation) in featuredIn.enumerated() {
+            guard compilation.name != "" else { continue }
+            
+            if fullNames == "" {
+                fullNames += compilation.name
+            } else if index == featuredInCount - 1 {
+                fullNames += ", and \(compilation.name)"
+            } else {
+                fullNames += ", \(compilation.name)"
+            }
+        }
+        
+        return fullNames
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case userRatings = "user_ratings"

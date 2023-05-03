@@ -32,10 +32,6 @@ class RecipeDetailViewController: UIViewController {
         let recipeDetailTableView = UITableView()
         recipeDetailTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        recipeDetailTableView.delegate = self
-        recipeDetailTableView.dataSource = self
-        recipeDetailTableView.separatorStyle = .none
-        
         return recipeDetailTableView
     }()
 
@@ -49,16 +45,17 @@ class RecipeDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func setupViewModel() {
         recipeDetailViewModel = RecipeDetailViewModel(recipeId: recipeId)
         recipeDetailViewModel.delegate = self
+        recipeDetailViewModel.getDetail()
     }
     
     private func setupTableView() {
-        registerTableViewCell()
         
         self.view.addSubview(recipeDetailTableView)
         
@@ -68,11 +65,19 @@ class RecipeDetailViewController: UIViewController {
             recipeDetailTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             recipeDetailTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+        
+        recipeDetailTableView.delegate = self
+        recipeDetailTableView.dataSource = self
+        recipeDetailTableView.separatorStyle = .none
+        
+        registerTableViewCell()
     }
     
     private func registerTableViewCell() {
         let detailHeaderNib = UINib(nibName: DetailHeaderTableViewCell.identifier, bundle: nil)
         recipeDetailTableView.register(detailHeaderNib, forCellReuseIdentifier: DetailHeaderTableViewCell.identifier)
+        
+        recipeDetailTableView.register(HomeItemHeaderTableViewCell.self, forCellReuseIdentifier: HomeItemHeaderTableViewCell.identifier)
         
         recipeDetailTableView.register(ServingsCountTableViewCell.self, forCellReuseIdentifier: ServingsCountTableViewCell.identifier)
         recipeDetailTableView.register(IngredientTableViewCell.self, forCellReuseIdentifier: IngredientTableViewCell.identifier)
@@ -94,6 +99,7 @@ extension RecipeDetailViewController: RecipeDetailViewModelDelegate {
             print(recipeDetailViewModel.errorMessage)
         } else {
             DispatchQueue.main.async {
+                print("here")
                 self.recipeDetailTableView.reloadData()
             }
         }
@@ -153,7 +159,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
             return nutritionInfoHeaderCell(of: tableView, cellForRowAt: indexPath)
             
         case .nutritionsBody:
-            return UITableViewCell()
+            return nutritionBodyCell(of: tableView, cellForRowAt: indexPath)
             
         case .addToGrocery:
             return addToGroceryBagCell(of: tableView, cellForRowAt: indexPath)
@@ -256,9 +262,10 @@ extension RecipeDetailViewController {
         else { return UITableViewCell() }
         
         var ingredient: IngredientCellParams? = nil
-        if let recipeDetail = recipeDetailViewModel.recipeDetail {
-            let ingredientSection = recipeDetail.ingredientSections[indexPath.section]
-            var ingredientOfIndex = ingredientSection.components[indexPath.row]
+        if let recipeDetail = recipeDetailViewModel.recipeDetail,
+           let ingredientsBodySection = recipeDetailViewModel.ingredientBodySectionIndexes[indexPath.section] {
+            let ingredientSection = recipeDetail.ingredientSections[ingredientsBodySection]
+            let ingredientOfIndex = ingredientSection.components[indexPath.row]
             
             var ingredientName: String = ingredientOfIndex.ingredient.name
             if let extraComment = ingredientOfIndex.extraComment, ingredientOfIndex.extraComment != "" {
@@ -293,10 +300,13 @@ extension RecipeDetailViewController {
 
         if let nutritions = recipeDetailViewModel.recipeDetail?.nutrition.nutritions,
            let nutrition = nutritions[indexPath.row+1] {
-//            ingredient = IngredientCellParams(ingredientName: nutrition.key, ingredientRatio: nutrition)
+            ingredient = IngredientCellParams(
+                ingredientName: nutrition.title,
+                ingredientRatio: nutrition.value
+            )
         }
         
-        nutritionBodyCell.setupCell(ingredient: <#T##IngredientCellParams?#>, isLoading: <#T##Bool#>)
+        nutritionBodyCell.setupCell(ingredient: ingredient, isLoading: recipeDetailViewModel.isLoading)
         
         return nutritionBodyCell
     }

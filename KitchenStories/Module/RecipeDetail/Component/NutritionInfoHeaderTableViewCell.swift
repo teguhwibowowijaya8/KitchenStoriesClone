@@ -20,7 +20,7 @@ class NutritionInfoHeaderTableViewCell: UITableViewCell {
     
     private var showInfo: Bool? {
         didSet {
-            showNutritionButton.setAttributedTitle(nutritionButtonTitle(), for: .normal)
+//            showNutritionButton.setAttributedTitle(nutritionButtonTitle(), for: .normal)
         }
     }
     
@@ -38,7 +38,8 @@ class NutritionInfoHeaderTableViewCell: UITableViewCell {
     private lazy var showNutritionButton: UIButton = {
         let showNutritionButton = UIButton(type: .system)
         
-        showNutritionButton.setAttributedTitle(nutritionButtonTitle(), for: .normal)
+//        showNutritionButton.setAttributedTitle(nutritionButtonTitle(), for: .normal)
+        showNutritionButton.setTitle("Show Info", for: .normal)
         showNutritionButton.setContentHuggingPriority(.required, for: .horizontal)
         showNutritionButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         
@@ -70,19 +71,19 @@ class NutritionInfoHeaderTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func nutritionButtonTitle() -> NSAttributedString {
-        showInfo = showInfo == nil ? false : showInfo
-        let showSymbol: String = showInfo! ? "-" : "+"
-        
-        let title = NSAttributedString(
-            string: "View Info \(showSymbol)",
-            attributes: [
-                .font: UIFont.boldSystemFont(ofSize: 13),
-                .foregroundColor: Constant.secondaryColor
-            ]
-        )
-        return title
-    }
+//    func nutritionButtonTitle() -> NSAttributedString {
+//        showInfo = showInfo == nil ? false : showInfo
+//        let showSymbol: String = showInfo! ? "-" : "+"
+//
+//        let title = NSAttributedString(
+//            string: "View Info \(showSymbol)",
+//            attributes: [
+//                .font: UIFont.boldSystemFont(ofSize: 13),
+//                .foregroundColor: Constant.secondaryColor
+//            ]
+//        )
+//        return title
+//    }
     
     @objc func changeShowInfo(_ sender: UIButton) {
         guard let showInfo = showInfo else { return }
@@ -123,7 +124,7 @@ class NutritionInfoHeaderTableViewCell: UITableViewCell {
         nutritionTitleLabel.backgroundColor = Constant.loadingColor
         
         showNutritionButton.tintColor = .clear
-        showNutritionButton.setAttributedTitle(nutritionButtonTitle(), for: .normal)
+//        showNutritionButton.setAttributedTitle(nutritionButtonTitle(), for: .normal)
         showNutritionButton.isUserInteractionEnabled = false
         showNutritionButton.backgroundColor = Constant.loadingColor
     }
