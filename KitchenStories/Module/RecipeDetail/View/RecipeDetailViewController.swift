@@ -46,7 +46,7 @@ class RecipeDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     private func setupViewModel() {
@@ -95,11 +95,10 @@ class RecipeDetailViewController: UIViewController {
 
 extension RecipeDetailViewController: RecipeDetailViewModelDelegate {
     func handleOnDetailsFetchCompleted() {
-        if recipeDetailViewModel.errorMessage.count <= 0 {
-            print(recipeDetailViewModel.errorMessage)
+        if let recipeDetailError = recipeDetailViewModel.recipeDetailErrorMessage {
+            print(recipeDetailError)
         } else {
             DispatchQueue.main.async {
-                print("here")
                 self.recipeDetailTableView.reloadData()
             }
         }
@@ -109,15 +108,16 @@ extension RecipeDetailViewController: RecipeDetailViewModelDelegate {
 
 extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return recipeDetailViewModel.isLoading ? recipeDetailViewModel.dummySection.count : recipeDetailViewModel.detailsSection.count
+        return recipeDetailViewModel.detailsSection.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch RecipeDetailSection(rawValue: section) {
+        switch recipeDetailViewModel.detailsSection[section] {
         case .ingredientsBody:
             if let recipeDetail = recipeDetailViewModel.recipeDetail,
+               let ingredientSections = recipeDetail.ingredientSections,
                 let ingredientBodySection = recipeDetailViewModel.ingredientBodySectionIndexes[section] {
-                return recipeDetail.ingredientSections[ingredientBodySection].components.count
+                return ingredientSections[ingredientBodySection].components.count
             } else if recipeDetailViewModel.isLoading {
                 return 5
             }
@@ -127,10 +127,10 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
             if recipeDetailViewModel.isLoading || recipeDetailViewModel.showNutritionInfo == false {
                 return 0
             }
-            return recipeDetailViewModel.recipeDetail?.nutrition.nutritions.count ?? 0
+            return recipeDetailViewModel.recipeDetail?.nutrition?.nutritions.count ?? 0
             
         case .preparationsBody:
-            return recipeDetailViewModel.isLoading ? 5 : recipeDetailViewModel.recipeDetail?.instructions.count ?? 0
+            return recipeDetailViewModel.isLoading ? 5 : recipeDetailViewModel.recipeDetail?.instructions?.count ?? 0
             
         default:
             if recipeDetailViewModel.isLoading || recipeDetailViewModel.recipeDetail != nil {
@@ -141,7 +141,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch RecipeDetailSection(rawValue: indexPath.section) {
+        switch recipeDetailViewModel.detailsSection[indexPath.section] {
             
         case .header:
             return headerCell(of: tableView, cellForRowAt: indexPath)
@@ -150,7 +150,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
             return ingredientsServingCell(of: tableView, cellForRowAt: indexPath)
             
         case .ingredientsHeader, .relatedRecipesHeader, .preparationsHeader:
-            return headerTitleCell(of: tableView, cellForRowAt: indexPath, section: RecipeDetailSection(rawValue: indexPath.section)!)
+            return headerTitleCell(of: tableView, cellForRowAt: indexPath, section: recipeDetailViewModel.detailsSection[indexPath.section])
             
         case .ingredientsBody:
             return ingredientsBodyCell(of: tableView, cellForRowAt: indexPath)
@@ -172,9 +172,6 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
             
         case .preparationsBody:
             return recipePreparationCell(of: tableView, cellForRowAt: indexPath)
-            
-        case .none:
-            return UITableViewCell()
         }
     }
     
@@ -207,7 +204,7 @@ extension RecipeDetailViewController {
         return headerCell
     }
     
-    private func headerTitleCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath, section: RecipeDetailSection) -> UITableViewCell {
+    private func headerTitleCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath, section: RecipeDetailSection?) -> UITableViewCell {
         guard let headerTitleCell = tableView.dequeueReusableCell(withIdentifier: HomeItemHeaderTableViewCell.identifier, for: indexPath) as? HomeItemHeaderTableViewCell
         else { return UITableViewCell() }
         
@@ -222,11 +219,12 @@ extension RecipeDetailViewController {
         case .ingredientsHeader:
             if let recipeDetail = recipeDetailViewModel.recipeDetail,
                let recipeHeaderSection = recipeDetailViewModel.ingredientHeaderSectionIndexes[indexPath.section],
-               let headerTitle = recipeDetail.ingredientSections[recipeHeaderSection].name {
+               let ingredientSections = recipeDetail.ingredientSections,
+               let headerTitle = ingredientSections[recipeHeaderSection].name {
                 title = headerTitle
             }
         default:
-            break
+            return UITableViewCell()
         }
         
         headerTitleCell.setupCell(
@@ -246,13 +244,13 @@ extension RecipeDetailViewController {
         
         if let recipeDetail = recipeDetailViewModel.recipeDetail {
             serving = ServingsCountCellParams(
-                servingCount: recipeDetail.numServings,
-                servingNounSingular: recipeDetail.servingsNounSingular,
-                servingNounPlural: recipeDetail.servingsNounPlural
+                servingCount: recipeDetail.numServings ?? 1,
+                servingNounSingular: recipeDetail.servingsNounSingular ?? "serving",
+                servingNounPlural: recipeDetail.servingsNounPlural ?? "servings"
             )
         }
         
-        ingredientsServingCell.setupCell(serving: serving, isLoading: true)
+        ingredientsServingCell.setupCell(serving: serving, isLoading: recipeDetailViewModel.isLoading)
         
         return ingredientsServingCell
     }
@@ -263,8 +261,9 @@ extension RecipeDetailViewController {
         
         var ingredient: IngredientCellParams? = nil
         if let recipeDetail = recipeDetailViewModel.recipeDetail,
+           let ingredientSections = recipeDetail.ingredientSections,
            let ingredientsBodySection = recipeDetailViewModel.ingredientBodySectionIndexes[indexPath.section] {
-            let ingredientSection = recipeDetail.ingredientSections[ingredientsBodySection]
+            let ingredientSection = ingredientSections[ingredientsBodySection]
             let ingredientOfIndex = ingredientSection.components[indexPath.row]
             
             var ingredientName: String = ingredientOfIndex.ingredient.name
@@ -298,7 +297,7 @@ extension RecipeDetailViewController {
         
         var ingredient: IngredientCellParams? = nil
 
-        if let nutritions = recipeDetailViewModel.recipeDetail?.nutrition.nutritions,
+        if let nutritions = recipeDetailViewModel.recipeDetail?.nutrition?.nutritions,
            let nutrition = nutritions[indexPath.row+1] {
             ingredient = IngredientCellParams(
                 ingredientName: nutrition.title,
@@ -358,8 +357,9 @@ extension RecipeDetailViewController {
         else { return UITableViewCell() }
         
         var recipePreparation: RecipePreparationCellParams? = nil
-        if let recipeDetail = recipeDetailViewModel.recipeDetail {
-            let preparationOfIndex = recipeDetail.instructions[indexPath.row]
+        if let recipeDetail = recipeDetailViewModel.recipeDetail,
+           let instructions = recipeDetail.instructions {
+            let preparationOfIndex = instructions[indexPath.row]
             recipePreparation = RecipePreparationCellParams(
                 preparationNumber: preparationOfIndex.position,
                 preparationDescription: preparationOfIndex.displayText

@@ -13,7 +13,7 @@ struct DetailHeaderParams {
     var recipeDescription: String?
     var isCommunityRecipe: Bool = false
     var communityMemberName: String?
-    var wouldMakeAgainPercentage: Double?
+    var wouldMakeAgainPercentage: Int?
 }
 
 class DetailHeaderTableViewCell: UITableViewCell {
@@ -49,6 +49,7 @@ class DetailHeaderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var communityMemberLabel: UILabel! {
         didSet {
+            communityMemberLabel.text = "Community Member"
             communityMemberLabel.font = .systemFont(ofSize: 13)
             communityMemberLabel.numberOfLines = 0
         }
@@ -71,12 +72,15 @@ class DetailHeaderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var wouldMakeAgainLabel: UILabel!
     
+    @IBOutlet var communityWarningContainerView: UIView!
+    
     @IBOutlet weak var communityRecipeWarningTextView: UITextView! {
         didSet {
-            communityRecipeWarningTextView.backgroundColor = .systemBackground.withAlphaComponent(0.3)
+            communityRecipeWarningTextView.backgroundColor = .gray.withAlphaComponent(0.3)
             communityRecipeWarningTextView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
             communityRecipeWarningTextView.font = .systemFont(ofSize: 12)
             communityRecipeWarningTextView.textColor = .label
+            communityRecipeWarningTextView.text = communityWarningText
         }
     }
     
@@ -103,12 +107,11 @@ class DetailHeaderTableViewCell: UITableViewCell {
     }
     
     func setupCell(detail: DetailHeaderParams?, isLoading: Bool) {
-        recipeNameLabel.isHidden = true
         recipeFeaturedInLabel.isHidden = true
         recipeDescriptionTextView.isHidden = true
         communityMemberStackView.isHidden = true
         communityMemberNameLabel.isHidden = true
-        communityRecipeWarningTextView.isHidden = true
+        communityWarningContainerView.isHidden = true
         wouldMakeAgainStackView.isHidden = true
         
         if isLoading {
@@ -116,18 +119,22 @@ class DetailHeaderTableViewCell: UITableViewCell {
             return
         }
         
-        removeLoadingView()
         if let detail = detail {
+            removeLoadingView()
+            
             recipeImageView.loadImageFromUrl(detail.recipeImageUrlString, defaultImage: nil, getImageNetworkService: getNetworkService)
             
-            if let recipeDescription = detail.recipeDescription {
+            recipeNameLabel.text = detail.recipeName
+            
+            if let recipeDescription = detail.recipeDescription,
+                recipeDescription != "" {
                 recipeDescriptionTextView.text = recipeDescription
                 recipeDescriptionTextView.isHidden = false
             }
             
             if detail.isCommunityRecipe {
                 communityMemberStackView.isHidden = false
-                communityRecipeWarningTextView.isHidden = false
+                communityWarningContainerView.isHidden = false
                 if let memberName = detail.communityMemberName {
                     communityMemberNameLabel.text = memberName
                     communityMemberNameLabel.isHidden = false
@@ -143,7 +150,7 @@ class DetailHeaderTableViewCell: UITableViewCell {
     }
     
     
-    private func wouldMakeAgainText(_ percentage: Double) -> NSAttributedString {
+    private func wouldMakeAgainText(_ percentage: Int) -> NSAttributedString {
         let percentageAttributedText = NSMutableAttributedString(
             string: "\(percentage)%",
             attributes: [
@@ -151,7 +158,7 @@ class DetailHeaderTableViewCell: UITableViewCell {
         ])
         
         let wouldMakeAgainAttributedText = NSAttributedString(
-            string: "would make this again",
+            string: " would make this again",
             attributes:  [
             .font: UIFont.systemFont(ofSize: 13)
         ])
@@ -164,6 +171,10 @@ class DetailHeaderTableViewCell: UITableViewCell {
     private func showLoadingView() {
         recipeDescriptionTextView.isHidden = false
         wouldMakeAgainStackView.isHidden = false
+        
+        recipeNameLabel.text = Constant.placholderText1
+        recipeNameLabel.textColor = .clear
+        recipeNameLabel.backgroundColor = Constant.loadingColor
         
         recipeDescriptionTextView.text = Constant.placholderText2
         recipeDescriptionTextView.textColor = .clear
@@ -181,6 +192,9 @@ class DetailHeaderTableViewCell: UITableViewCell {
     private func removeLoadingView() {
         recipeDescriptionTextView.isHidden = true
         wouldMakeAgainStackView.isHidden = true
+        
+        recipeNameLabel.textColor = .label
+        recipeNameLabel.backgroundColor = .clear
         
         recipeDescriptionTextView.text = ""
         recipeDescriptionTextView.textColor = .label

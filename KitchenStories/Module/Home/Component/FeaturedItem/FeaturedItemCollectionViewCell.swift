@@ -36,7 +36,7 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var itemIsLikedButton: UIButton! {
         didSet {
             itemIsLikedButton.tintColor = .red.withAlphaComponent(0.5)
-            itemIsLikedButton.setImage(itemIsNotLikedImage, for: .normal)
+            itemIsLikedButton.setImage(isLikedImage(), for: .normal)
             itemIsLikedButton.layer.cornerRadius = itemIsLikedButton.frame.height / 2
             itemIsLikedButton.backgroundColor = .white
         }
@@ -90,7 +90,7 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
         
         itemNameLabel.text = itemName
         
-        let isLikedButtonImage = isLiked ? itemIsLikedImage : itemIsNotLikedImage
+        let isLikedButtonImage = isLikedImage(isLiked)
         itemIsLikedButton.setImage(isLikedButtonImage, for: .normal)
         
         if let itemFeedCredits = itemFeedCredits {
@@ -133,6 +133,13 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
         
         itemIsLikedButton.tintColor = Constant.secondaryColor
         itemIsLikedButton.isUserInteractionEnabled = true
+    }
+    
+    private func isLikedImage(_ isLiked: Bool = false) -> UIImage? {
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .bold, scale: .medium)
+        let image = isLiked ? itemIsLikedImage : itemIsNotLikedImage
+        
+        return image?.withConfiguration(imageConfig)
     }
 }
 

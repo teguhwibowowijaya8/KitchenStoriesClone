@@ -18,14 +18,14 @@ struct RecipeDetailModel: Codable {
     let recipes: [RecipeModel]?
     
     let featuredIn: [FeaturedInModel]
-    let numServings: Int
-    let servingsNounSingular: String
-    let servingsNounPlural: String
+    let numServings: Int?
+    let servingsNounSingular: String?
+    let servingsNounPlural: String?
     let videoUrl: String?
     let description: String?
-    let ingredientSections: [IngredientSectionModel]
-    let nutrition: NutritionModel
-    let instructions: [InstructionModel]
+    let ingredientSections: [IngredientSectionModel]?
+    let nutrition: NutritionModel?
+    let instructions: [InstructionModel]?
     
     var isCommunityMemberRecipe: Bool {
         for credit in credits {

@@ -49,7 +49,7 @@ class AddToGroceryBagTableViewCell: UITableViewCell {
         addToGroceryButton.layer.cornerRadius = Constant.cornerRadius
         addToGroceryButton.clipsToBounds = true
         
-        addToGroceryButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        addToGroceryButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         addToGroceryButton.addTarget(self, action: #selector(addItemToGroceryBag), for: .touchUpInside)
         
         return addToGroceryButton

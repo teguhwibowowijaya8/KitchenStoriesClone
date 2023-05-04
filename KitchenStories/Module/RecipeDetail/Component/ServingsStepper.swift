@@ -58,7 +58,7 @@ class ServingStepper: UIView {
     }()
     
     private lazy var numberLabelWidth: NSLayoutConstraint = {
-        let buttonWidthConstraint = numberLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 40)
+        let buttonWidthConstraint = numberLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 30)
         
         return buttonWidthConstraint
     }()
@@ -74,6 +74,7 @@ class ServingStepper: UIView {
     private lazy var numberLabel: UILabel = {
         let numberLabel = UILabel()
         numberLabel.font = .systemFont(ofSize: 13)
+        numberLabel.textAlignment = .center
         
         return numberLabel
     }()

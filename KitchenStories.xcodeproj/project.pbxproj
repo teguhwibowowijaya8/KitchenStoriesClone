@@ -35,6 +35,8 @@
 		7ABA0FB229DE8BF000E58FBA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABA0FB129DE8BF000E58FBA /* FirebaseFirestore */; };
 		7ABA0FB529DE8C6600E58FBA /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABA0FB429DE8C6600E58FBA /* SkeletonView */; };
 		7ABA0FB829DEABCF00E58FBA /* BottomBorderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FB729DEABCF00E58FBA /* BottomBorderTextField.swift */; };
+		7ABBC6BD2A03910C00A4D146 /* RecipeCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6BB2A03910C00A4D146 /* RecipeCardCollectionViewCell.swift */; };
+		7ABBC6BE2A03910C00A4D146 /* RecipeCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ABBC6BC2A03910C00A4D146 /* RecipeCardCollectionViewCell.xib */; };
 		7AC5933A29E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933929E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift */; };
 		7AC5933C29E309A000667F3E /* RoundedCornersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */; };
 		7AC5933F29E3B43A00667F3E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933E29E3B43A00667F3E /* RegisterViewModel.swift */; };
@@ -117,6 +119,8 @@
 		7ABA0FA729DE81C900E58FBA /* GetNetworkImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNetworkImageService.swift; sourceTree = "<group>"; };
 		7ABA0FAA29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+loadImageFromUrl.swift"; sourceTree = "<group>"; };
 		7ABA0FB729DEABCF00E58FBA /* BottomBorderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBorderTextField.swift; sourceTree = "<group>"; };
+		7ABBC6BB2A03910C00A4D146 /* RecipeCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		7ABBC6BC2A03910C00A4D146 /* RecipeCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		7AC5933929E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeGreetingCollectionViewCell.swift; sourceTree = "<group>"; };
 		7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersButton.swift; sourceTree = "<group>"; };
 		7AC5933E29E3B43A00667F3E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -373,8 +377,18 @@
 				7AE178C329E2664100706D64 /* BackgroundImageView.swift */,
 				7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */,
 				7A06F64A29E7B2B1004FE00F /* DynamicHeightCollectionView.swift */,
+				7ABBC6B62A0390C900A4D146 /* RecipeCard */,
 			);
 			path = SharedComponent;
+			sourceTree = "<group>";
+		};
+		7ABBC6B62A0390C900A4D146 /* RecipeCard */ = {
+			isa = PBXGroup;
+			children = (
+				7ABBC6BB2A03910C00A4D146 /* RecipeCardCollectionViewCell.swift */,
+				7ABBC6BC2A03910C00A4D146 /* RecipeCardCollectionViewCell.xib */,
+			);
+			path = RecipeCard;
 			sourceTree = "<group>";
 		};
 		7AC5933829E3004000667F3E /* Component */ = {
@@ -654,6 +668,7 @@
 				7AF7DC7629FE9EC900068D3B /* RecipeTipTableViewCell.xib in Resources */,
 				7AC632E429EE3D6B009ABB08 /* DetailHeaderTableViewCell.xib in Resources */,
 				7AC5936529E51BEC00667F3E /* FeaturedItemCollectionViewCell.xib in Resources */,
+				7ABBC6BE2A03910C00A4D146 /* RecipeCardCollectionViewCell.xib in Resources */,
 				7AE178C229E2661D00706D64 /* LoginViewController.xib in Resources */,
 				7ABA0F7529DD53F500E58FBA /* Main.storyboard in Resources */,
 			);
@@ -674,6 +689,7 @@
 				7AC5AB3829E1553A00C30433 /* WelcomeViewController.swift in Sources */,
 				7AF7DC8C2A00C9E300068D3B /* MeasurementUnitModel.swift in Sources */,
 				7AF7DC7029FD7A8800068D3B /* NutritionInfoHeaderTableViewCell.swift in Sources */,
+				7ABBC6BD2A03910C00A4D146 /* RecipeCardCollectionViewCell.swift in Sources */,
 				7ABA0FA629DE7AAA00E58FBA /* GetAPIService.swift in Sources */,
 				7ABA0FA829DE81C900E58FBA /* GetNetworkImageService.swift in Sources */,
 				7ABA0FA429DE787700E58FBA /* ParseDataService.swift in Sources */,

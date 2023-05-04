@@ -11,9 +11,9 @@ struct RecipeRatingModel: Codable {
     let countPositive: Int
     let countNegative: Int
     let score: Double?
-    var percentage: Double? {
+    var percentage: Int? {
         if let score = score {
-            return round(score * 100)
+            return Int(round(score * 100))
         }
         return nil
     }

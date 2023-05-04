@@ -58,10 +58,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="brC-9Q-Rwu">
-                                <rect key="frame" x="0.0" y="308.66666666666669" width="407" height="44"/>
+                                <rect key="frame" x="0.0" y="308.66666666666669" width="407" height="34"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZP6-OI-DNr">
-                                        <rect key="frame" x="0.0" y="10" width="407" height="24"/>
+                                        <rect key="frame" x="0.0" y="5" width="407" height="24"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6ZW-4q-7lO">
                                                 <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -81,24 +81,36 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="ZP6-OI-DNr" firstAttribute="top" secondItem="brC-9Q-Rwu" secondAttribute="top" constant="10" id="3h3-R3-ekI"/>
-                                    <constraint firstAttribute="bottom" secondItem="ZP6-OI-DNr" secondAttribute="bottom" constant="10" id="Dz9-d6-Ita"/>
+                                    <constraint firstItem="ZP6-OI-DNr" firstAttribute="top" secondItem="brC-9Q-Rwu" secondAttribute="top" constant="5" id="3h3-R3-ekI"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZP6-OI-DNr" secondAttribute="bottom" constant="5" id="Dz9-d6-Ita"/>
                                     <constraint firstItem="ZP6-OI-DNr" firstAttribute="leading" secondItem="brC-9Q-Rwu" secondAttribute="leading" id="Gei-FT-gPq"/>
                                     <constraint firstAttribute="trailing" secondItem="ZP6-OI-DNr" secondAttribute="trailing" id="eeP-dU-krw"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Z3-n7-Hou">
-                                <rect key="frame" x="0.0" y="357.66666666666669" width="407" height="166.66666666666669"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tgs-sO-DV2">
+                                <rect key="frame" x="0.0" y="347.66666666666669" width="407" height="176.66666666666669"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Z3-n7-Hou">
+                                        <rect key="frame" x="0.0" y="0.0" width="407" height="166.66666666666666"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <constraints>
+                                    <constraint firstItem="2Z3-n7-Hou" firstAttribute="leading" secondItem="Tgs-sO-DV2" secondAttribute="leading" id="5uD-Ee-Vgm"/>
+                                    <constraint firstItem="2Z3-n7-Hou" firstAttribute="top" secondItem="Tgs-sO-DV2" secondAttribute="top" id="GQm-ON-uBA"/>
+                                    <constraint firstAttribute="trailing" secondItem="2Z3-n7-Hou" secondAttribute="trailing" id="SqG-sM-0Do"/>
+                                    <constraint firstAttribute="bottom" secondItem="2Z3-n7-Hou" secondAttribute="bottom" constant="10" id="pRs-rC-QCO"/>
+                                </constraints>
+                            </view>
                         </subviews>
                     </stackView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bFw-tq-QPJ">
-                        <rect key="frame" x="0.0" y="554.33333333333337" width="427" height="100.66666666666663"/>
+                        <rect key="frame" x="0.0" y="544.33333333333337" width="427" height="110.66666666666663"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="bFw-tq-QPJ" secondAttribute="height" priority="999" id="2Wm-8K-3uQ"/>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="LdJ-cX-qZJ"/>
@@ -111,7 +123,7 @@
                     <constraint firstAttribute="trailing" secondItem="c4c-ex-rwV" secondAttribute="trailing" constant="10" id="NTq-9m-Kfh"/>
                     <constraint firstItem="bFw-tq-QPJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Rgq-9u-Zx4"/>
                     <constraint firstItem="c4c-ex-rwV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="Rk5-wV-nhD"/>
-                    <constraint firstItem="bFw-tq-QPJ" firstAttribute="top" secondItem="c4c-ex-rwV" secondAttribute="bottom" constant="15" id="SYJ-ds-YK1"/>
+                    <constraint firstItem="bFw-tq-QPJ" firstAttribute="top" secondItem="c4c-ex-rwV" secondAttribute="bottom" constant="5" id="SYJ-ds-YK1"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bFw-tq-QPJ" secondAttribute="bottom" id="eql-Di-CLk"/>
                 </constraints>
             </tableViewCellContentView>
@@ -121,6 +133,7 @@
                 <outlet property="communityMemberNameLabel" destination="3kN-hW-5nT" id="1Fj-xV-La2"/>
                 <outlet property="communityMemberStackView" destination="j0p-We-hz5" id="X5r-o6-9VW"/>
                 <outlet property="communityRecipeWarningTextView" destination="2Z3-n7-Hou" id="6eL-ke-K6r"/>
+                <outlet property="communityWarningContainerView" destination="Tgs-sO-DV2" id="Lbo-dD-Ta4"/>
                 <outlet property="recipeDescriptionTextView" destination="1s5-95-jLi" id="aid-hj-2w5"/>
                 <outlet property="recipeFeaturedInLabel" destination="F82-9a-ygs" id="mEj-kI-yTx"/>
                 <outlet property="recipeImageView" destination="bFw-tq-QPJ" id="F0j-rV-eh1"/>

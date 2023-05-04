@@ -91,23 +91,23 @@ class RecipeTipTableViewCell: UITableViewCell {
             return
         }
         
-        guard let recipeTopTip = recipeTopTip
-        else { return }
-        
-        removeLoadingView()
-        if recipeTopTip.totalTipsCount == 1 {
-            showAllTipsButton.isHidden = true
+        if let recipeTopTip = recipeTopTip {
+            removeLoadingView()
+            
+            if recipeTopTip.totalTipsCount == 1 {
+                showAllTipsButton.isHidden = true
+            }
+            
+            topTipImageView.loadImageFromUrl(
+                recipeTopTip.topTipImageUrl,
+                defaultImage: defaultTopTipImage,
+                getImageNetworkService: getNetworkImageService
+            )
+            
+            tipsTitleLabel.attributedText = tipsTitleText(with: recipeTopTip.totalTipsCount)
+            topTipNameLabel.text = recipeTopTip.topTipName
+            topTipDescriptionTextView.text = recipeTopTip.topTipDescription
         }
-        
-        topTipImageView.loadImageFromUrl(
-            recipeTopTip.topTipImageUrl,
-            defaultImage: defaultTopTipImage,
-            getImageNetworkService: getNetworkImageService
-        )
-        
-        tipsTitleLabel.attributedText = tipsTitleText(with: recipeTopTip.totalTipsCount)
-        topTipNameLabel.text = recipeTopTip.topTipName
-        topTipDescriptionTextView.text = recipeTopTip.topTipDescription
     }
     
     private func tipsTitleText(with tipsCount: Int) -> NSAttributedString {

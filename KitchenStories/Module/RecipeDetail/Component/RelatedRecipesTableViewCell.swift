@@ -23,6 +23,8 @@ class RelatedRecipesTableViewCell: UITableViewCell {
         flowLayout.scrollDirection = .horizontal
         
         let relatedRecipesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        relatedRecipesCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         relatedRecipesCollectionView.delegate = self
         relatedRecipesCollectionView.dataSource = self
         
@@ -61,18 +63,16 @@ class RelatedRecipesTableViewCell: UITableViewCell {
         
         self.contentView.addSubview(relatedRecipesCollectionView)
         
+        let carouselCellSize = CarouselItemCollectionViewCell.carouselCellSize(availableWidth: screenSize.width)
+        let collectionCellHeight = carouselCellSize.height + (verticalSpacing * 2)
         NSLayoutConstraint.activate([
             relatedRecipesCollectionView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
             relatedRecipesCollectionView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
             relatedRecipesCollectionView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),
             relatedRecipesCollectionView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            relatedRecipesCollectionView.heightAnchor.constraint(equalToConstant: collectionCellHeight)
         ])
     }
-    
-    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-        return relatedRecipesCollectionView.contentSize
-    }
-    
 }
 
 extension RelatedRecipesTableViewCell: UICollectionViewDelegateFlowLayout {
@@ -91,11 +91,11 @@ extension RelatedRecipesTableViewCell: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return .zero
+        return Constant.horizontalSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return Constant.horizontalSpacing
+        return .zero
     }
 }
 

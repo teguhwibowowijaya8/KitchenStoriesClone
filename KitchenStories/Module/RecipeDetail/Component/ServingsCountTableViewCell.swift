@@ -102,8 +102,9 @@ class ServingsCountTableViewCell: UITableViewCell {
             return
         }
         
-        removeLoadingView()
         if let serving = serving {
+            removeLoadingView()
+            
             servingNounPlural = serving.servingNounPlural
             servingNounSingular = serving.servingNounSingular
             servingCount = serving.servingCount
@@ -123,7 +124,7 @@ class ServingsCountTableViewCell: UITableViewCell {
             horizontalStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
             horizontalStackView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: Constant.horizontalSpacing),
             horizontalStackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -Constant.horizontalSpacing),
-            horizontalStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10)
+            horizontalStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -15)
         ])
     }
     

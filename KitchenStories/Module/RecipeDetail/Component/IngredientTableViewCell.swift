@@ -17,7 +17,6 @@ class IngredientTableViewCell: UITableViewCell {
     
     private lazy var ingredientNameLabel: UILabel = {
         let ingredientNameLabel = UILabel()
-        ingredientNameLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         ingredientNameLabel.numberOfLines = 0
         ingredientNameLabel.font = .systemFont(ofSize: 13)
@@ -26,13 +25,13 @@ class IngredientTableViewCell: UITableViewCell {
     }()
     
     private lazy var ingredientRatioLabel: UILabel = {
-        let ingredientNameLabel = UILabel()
+        let ingredientRatioLabel = UILabel()
         
-        ingredientNameLabel.font = .systemFont(ofSize: 13, weight: .semibold)
-        ingredientNameLabel.numberOfLines = 0
-        ingredientNameLabel.textAlignment = .right
+        ingredientRatioLabel.font = .systemFont(ofSize: 13, weight: .semibold)
+        ingredientRatioLabel.numberOfLines = 0
+        ingredientRatioLabel.textAlignment = .right
         
-        return ingredientNameLabel
+        return ingredientRatioLabel
     }()
     
     private lazy var containerStackView: UIStackView = {
@@ -41,7 +40,7 @@ class IngredientTableViewCell: UITableViewCell {
         
         containerStackView.axis = .horizontal
         containerStackView.distribution = .fill
-        containerStackView.alignment = .center
+        containerStackView.alignment = .top
         containerStackView.spacing = 8
         
         return containerStackView
@@ -70,8 +69,9 @@ class IngredientTableViewCell: UITableViewCell {
             return
         }
         
-        removeLoadingView()
         if let ingredient = ingredient {
+            removeLoadingView()
+            
             ingredientNameLabel.text = ingredient.ingredientName
             if let ingredientRatio = ingredient.ingredientRatio {
                 ingredientRatioLabel.text = ingredientRatio
@@ -85,6 +85,9 @@ class IngredientTableViewCell: UITableViewCell {
         contentView.addSubview(containerStackView)
         containerStackView.addArrangedSubview(ingredientNameLabel)
         containerStackView.addArrangedSubview(ingredientRatioLabel)
+        ingredientNameLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        ingredientRatioLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
     }
 
     private func setComponentsConstraints() {

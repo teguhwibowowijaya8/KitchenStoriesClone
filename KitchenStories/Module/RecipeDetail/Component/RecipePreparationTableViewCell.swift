@@ -46,11 +46,15 @@ class RecipePreparationTableViewCell: UITableViewCell {
         preparationDescriptionTextView.contentInset = .zero
         preparationDescriptionTextView.textContainerInset = .zero
         
+        preparationDescriptionTextView.setContentHuggingPriority(.required, for: .vertical)
+        preparationDescriptionTextView.setContentCompressionResistancePriority(.required, for: .vertical)
+        
         return preparationDescriptionTextView
     }()
     
     private lazy var preparationStackView: UIStackView = {
         let preparationStackView = UIStackView()
+        preparationStackView.translatesAutoresizingMaskIntoConstraints = false
         
         preparationStackView.axis = .horizontal
         preparationStackView.distribution = .fillProportionally
@@ -69,6 +73,7 @@ class RecipePreparationTableViewCell: UITableViewCell {
         recipePreparation: RecipePreparationCellParams?,
         isLoading: Bool
     ) {
+        self.backgroundColor = .gray.withAlphaComponent(0.3)
         addSubviews()
         setComponentConstraints()
         
@@ -98,12 +103,12 @@ class RecipePreparationTableViewCell: UITableViewCell {
             containerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
             containerView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: Constant.horizontalSpacing),
             containerView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -Constant.horizontalSpacing),
-            containerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10),
+            containerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
             
-            preparationStackView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            preparationStackView.leftAnchor.constraint(equalTo: containerView.leftAnchor),
-            preparationStackView.rightAnchor.constraint(equalTo: containerView.rightAnchor),
-            preparationStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            preparationStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
+            preparationStackView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 5),
+            preparationStackView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -5),
+            preparationStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10),
         ])
     }
     
