@@ -19,7 +19,8 @@ class IngredientTableViewCell: UITableViewCell {
         let ingredientNameLabel = UILabel()
         
         ingredientNameLabel.numberOfLines = 0
-        ingredientNameLabel.font = .systemFont(ofSize: 13)
+        ingredientNameLabel.font = .systemFont(ofSize: 15)
+        ingredientNameLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         return ingredientNameLabel
     }()
@@ -27,7 +28,7 @@ class IngredientTableViewCell: UITableViewCell {
     private lazy var ingredientRatioLabel: UILabel = {
         let ingredientRatioLabel = UILabel()
         
-        ingredientRatioLabel.font = .systemFont(ofSize: 13, weight: .semibold)
+        ingredientRatioLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         ingredientRatioLabel.numberOfLines = 0
         ingredientRatioLabel.textAlignment = .right
         
@@ -40,7 +41,7 @@ class IngredientTableViewCell: UITableViewCell {
         
         containerStackView.axis = .horizontal
         containerStackView.distribution = .fill
-        containerStackView.alignment = .top
+        containerStackView.alignment = .fill
         containerStackView.spacing = 8
         
         return containerStackView
@@ -85,8 +86,6 @@ class IngredientTableViewCell: UITableViewCell {
         contentView.addSubview(containerStackView)
         containerStackView.addArrangedSubview(ingredientNameLabel)
         containerStackView.addArrangedSubview(ingredientRatioLabel)
-        ingredientNameLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        ingredientRatioLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
     }
 

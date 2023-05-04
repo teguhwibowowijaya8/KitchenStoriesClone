@@ -18,7 +18,7 @@ struct RecipeDetailModel: Codable {
     let recipes: [RecipeModel]?
     
     let featuredIn: [FeaturedInModel]
-    let numServings: Int?
+    var numServings: Int?
     let servingsNounSingular: String?
     let servingsNounPlural: String?
     let videoUrl: String?

@@ -37,21 +37,21 @@ class RecipeTipTableViewCell: UITableViewCell {
     @IBOutlet weak var topTipLabel: UILabel! {
         didSet {
             topTipLabel.text = "Top Tip"
-            topTipLabel.font = .systemFont(ofSize: 13)
+            topTipLabel.font = .systemFont(ofSize: 14)
             topTipLabel.numberOfLines = 0
         }
     }
     
     @IBOutlet weak var topTipNameLabel: UILabel! {
         didSet {
-            topTipNameLabel.font = .boldSystemFont(ofSize: 15)
+            topTipNameLabel.font = .boldSystemFont(ofSize: 16)
             topTipNameLabel.numberOfLines = 0
         }
     }
     
     @IBOutlet weak var topTipDescriptionTextView: UITextView! {
         didSet {
-            topTipDescriptionTextView.font = .systemFont(ofSize: 13)
+            topTipDescriptionTextView.font = .systemFont(ofSize: 14)
             topTipDescriptionTextView.contentInset = .zero
             topTipDescriptionTextView.textContainerInset = .zero
         }
@@ -61,7 +61,7 @@ class RecipeTipTableViewCell: UITableViewCell {
         didSet {
             showAllTipsButton.tintColor = Constant.secondaryColor
             showAllTipsButton.setTitle("See all tips and photo >", for: .normal)
-            showAllTipsButton.titleLabel?.font = .boldSystemFont(ofSize: 13)
+            showAllTipsButton.titleLabel?.font = .boldSystemFont(ofSize: 14)
         }
     }
     
@@ -114,14 +114,14 @@ class RecipeTipTableViewCell: UITableViewCell {
         let tipsTitleAttributedText = NSMutableAttributedString(
             string: "Tips",
             attributes: [
-                .font: UIFont.boldSystemFont(ofSize: 15)
+                .font: UIFont.boldSystemFont(ofSize: 18)
             ]
         )
         
         let tipsCountAttributedText = NSAttributedString(
             string: "(\(tipsCount))",
             attributes: [
-                .font: UIFont.systemFont(ofSize: 15)
+                .font: UIFont.systemFont(ofSize: 18)
             ]
         )
         

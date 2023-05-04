@@ -73,7 +73,6 @@ class RecipePreparationTableViewCell: UITableViewCell {
         recipePreparation: RecipePreparationCellParams?,
         isLoading: Bool
     ) {
-        self.backgroundColor = .gray.withAlphaComponent(0.3)
         addSubviews()
         setComponentConstraints()
         

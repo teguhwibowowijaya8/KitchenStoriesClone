@@ -66,8 +66,11 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    
-    @IBOutlet var recipeImageHeightConstraint: NSLayoutConstraint!
+    private lazy var recipeImageHeightConstraint: NSLayoutConstraint = {
+        let recipeImageHeightConstraint = itemImageView.heightAnchor.constraint(equalToConstant: containerView.bounds.height * 0.5)
+        
+        return recipeImageHeightConstraint
+    }()
     
     //    @IBOutlet weak var recipeImageHeightEqualContainerConstraint: NSLayoutConstraint!
     
@@ -81,7 +84,6 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         itemImageView.image = nil
         recipeImageHeightConstraint.isActive = false
-        layoutIfNeeded()
         getNetworkImageService.cancel()
     }
     
@@ -106,6 +108,7 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
             getImageNetworkService: getNetworkImageService
         )
         
+        print("itemName: \(recipe.itemName)")
         itemNameLabel.text = recipe.itemName
         itemNameLabel.textAlignment = recipe.alignLabel
         itemNameLabel.numberOfLines = recipe.maxLines
@@ -127,20 +130,20 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
         
         if let imageHeightConstant = recipe.imageHeight {
             self.recipeImageHeightConstraint.constant = imageHeightConstant
-            self.recipeImageHeightConstraint.priority = .required
+//            self.recipeImageHeightConstraint.priority = .required
             self.recipeImageHeightConstraint.isActive = true
-            
            
         } else if let imageEqualToContainerHeight = recipe.imageHeightEqualToContainerMultiplier {
             self.recipeImageHeightConstraint.constant = self.containerView.bounds.height * imageEqualToContainerHeight
-            self.recipeImageHeightConstraint.priority = .required
+//            self.recipeImageHeightConstraint.priority = .required
             self.recipeImageHeightConstraint.isActive = true
             
         } else {
             self.recipeImageHeightConstraint.isActive = false
         }
         
-        layoutIfNeeded()
+        print("cell height: \(contentView.bounds.height)")
+        print("image view height: \(itemImageView.bounds.height)")
     }
 
     private func showLoadingView() {

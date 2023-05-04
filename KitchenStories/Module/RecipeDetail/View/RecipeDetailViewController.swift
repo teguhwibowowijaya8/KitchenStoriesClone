@@ -27,6 +27,8 @@ class RecipeDetailViewController: UIViewController {
     var recipeId: Int!
     
     private var recipeDetailViewModel: RecipeDetailViewModel!
+    private var preparationCellBackgroundColor: UIColor = .gray.withAlphaComponent(0.3)
+
     
     private lazy var recipeDetailTableView: UITableView = {
         let recipeDetailTableView = UITableView()
@@ -77,7 +79,7 @@ class RecipeDetailViewController: UIViewController {
         let detailHeaderNib = UINib(nibName: DetailHeaderTableViewCell.identifier, bundle: nil)
         recipeDetailTableView.register(detailHeaderNib, forCellReuseIdentifier: DetailHeaderTableViewCell.identifier)
         
-        recipeDetailTableView.register(HomeItemHeaderTableViewCell.self, forCellReuseIdentifier: HomeItemHeaderTableViewCell.identifier)
+        recipeDetailTableView.register(HeaderTitleTableViewCell.self, forCellReuseIdentifier: HeaderTitleTableViewCell.identifier)
         
         recipeDetailTableView.register(ServingsCountTableViewCell.self, forCellReuseIdentifier: ServingsCountTableViewCell.identifier)
         recipeDetailTableView.register(IngredientTableViewCell.self, forCellReuseIdentifier: IngredientTableViewCell.identifier)
@@ -119,7 +121,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
                 let ingredientBodySection = recipeDetailViewModel.ingredientBodySectionIndexes[section] {
                 return ingredientSections[ingredientBodySection].components.count
             } else if recipeDetailViewModel.isLoading {
-                return 5
+                return recipeDetailViewModel.maxRelatedRecipesShown
             }
             return 0
             
@@ -205,8 +207,10 @@ extension RecipeDetailViewController {
     }
     
     private func headerTitleCell(of tableView: UITableView, cellForRowAt indexPath: IndexPath, section: RecipeDetailSection?) -> UITableViewCell {
-        guard let headerTitleCell = tableView.dequeueReusableCell(withIdentifier: HomeItemHeaderTableViewCell.identifier, for: indexPath) as? HomeItemHeaderTableViewCell
+        guard let headerTitleCell = tableView.dequeueReusableCell(withIdentifier: HeaderTitleTableViewCell.identifier, for: indexPath) as? HeaderTitleTableViewCell
         else { return UITableViewCell() }
+        
+        headerTitleCell.backgroundColor = .clear
         
         var showSeeAllButton: Bool = false
         var title: String = "Title"
@@ -214,8 +218,15 @@ extension RecipeDetailViewController {
         switch section {
         case .relatedRecipesHeader:
             title = "Related Recipes"
+            if let relatedRecipes = recipeDetailViewModel.relatedRecipes,
+               relatedRecipes.count > recipeDetailViewModel.maxRelatedRecipesShown {
+                showSeeAllButton = true
+            }
+            
         case .preparationsHeader:
             title = "Preparation"
+            headerTitleCell.backgroundColor = preparationCellBackgroundColor
+            
         case .ingredientsHeader:
             if let recipeDetail = recipeDetailViewModel.recipeDetail,
                let recipeHeaderSection = recipeDetailViewModel.ingredientHeaderSectionIndexes[indexPath.section],
@@ -268,7 +279,7 @@ extension RecipeDetailViewController {
             
             var ingredientName: String = ingredientOfIndex.ingredient.name
             if let extraComment = ingredientOfIndex.extraComment, ingredientOfIndex.extraComment != "" {
-                ingredientName = "\(ingredientName), \(extraComment)"
+                ingredientName = "\(ingredientName.capitalized(with: .current)), \(extraComment)"
             }
             
             ingredient = IngredientCellParams(
@@ -287,6 +298,7 @@ extension RecipeDetailViewController {
         else { return UITableViewCell() }
         
         nutritionInfoHeaderCell.setupCell(showInfo: recipeDetailViewModel.showNutritionInfo, isLoading: recipeDetailViewModel.isLoading)
+        nutritionInfoHeaderCell.delegate = self
         
         return nutritionInfoHeaderCell
     }
@@ -345,6 +357,7 @@ extension RecipeDetailViewController {
         
         relatedRecipesCell.setupCell(
             relatedRecipes: recipeDetailViewModel.relatedRecipes,
+            maxShown: recipeDetailViewModel.maxRelatedRecipesShown,
             screenSize: view.safeAreaLayoutGuide.layoutFrame.size,
             isLoading: recipeDetailViewModel.isLoading
         )
@@ -370,7 +383,17 @@ extension RecipeDetailViewController {
             recipePreparation: recipePreparation,
             isLoading: recipeDetailViewModel.isLoading
         )
+        recipePreparationCell.backgroundColor = preparationCellBackgroundColor
         
         return recipePreparationCell
+    }
+}
+
+extension RecipeDetailViewController: NutritionInfoHeaderCellDelegate {
+    func handleShowNutritionInfo(_ showInfo: Bool) {
+        recipeDetailViewModel.changeShowNutritionInfo()
+        if let nutritionBodySection = recipeDetailViewModel.getSectionIndex(of: .nutritionsBody) {
+            recipeDetailTableView.reloadSections(IndexSet(integer: nutritionBodySection), with: .automatic)
+        }
     }
 }

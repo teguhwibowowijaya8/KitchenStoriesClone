@@ -75,7 +75,7 @@ class HomeViewController: UIViewController {
         homeTableView.estimatedRowHeight = 100
         homeTableView.separatorStyle = .none
         
-        homeTableView.register(HomeItemHeaderTableViewCell.self, forCellReuseIdentifier: HomeItemHeaderTableViewCell.identifier)
+        homeTableView.register(HeaderTitleTableViewCell.self, forCellReuseIdentifier: HeaderTitleTableViewCell.identifier)
         
         homeTableView.register(HomeItemsTableViewCell.self, forCellReuseIdentifier: HomeItemsTableViewCell.identifier)
     }
@@ -118,7 +118,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         switch HomeTableRowType(rawValue: indexPath.row) {
         case .itemsHeader:
-            return HomeItemHeaderTableViewCell.identifier
+            return HeaderTitleTableViewCell.identifier
         default:
             return HomeItemsTableViewCell.identifier
         }
@@ -142,7 +142,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
         
         switch HomeTableRowType(rawValue: indexPath.row) {
         case .itemsHeader:
-            guard let itemsHeaderCell = tableView.dequeueReusableCell(withIdentifier: HomeItemHeaderTableViewCell.identifier) as? HomeItemHeaderTableViewCell
+            guard let itemsHeaderCell = tableView.dequeueReusableCell(withIdentifier: HeaderTitleTableViewCell.identifier) as? HeaderTitleTableViewCell
             else { return UITableViewCell() }
             
             let headerTitle: String

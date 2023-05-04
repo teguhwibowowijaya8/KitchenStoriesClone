@@ -25,7 +25,7 @@ class DetailHeaderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var recipeNameLabel: UILabel! {
         didSet {
-            recipeNameLabel.font = .boldSystemFont(ofSize: 22)
+            recipeNameLabel.font = .boldSystemFont(ofSize: 28)
             recipeNameLabel.numberOfLines = 0
         }
     }
@@ -154,13 +154,13 @@ class DetailHeaderTableViewCell: UITableViewCell {
         let percentageAttributedText = NSMutableAttributedString(
             string: "\(percentage)%",
             attributes: [
-            .font: UIFont.boldSystemFont(ofSize: 13)
+            .font: UIFont.boldSystemFont(ofSize: 14)
         ])
         
         let wouldMakeAgainAttributedText = NSAttributedString(
             string: " would make this again",
             attributes:  [
-            .font: UIFont.systemFont(ofSize: 13)
+            .font: UIFont.systemFont(ofSize: 14)
         ])
         
         percentageAttributedText.append(wouldMakeAgainAttributedText)

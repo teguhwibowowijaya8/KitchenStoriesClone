@@ -29,7 +29,7 @@ class NutritionInfoHeaderTableViewCell: UITableViewCell {
         nutritionTitleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         nutritionTitleLabel.numberOfLines = 0
-        nutritionTitleLabel.font = .boldSystemFont(ofSize: 15)
+        nutritionTitleLabel.font = .boldSystemFont(ofSize: 18)
         nutritionTitleLabel.text = "Nutrition Info"
         
         return nutritionTitleLabel
@@ -115,7 +115,7 @@ class NutritionInfoHeaderTableViewCell: UITableViewCell {
             containerStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
             containerStackView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: Constant.horizontalSpacing),
             containerStackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -Constant.horizontalSpacing),
-            containerStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -15),
+            containerStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8),
         ])
     }
     

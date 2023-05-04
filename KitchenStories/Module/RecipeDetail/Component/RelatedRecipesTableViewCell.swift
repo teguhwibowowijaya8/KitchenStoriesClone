@@ -11,8 +11,8 @@ class RelatedRecipesTableViewCell: UITableViewCell {
     static let identifier = "RelatedRecipesTableViewCell"
     
     private let verticalSpacing: CGFloat = 10
-    private let carouselRecipeCellIdentifier = CarouselItemCollectionViewCell.identifier
-    private let relatedRecipeMaxCount = 5
+    private let recipeCardCellIdentifier = RecipeCardCollectionViewCell.identifier
+    private var relatedRecipeMaxCount: Int!
     
     private var screenSize: CGSize!
     private var isLoading: Bool!
@@ -44,11 +44,13 @@ class RelatedRecipesTableViewCell: UITableViewCell {
     
     func setupCell(
         relatedRecipes: RelatedRecipesModel?,
+        maxShown: Int,
         screenSize: CGSize,
         isLoading: Bool
     ) {
         self.screenSize = screenSize
         self.isLoading = isLoading
+        self.relatedRecipeMaxCount = maxShown
         if let relatedRecipes = relatedRecipes {
             self.relatedRecipes = relatedRecipes
         }
@@ -58,12 +60,12 @@ class RelatedRecipesTableViewCell: UITableViewCell {
     
     
     private func setupCollectionView() {
-        let carouselRecipeCell = UINib(nibName: carouselRecipeCellIdentifier, bundle: nil)
-        relatedRecipesCollectionView.register(carouselRecipeCell, forCellWithReuseIdentifier: carouselRecipeCellIdentifier)
+        let carouselRecipeCell = UINib(nibName: recipeCardCellIdentifier, bundle: nil)
+        relatedRecipesCollectionView.register(carouselRecipeCell, forCellWithReuseIdentifier: recipeCardCellIdentifier)
         
         self.contentView.addSubview(relatedRecipesCollectionView)
         
-        let carouselCellSize = CarouselItemCollectionViewCell.carouselCellSize(availableWidth: screenSize.width)
+        let carouselCellSize = RecipeCardCollectionViewCell.carouselCellSize(availableWidth: screenSize.width)
         let collectionCellHeight = carouselCellSize.height + (verticalSpacing * 2)
         NSLayoutConstraint.activate([
             relatedRecipesCollectionView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -87,7 +89,7 @@ extension RelatedRecipesTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let availableWidth = screenSize.width - (Constant.horizontalSpacing * 2)
-        return CarouselItemCollectionViewCell.carouselCellSize(availableWidth: availableWidth)
+        return RecipeCardCollectionViewCell.carouselCellSize(availableWidth: availableWidth)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -109,20 +111,23 @@ extension RelatedRecipesTableViewCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let carouselRecipeCell = collectionView.dequeueReusableCell(withReuseIdentifier: carouselRecipeCellIdentifier, for: indexPath) as? CarouselItemCollectionViewCell
+        guard let recipeCardCell = collectionView.dequeueReusableCell(withReuseIdentifier: recipeCardCellIdentifier, for: indexPath) as? RecipeCardCollectionViewCell
         else { return UICollectionViewCell() }
         
-        var relatedRecipeOfIndex: RecipeModel? = nil
-        if let relatedRecipes = relatedRecipes?.results {
-            relatedRecipeOfIndex = relatedRecipes[indexPath.row]
+        var recipeCardParams: RecipeCardCellParams?
+        if let recipeOfIndex = relatedRecipes?.results[indexPath.row] {
+            recipeCardParams = RecipeCardCellParams(
+                imageUrlString: recipeOfIndex.thumbnailUrlString,
+                itemName: recipeOfIndex.name,
+                alignLabel: .center,
+                imageHeightEqualToContainerMultiplier: 0.7
+            )
+            print("relatedRecipeName: \(recipeOfIndex.name)")
         }
         
-        carouselRecipeCell.setupCell(
-            imageUrlString: relatedRecipeOfIndex?.thumbnailUrlString,
-            itemName: relatedRecipeOfIndex?.name
-        )
+        recipeCardCell.setupCell(recipe: recipeCardParams, isLoading: isLoading)
         
-        return carouselRecipeCell
+        return recipeCardCell
     }
     
     

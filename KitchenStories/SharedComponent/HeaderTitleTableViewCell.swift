@@ -1,5 +1,5 @@
 //
-//  HomeItemHeaderTableViewCell.swift
+//  HeaderTitleTableViewCell.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 11/04/23.
@@ -8,15 +8,15 @@
 import UIKit
 import SkeletonView
 
-protocol HomeItemHeaderCellDelegate {
+protocol HeaderTitleCellDelegate {
     func handleOnSeeAllButtonSelected()
 }
 
-class HomeItemHeaderTableViewCell: UITableViewCell {
+class HeaderTitleTableViewCell: UITableViewCell {
     
-    static let identifier = "HomeItemHeaderTableViewCell"
+    static let identifier = "HeaderTitleTableViewCell"
     
-    var delegate: HomeItemHeaderCellDelegate?
+    var delegate: HeaderTitleCellDelegate?
     
     private lazy var headerTitleLabel: UILabel = {
        let headerTitleLabel = UILabel()
@@ -73,7 +73,6 @@ class HomeItemHeaderTableViewCell: UITableViewCell {
     ) {
         addSubviews()
         setComponentsConstraints()
-        self.backgroundColor = .clear
         
         guard isLoading == false
         else {

@@ -34,7 +34,7 @@ class ServingsCountTableViewCell: UITableViewCell {
         
         servingTitleLabel.text = "Ingredients for"
         servingTitleLabel.numberOfLines = 0
-        servingTitleLabel.font = .boldSystemFont(ofSize: 14)
+        servingTitleLabel.font = .boldSystemFont(ofSize: 18)
         
         return servingTitleLabel
     }()
@@ -43,7 +43,7 @@ class ServingsCountTableViewCell: UITableViewCell {
        let servingCountLabel = UILabel()
         
         servingCountLabel.numberOfLines = 0
-        servingCountLabel.font = .systemFont(ofSize: 15)
+        servingCountLabel.font = .systemFont(ofSize: 17)
         
         return servingCountLabel
     }()

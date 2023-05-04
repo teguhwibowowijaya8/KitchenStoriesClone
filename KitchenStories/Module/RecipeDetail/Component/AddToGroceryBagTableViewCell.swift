@@ -21,7 +21,7 @@ class AddToGroceryBagTableViewCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         titleLabel.text = "Save time, shop ingredients"
-        titleLabel.font = .boldSystemFont(ofSize: 15)
+        titleLabel.font = .boldSystemFont(ofSize: 18)
         titleLabel.numberOfLines = 0
         
         return titleLabel
@@ -33,7 +33,7 @@ class AddToGroceryBagTableViewCell: UITableViewCell {
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         subTitleLabel.text = "Build your grocery bag with Kitchen Stories to save your time and organize your grocery bag."
-        subTitleLabel.font = .systemFont(ofSize: 13)
+        subTitleLabel.font = .systemFont(ofSize: 15)
         subTitleLabel.numberOfLines = 0
         
         return subTitleLabel
@@ -75,7 +75,7 @@ class AddToGroceryBagTableViewCell: UITableViewCell {
     
     private func setComponentsConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
+            titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
             titleLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: Constant.horizontalSpacing),
             titleLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -Constant.horizontalSpacing),
             

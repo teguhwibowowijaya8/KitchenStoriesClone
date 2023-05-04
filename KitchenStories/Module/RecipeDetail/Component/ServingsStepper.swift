@@ -14,7 +14,13 @@ protocol ServingStepperDelegate {
 
 class ServingStepper: UIView {
     private var value: Int = 1 {
-        didSet {
+        didSet(oldValue) {
+            if value < minValue {
+                value = minValue
+            } else if value > maxValue {
+                value = maxValue
+            }
+            
             numberLabel.text = "\(value)"
         }
     }
@@ -33,12 +39,16 @@ class ServingStepper: UIView {
         }
     }
     
-    static private let minusImage: UIImage = UIImage(systemName: "minus")!
-    static private let plusImage: UIImage = UIImage(systemName: "plus")!
+    private lazy var imageButtonConfig: UIImage.SymbolConfiguration = {
+        return UIImage.SymbolConfiguration(pointSize: buttonWidth * 0.5, weight: .semibold, scale: .medium)
+    }()
+    
+    private let minusImage: UIImage = UIImage(systemName: "minus")!
+    private let plusImage: UIImage = UIImage(systemName: "plus")!
     
     var delegate: ServingStepperDelegate?
     
-    var buttonWidth: CGFloat = 35 {
+    var buttonWidth: CGFloat = 30 {
         didSet {
             minusButtonWidth.constant = buttonWidth
             plusButtonWidth.constant = buttonWidth
@@ -65,7 +75,10 @@ class ServingStepper: UIView {
     
     private lazy var minusButton: UIButton = {
         let minusButton = UIButton(type: .system)
-        minusButton.setImage(ServingStepper.minusImage, for: .normal)
+        minusButton.setImage(
+            minusImage.withConfiguration(imageButtonConfig),
+            for: .normal
+        )
         minusButton.tintColor = Constant.secondaryColor
         
         return minusButton
@@ -73,7 +86,7 @@ class ServingStepper: UIView {
     
     private lazy var numberLabel: UILabel = {
         let numberLabel = UILabel()
-        numberLabel.font = .systemFont(ofSize: 13)
+        numberLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         numberLabel.textAlignment = .center
         
         return numberLabel
@@ -81,7 +94,10 @@ class ServingStepper: UIView {
     
     private lazy var plusButton: UIButton = {
         let plusButton = UIButton(type: .system)
-        plusButton.setImage(ServingStepper.plusImage, for: .normal)
+        plusButton.setImage(
+            plusImage.withConfiguration(imageButtonConfig),
+            for: .normal
+        )
         plusButton.tintColor = Constant.secondaryColor
         
         return plusButton
@@ -102,6 +118,10 @@ class ServingStepper: UIView {
         containerStackView.spacing = 5
         
         return containerStackView
+    }()
+    
+    private lazy var stepperHeight: NSLayoutConstraint = {
+        return containerStackView.heightAnchor.constraint(equalToConstant: 30)
     }()
     
     override init(frame: CGRect) {
@@ -136,6 +156,7 @@ class ServingStepper: UIView {
             containerStackView.rightAnchor.constraint(equalTo: self.rightAnchor),
             containerStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
+            stepperHeight,
             minusButtonWidth,
             plusButtonWidth,
             numberLabelWidth
@@ -148,11 +169,11 @@ class ServingStepper: UIView {
     }
     
     @objc func handlePlusMinButtonSelected(_ sender: UIButton) {
-        if sender.currentImage == ServingStepper.minusImage {
+        if sender.currentImage == minusImage.withConfiguration(imageButtonConfig) {
             if value <= minValue {
                 value = minValue
             } else { value -= 1 }
-        } else if sender.currentImage == ServingStepper.plusImage {
+        } else if sender.currentImage == plusImage.withConfiguration(imageButtonConfig) {
             if value >= maxValue {
                 value = maxValue
             } else { value += 1 }

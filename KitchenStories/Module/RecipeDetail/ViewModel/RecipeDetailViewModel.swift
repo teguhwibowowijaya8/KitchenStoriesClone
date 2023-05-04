@@ -30,6 +30,8 @@ class RecipeDetailViewModel {
     var relatedRecipesErrorMessage: String?
     var delegate: RecipeDetailViewModelDelegate?
     
+    let maxRelatedRecipesShown: Int = 5
+    
     var showNutritionInfo: Bool = false
     
     var detailsSection: [RecipeDetailSection] = []
@@ -66,6 +68,20 @@ class RecipeDetailViewModel {
             .preparationsBody,
         ]
         detailsSection = defaultSection
+    }
+    
+    func changeShowNutritionInfo() {
+        self.showNutritionInfo.toggle()
+    }
+    
+    func getSectionIndex(of section: RecipeDetailSection) -> Int? {
+        for (index, currentSection) in detailsSection.enumerated() {
+            if currentSection == section {
+                return index
+            }
+        }
+        
+        return nil
     }
     
     func getDetail() {

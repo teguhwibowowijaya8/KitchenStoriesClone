@@ -18,9 +18,9 @@ struct IngredientComponentModel: Codable {
         var measurementString: String = ""
         for (index, measurement) in measurements.enumerated() {
             if index == 0 {
-                measurementString = measurement.measurementString(servingCount: servingCount)
+                measurementString = measurement.measurementString
             } else {
-                measurementString += "(\(measurement.measurementString(servingCount: servingCount)))"
+                measurementString += " (\(measurement.measurementString))"
             }
         }
         

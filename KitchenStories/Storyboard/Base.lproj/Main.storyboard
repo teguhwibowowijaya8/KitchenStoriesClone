@@ -15,8 +15,44 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GlN-0w-7Nt">
+                                <rect key="frame" x="0.0" y="59.000000000000007" width="393" height="20.333333333333336"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UUE-bt-oIX">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="20.333333333333332"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y4e-cz-PC6">
+                                                <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qjk-3J-SVy">
+                                                <rect key="frame" x="351.66666666666669" y="0.0" width="41.333333333333314" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="UUE-bt-oIX" firstAttribute="top" secondItem="GlN-0w-7Nt" secondAttribute="top" id="A2B-kk-wwA"/>
+                                    <constraint firstAttribute="bottom" secondItem="UUE-bt-oIX" secondAttribute="bottom" id="DBh-60-yct"/>
+                                    <constraint firstItem="UUE-bt-oIX" firstAttribute="leading" secondItem="GlN-0w-7Nt" secondAttribute="leading" id="rIA-Xz-ily"/>
+                                    <constraint firstAttribute="trailing" secondItem="UUE-bt-oIX" secondAttribute="trailing" id="u7q-3n-bWI"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="GlN-0w-7Nt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="joC-G0-SZ1"/>
+                            <constraint firstItem="GlN-0w-7Nt" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="k59-5w-gBn"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GlN-0w-7Nt" secondAttribute="trailing" id="mjS-1r-R8M"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
