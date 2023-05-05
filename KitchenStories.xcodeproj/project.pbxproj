@@ -41,6 +41,10 @@
 		7ABBC6C42A04A0FA00A4D146 /* UITextView+removePadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6C32A04A0FA00A4D146 /* UITextView+removePadding.swift */; };
 		7ABBC6C92A05006C00A4D146 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6C82A05006C00A4D146 /* ProfileViewModel.swift */; };
 		7ABBC6CB2A05022F00A4D146 /* ProfileAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6CA2A05022F00A4D146 /* ProfileAccountTableViewCell.swift */; };
+		7ABBC6CD2A0566D700A4D146 /* ProfileSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6CC2A0566D600A4D146 /* ProfileSettingTableViewCell.swift */; };
+		7ABBC6D22A05752300A4D146 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6D12A05752300A4D146 /* SettingModel.swift */; };
+		7ABBC6D42A05757F00A4D146 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6D32A05757F00A4D146 /* SettingSectionModel.swift */; };
+		7ABBC6D62A05773B00A4D146 /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6D52A05773B00A4D146 /* UserProfileModel.swift */; };
 		7AC5933A29E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933929E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift */; };
 		7AC5933C29E309A000667F3E /* RoundedCornersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */; };
 		7AC5933F29E3B43A00667F3E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933E29E3B43A00667F3E /* RegisterViewModel.swift */; };
@@ -130,6 +134,10 @@
 		7ABBC6C32A04A0FA00A4D146 /* UITextView+removePadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+removePadding.swift"; sourceTree = "<group>"; };
 		7ABBC6C82A05006C00A4D146 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		7ABBC6CA2A05022F00A4D146 /* ProfileAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAccountTableViewCell.swift; sourceTree = "<group>"; };
+		7ABBC6CC2A0566D600A4D146 /* ProfileSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingTableViewCell.swift; sourceTree = "<group>"; };
+		7ABBC6D12A05752300A4D146 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
+		7ABBC6D32A05757F00A4D146 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
+		7ABBC6D52A05773B00A4D146 /* UserProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
 		7AC5933929E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeGreetingCollectionViewCell.swift; sourceTree = "<group>"; };
 		7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersButton.swift; sourceTree = "<group>"; };
 		7AC5933E29E3B43A00667F3E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -353,6 +361,7 @@
 		7ABA0F9129DE573900E58FBA /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				7ABBC6D02A05751900A4D146 /* Model */,
 				7ABBC6C72A05004A00A4D146 /* ViewModel */,
 				7ABBC6C52A04FB1100A4D146 /* View */,
 				7ABBC6C62A04FFEE00A4D146 /* Component */,
@@ -417,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				7ABBC6CA2A05022F00A4D146 /* ProfileAccountTableViewCell.swift */,
+				7ABBC6CC2A0566D600A4D146 /* ProfileSettingTableViewCell.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -427,6 +437,16 @@
 				7ABBC6C82A05006C00A4D146 /* ProfileViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7ABBC6D02A05751900A4D146 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7ABBC6D32A05757F00A4D146 /* SettingSectionModel.swift */,
+				7ABBC6D12A05752300A4D146 /* SettingModel.swift */,
+				7ABBC6D52A05773B00A4D146 /* UserProfileModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		7AC5933829E3004000667F3E /* Component */ = {
@@ -730,10 +750,12 @@
 				7ABA0FA829DE81C900E58FBA /* GetNetworkImageService.swift in Sources */,
 				7ABA0FA429DE787700E58FBA /* ParseDataService.swift in Sources */,
 				7A06F64E29E7BB6A004FE00F /* RecipeDetailViewController.swift in Sources */,
+				7ABBC6D42A05757F00A4D146 /* SettingSectionModel.swift in Sources */,
 				7AC5935029E4F41B00667F3E /* RecipeModel.swift in Sources */,
 				7ABA0F9B29DE5BA300E58FBA /* RegisterViewController.swift in Sources */,
 				7AF7DC7C2A000CC300068D3B /* RecipePreparationTableViewCell.swift in Sources */,
 				7ABA0F6E29DD53F500E58FBA /* AppDelegate.swift in Sources */,
+				7ABBC6CD2A0566D700A4D146 /* ProfileSettingTableViewCell.swift in Sources */,
 				7AF7DCA12A00F1D600068D3B /* GetRecipeDetailAPIService.swift in Sources */,
 				7AF7DC822A00C18300068D3B /* RecipeDetailModel.swift in Sources */,
 				7AF7DC842A00C69F00068D3B /* IngredientSectionModel.swift in Sources */,
@@ -748,6 +770,7 @@
 				7ABA0F9829DE5A1600E58FBA /* Constant.swift in Sources */,
 				7AC5935229E4F49000667F3E /* RecipeIngredientsPriceModel.swift in Sources */,
 				7AC632EC29F6E0F1009ABB08 /* UITableViewCell+getTableView.swift in Sources */,
+				7ABBC6D62A05773B00A4D146 /* UserProfileModel.swift in Sources */,
 				7AC5935D29E514A000667F3E /* HomeItemsTableViewCell.swift in Sources */,
 				7ABA0F8D29DE50FA00E58FBA /* TabBarController.swift in Sources */,
 				7ABBC6C92A05006C00A4D146 /* ProfileViewModel.swift in Sources */,
@@ -756,6 +779,7 @@
 				7A06F64B29E7B2B1004FE00F /* DynamicHeightCollectionView.swift in Sources */,
 				7AC5933F29E3B43A00667F3E /* RegisterViewModel.swift in Sources */,
 				7AC5935B29E50E4000667F3E /* HeaderTitleTableViewCell.swift in Sources */,
+				7ABBC6D22A05752300A4D146 /* SettingModel.swift in Sources */,
 				7ABA0FA229DE6D4A00E58FBA /* FetchDataService.swift in Sources */,
 				7ABA0FAB29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift in Sources */,
 				7AF7DC862A00C7EE00068D3B /* IngredientComponentModel.swift in Sources */,
