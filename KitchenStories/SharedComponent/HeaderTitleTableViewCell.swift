@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SkeletonView
 
 protocol HeaderTitleCellDelegate {
     func handleOnSeeAllButtonSelected()

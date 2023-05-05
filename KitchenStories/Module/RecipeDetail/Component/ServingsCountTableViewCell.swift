@@ -150,15 +150,8 @@ class ServingsCountTableViewCell: UITableViewCell {
 }
 
 extension ServingsCountTableViewCell: ServingStepperDelegate {
-    func didMinButtonSelected(_ value: Int) {
+    func handleServingValueChanged(_ value: Int) {
         servingCount = value
-        delegate?.didMinButtonSelected(value)
+        delegate?.handleServingValueChanged(value)
     }
-    
-    func didPlusButtonSelected(_ value: Int) {
-        servingCount = value
-        delegate?.didPlusButtonSelected(value)
-    }
-    
-    
 }

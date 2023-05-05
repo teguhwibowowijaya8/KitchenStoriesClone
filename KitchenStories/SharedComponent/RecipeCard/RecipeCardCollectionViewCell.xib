@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,13 +22,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="272" height="357"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y3k-fK-g2r">
-                                <rect key="frame" x="0.0" y="0.0" width="272" height="250.66666666666666"/>
+                                <rect key="frame" x="0.0" y="0.0" width="272" height="232.66666666666666"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zwy-mA-uir">
-                                        <rect key="frame" x="0.0" y="0.0" width="272" height="250.66666666666666"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="272" height="232.66666666666666"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EUr-Hf-QzG">
-                                        <rect key="frame" x="232" y="210.66666666666666" width="30" height="30"/>
+                                        <rect key="frame" x="232" y="192.66666666666666" width="30" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="KeJ-n0-e6m"/>
@@ -49,22 +50,27 @@
                                     <constraint firstAttribute="bottom" secondItem="Zwy-mA-uir" secondAttribute="bottom" id="W0u-3O-XEZ"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="91f-lA-W8D">
-                                <rect key="frame" x="10" y="260.66666666666669" width="252" height="86.333333333333314"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="91f-lA-W8D">
+                                <rect key="frame" x="10" y="242.66666666666666" width="252" height="104.33333333333334"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Label Label Label Label Label Label Label Label Label Label Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ows-rA-7rd">
-                                        <rect key="frame" x="0.0" y="0.0" width="252" height="61"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E0S-7a-f2l">
-                                        <rect key="frame" x="0.0" y="66" width="252" height="20.333333333333329"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Title Label Title Label Title Label Title Label Title Label Title Label Title Label Title Label Title Label" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CPd-wo-kd5">
+                                        <rect key="frame" x="0.0" y="0.0" width="252" height="66.333333333333329"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Title Label" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MwT-mV-I6e">
+                                        <rect key="frame" x="0.0" y="71.333333333333343" width="252" height="33"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="OnO-eN-Z5h"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -90,15 +96,21 @@
             <size key="customSize" width="272" height="357"/>
             <connections>
                 <outlet property="containerView" destination="Sm7-3u-TrV" id="zGs-Ce-yL2"/>
-                <outlet property="itemFeedCreditsLabel" destination="E0S-7a-f2l" id="NXH-xx-Sqi"/>
+                <outlet property="imageContainerView" destination="y3k-fK-g2r" id="p0R-Dn-3JJ"/>
+                <outlet property="itemFeedCreditsLabel" destination="MwT-mV-I6e" id="T3f-Yt-fHj"/>
                 <outlet property="itemImageView" destination="Zwy-mA-uir" id="m0r-54-5hD"/>
                 <outlet property="itemIsLikedButton" destination="EUr-Hf-QzG" id="vYV-wk-djR"/>
-                <outlet property="itemNameLabel" destination="Ows-rA-7rd" id="Zve-K7-FZd"/>
+                <outlet property="itemNameLabel" destination="CPd-wo-kd5" id="QDd-6A-8Qz"/>
+                <outlet property="textViewsContainer" destination="91f-lA-W8D" id="qBH-N7-vIj"/>
+                <outlet property="textViewsContainerHeight" destination="OnO-eN-Z5h" id="CcP-4L-AP1"/>
             </connections>
             <point key="canvasLocation" x="138.93129770992365" y="127.8169014084507"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="heart" catalog="system" width="128" height="107"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

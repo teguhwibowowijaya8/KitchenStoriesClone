@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SkeletonView
 
 class CarouselItemCollectionViewCell: UICollectionViewCell {
     static let identifier = "CarouselItemCollectionViewCell"
@@ -18,7 +17,6 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var containerView: UIView! {
         didSet {
-            containerView.isSkeletonable = true
             containerView.layer.cornerRadius = Constant.cornerRadius
             containerView.clipsToBounds = true
         }
@@ -26,7 +24,6 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemImageView: UIImageView! {
         didSet {
-            itemImageView.isSkeletonable = true
             itemImageView.contentMode = .scaleAspectFill
             itemImageView.layer.cornerRadius = Constant.cornerRadius
         }
@@ -43,7 +40,6 @@ class CarouselItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemNameLabel: UILabel! {
         didSet {
-            itemNameLabel.isSkeletonable = true
             itemNameLabel.numberOfLines = 0
             itemNameLabel.textAlignment = .center
             itemNameLabel.font = .boldSystemFont(ofSize: 15)

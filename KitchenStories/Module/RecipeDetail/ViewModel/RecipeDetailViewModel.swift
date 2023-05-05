@@ -74,6 +74,10 @@ class RecipeDetailViewModel {
         self.showNutritionInfo.toggle()
     }
     
+    func changeServingNums(to value: Int) {
+        recipeDetail?.numServings = value
+    }
+    
     func getSectionIndex(of section: RecipeDetailSection) -> Int? {
         for (index, currentSection) in detailsSection.enumerated() {
             if currentSection == section {

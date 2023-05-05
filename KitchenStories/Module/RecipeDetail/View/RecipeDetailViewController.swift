@@ -262,6 +262,7 @@ extension RecipeDetailViewController {
         }
         
         ingredientsServingCell.setupCell(serving: serving, isLoading: recipeDetailViewModel.isLoading)
+        ingredientsServingCell.delegate = self
         
         return ingredientsServingCell
     }
@@ -277,9 +278,9 @@ extension RecipeDetailViewController {
             let ingredientSection = ingredientSections[ingredientsBodySection]
             let ingredientOfIndex = ingredientSection.components[indexPath.row]
             
-            var ingredientName: String = ingredientOfIndex.ingredient.name
+            var ingredientName: String = ingredientOfIndex.ingredient.name.capitalized(with: .current)
             if let extraComment = ingredientOfIndex.extraComment, ingredientOfIndex.extraComment != "" {
-                ingredientName = "\(ingredientName.capitalized(with: .current)), \(extraComment)"
+                ingredientName = "\(ingredientName), \(extraComment)"
             }
             
             ingredient = IngredientCellParams(
@@ -396,4 +397,12 @@ extension RecipeDetailViewController: NutritionInfoHeaderCellDelegate {
             recipeDetailTableView.reloadSections(IndexSet(integer: nutritionBodySection), with: .automatic)
         }
     }
+}
+
+extension RecipeDetailViewController: ServingStepperDelegate {
+    func handleServingValueChanged(_ value: Int) {
+        recipeDetailViewModel.changeServingNums(to: value)
+    }
+    
+    
 }

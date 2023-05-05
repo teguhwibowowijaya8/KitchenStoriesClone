@@ -31,6 +31,8 @@ class IngredientTableViewCell: UITableViewCell {
         ingredientRatioLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         ingredientRatioLabel.numberOfLines = 0
         ingredientRatioLabel.textAlignment = .right
+        ingredientRatioLabel.setContentHuggingPriority(.required, for: .horizontal)
+        ingredientRatioLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         
         return ingredientRatioLabel
     }()
@@ -41,7 +43,7 @@ class IngredientTableViewCell: UITableViewCell {
         
         containerStackView.axis = .horizontal
         containerStackView.distribution = .fill
-        containerStackView.alignment = .fill
+        containerStackView.alignment = .top
         containerStackView.spacing = 8
         
         return containerStackView

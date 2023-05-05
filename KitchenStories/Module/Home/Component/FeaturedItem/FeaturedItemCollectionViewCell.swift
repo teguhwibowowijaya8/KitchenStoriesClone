@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SkeletonView
 
 class FeaturedItemCollectionViewCell: UICollectionViewCell {
     static let identifier = "FeaturedItemCollectionViewCell"
@@ -19,7 +18,6 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var containerView: UIView! {
         didSet {
-            containerView.isSkeletonable = true
             containerView.layer.cornerRadius = Constant.cornerRadius
             containerView.clipsToBounds = true
             containerView.backgroundColor = containerBackgroundColor
@@ -28,7 +26,6 @@ class FeaturedItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemImageView: UIImageView! {
         didSet {
-            itemImageView.isSkeletonable = true
             itemImageView.contentMode = .scaleAspectFill
         }
     }

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SkeletonView
 
 enum HomeTableRowType: Int {
     case itemsHeader
@@ -22,7 +21,6 @@ class HomeViewController: UIViewController {
     
     private lazy var homeTableView: UITableView = {
         let homeTableView = UITableView()
-        homeTableView.isSkeletonable = true
         homeTableView.translatesAutoresizingMaskIntoConstraints = false
         
         return homeTableView
@@ -46,17 +44,7 @@ class HomeViewController: UIViewController {
         homeViewModel = HomeViewModel()
         homeViewModel?.delegate = self
         
-        showSkeleton()
         homeViewModel?.fetchFeeds()
-    }
-    
-    private func showSkeleton() {
-        homeTableView.showSkeleton()
-    }
-    
-    private func hideSkeleton() {
-        homeTableView.stopSkeletonAnimation()
-        homeTableView.hideSkeleton()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -97,14 +85,13 @@ extension HomeViewController: HomeViewModelDelegate {
             print(errorMessage)
         } else {
             DispatchQueue.main.async {
-                self.hideSkeleton()
                 self.homeTableView.reloadData()
             }
         }
     }
 }
 
-extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDelegate {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let sectionCount = homeViewModel?.feeds?.results.count
         else { return homeViewModel?.dummyFeeds.results.count ?? 0 }
@@ -113,15 +100,6 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
-    }
-    
-    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        switch HomeTableRowType(rawValue: indexPath.row) {
-        case .itemsHeader:
-            return HeaderTitleTableViewCell.identifier
-        default:
-            return HomeItemsTableViewCell.identifier
-        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

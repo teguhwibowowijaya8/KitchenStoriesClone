@@ -17,7 +17,6 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var containerView: UIView! {
         didSet {
-            containerView.isSkeletonable = true
             containerView.backgroundColor = containerBackgroundColor
             containerView.layer.cornerRadius = Constant.cornerRadius
         }
@@ -25,7 +24,6 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemImageView: UIImageView! {
         didSet {
-            itemImageView.isSkeletonable = true
             itemImageView.contentMode = .scaleAspectFill
             itemImageView.layer.cornerRadius = Constant.cornerRadius
         }
@@ -33,7 +31,6 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemNameLabel: UILabel! {
         didSet {
-            itemNameLabel.isSkeletonable = true
             itemNameLabel.font = .boldSystemFont(ofSize: 16)
             itemNameLabel.numberOfLines = 4
         }
@@ -42,7 +39,6 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var itemRecipesCountLabel: UILabel! {
         didSet {
-            itemRecipesCountLabel.isSkeletonable = true
             itemRecipesCountLabel.font = .systemFont(ofSize: 12)
             itemRecipesCountLabel.textColor = .darkGray
             itemRecipesCountLabel.adjustsFontSizeToFitWidth = true
@@ -52,7 +48,6 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var shopIngredientsButton: UIButton! {
         didSet {
-            shopIngredientsButton.isSkeletonable = true
             shopIngredientsButton.tintColor = .white
             shopIngredientsButton.backgroundColor = .red.withAlphaComponent(0.5)
             shopIngredientsButton.layer.cornerRadius = Constant.cornerRadius

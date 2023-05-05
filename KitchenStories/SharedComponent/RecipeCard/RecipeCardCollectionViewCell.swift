@@ -15,7 +15,7 @@ struct RecipeCardCellParams {
     var backgroundColor: UIColor = .clear
     var alignLabel: NSTextAlignment = .left
     var recipeNameFont: UIFont = .boldSystemFont(ofSize: 15)
-    var recipeCreditFont: UIFont?
+    var recipeCreditFont: UIFont = .systemFont(ofSize: 12)
     var maxLines: Int = 3
     var imageHeight: CGFloat?
     var imageHeightEqualToContainerMultiplier: CGFloat?
@@ -37,6 +37,9 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    
+    @IBOutlet var imageContainerView: UIView!
+    
     @IBOutlet weak var itemImageView: UIImageView! {
         didSet {
             itemImageView.contentMode = .scaleAspectFill
@@ -52,39 +55,41 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    @IBOutlet weak var itemNameLabel: UILabel! {
+    @IBOutlet weak var textViewsContainer: UIStackView!
+    
+    @IBOutlet weak var itemNameLabel: UITextView! {
         didSet {
-            itemNameLabel.numberOfLines = 0
+            itemNameLabel.removePadding()
         }
     }
     
-    @IBOutlet weak var itemFeedCreditsLabel: UILabel! {
+    @IBOutlet weak var itemFeedCreditsLabel: UITextView! {
         didSet {
-            itemFeedCreditsLabel.font = .systemFont(ofSize: 12)
-            itemFeedCreditsLabel.numberOfLines = 0
+            itemFeedCreditsLabel.removePadding()
             itemFeedCreditsLabel.isHidden = true
         }
     }
     
-    private lazy var recipeImageHeightConstraint: NSLayoutConstraint = {
-        let recipeImageHeightConstraint = itemImageView.heightAnchor.constraint(equalToConstant: containerView.bounds.height * 0.5)
-        
-        return recipeImageHeightConstraint
-    }()
     
-    //    @IBOutlet weak var recipeImageHeightEqualContainerConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewsContainerHeight: NSLayoutConstraint!
     
+//    @IBOutlet var recipeImageHeightConstraint: NSLayoutConstraint!
+//
+//    @IBOutlet weak var recipeImageHeightEqualContainerConstraint: NSLayoutConstraint!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         itemImageView.image = nil
-        recipeImageHeightConstraint.isActive = false
+//        recipeImageHeightConstraint?.isActive = false
+//        recipeImageHeightConstraint = nil
+        textViewsContainerHeight.constant = 20
+        itemFeedCreditsLabel.isHidden = true
         getNetworkImageService.cancel()
+        
+//        recipeImageHeightConstraint = imageContainerView.heightAnchor.constraint(equalToConstant: containerView.bounds.height * 0.7)
+//        recipeImageHeightConstraint?.isActive = false
+        
     }
     
     func setupCell(
@@ -108,10 +113,9 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
             getImageNetworkService: getNetworkImageService
         )
         
-        print("itemName: \(recipe.itemName)")
         itemNameLabel.text = recipe.itemName
         itemNameLabel.textAlignment = recipe.alignLabel
-        itemNameLabel.numberOfLines = recipe.maxLines
+        itemNameLabel.textContainer.maximumNumberOfLines = recipe.maxLines
         itemNameLabel.font = recipe.recipeNameFont
         
         let isLikedButtonImage = isLikedImage(recipe.isLiked)
@@ -119,31 +123,64 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
         
         if let itemFeedCredits = recipe.itemFeedCredits {
             itemFeedCreditsLabel.text = "Presented by \(itemFeedCredits)"
+            itemFeedCreditsLabel.font = recipe.recipeCreditFont
             itemFeedCreditsLabel.isHidden = false
             itemFeedCreditsLabel.textAlignment = recipe.alignLabel
-            itemFeedCreditsLabel.numberOfLines = recipe.maxLines
+            itemFeedCreditsLabel.textContainer.maximumNumberOfLines = recipe.maxLines
+        }
+        
+        if recipe.maxLines != 0 {
+            var textContainerHeight: CGFloat
             
-            if let recipeCreditFont = recipe.recipeCreditFont {
-                itemFeedCreditsLabel.font = recipeCreditFont
+            textContainerHeight = getTextHeight(of: recipe.recipeNameFont.pointSize, maxLines: recipe.maxLines, desiredText: recipe.itemName)
+            
+            if let itemFeedCredits = recipe.itemFeedCredits {
+                textContainerHeight += getTextHeight(of: recipe.recipeCreditFont.pointSize, maxLines: recipe.maxLines, desiredText: itemFeedCredits)
+                textContainerHeight += textViewsContainer.spacing
             }
-        }
-        
-        if let imageHeightConstant = recipe.imageHeight {
-            self.recipeImageHeightConstraint.constant = imageHeightConstant
-//            self.recipeImageHeightConstraint.priority = .required
-            self.recipeImageHeightConstraint.isActive = true
-           
-        } else if let imageEqualToContainerHeight = recipe.imageHeightEqualToContainerMultiplier {
-            self.recipeImageHeightConstraint.constant = self.containerView.bounds.height * imageEqualToContainerHeight
-//            self.recipeImageHeightConstraint.priority = .required
-            self.recipeImageHeightConstraint.isActive = true
             
-        } else {
-            self.recipeImageHeightConstraint.isActive = false
+            textViewsContainerHeight.constant = textContainerHeight
         }
         
-        print("cell height: \(contentView.bounds.height)")
-        print("image view height: \(itemImageView.bounds.height)")
+//        setImageHeightConstraint(constant: recipe.imageHeight, multiplier: recipe.imageHeightEqualToContainerMultiplier)
+    }
+    
+//    private func setImageHeightConstraint(constant: CGFloat?, multiplier: CGFloat?) {
+//
+//        if let imageHeightConstant = constant {
+//            self.recipeImageHeightConstraint?.constant = imageHeightConstant
+//            self.recipeImageHeightConstraint.priority = .required
+//
+//            self.recipeImageHeightEqualContainerConstraint.priority = .init(999)
+//
+//        } else if let imageMultiplierToContainer = multiplier {
+//            self.recipeImageHeightConstraint?.constant = self.containerView.bounds.height * imageMultiplierToContainer
+//            self.recipeImageHeightConstraint.priority = .required
+//
+//            self.recipeImageHeightEqualContainerConstraint.priority = .init(999)
+//
+//        } else {
+//
+//            self.recipeImageHeightEqualContainerConstraint.priority = .init(999)
+//            self.recipeImageHeightConstraint.priority = .init(999)
+////            self.recipeImageHeightConstraint?.constant = defaultImageHeight
+//        }
+//    }
+    
+    private func getTextHeight(of textSize: CGFloat, maxLines: Int, desiredText: String) -> CGFloat {
+        let singleLineTextView = UITextView(frame: CGRect(x: 0, y: 0, width: itemNameLabel.frame.width, height: .greatestFiniteMagnitude))
+        
+        singleLineTextView.isEditable = false
+        singleLineTextView.isSelectable = false
+        singleLineTextView.isScrollEnabled = false
+        singleLineTextView.removePadding()
+        
+        singleLineTextView.font = itemNameLabel.font
+        singleLineTextView.text = "A"
+        singleLineTextView.sizeToFit()
+        let measuredHeight = singleLineTextView.frame.height
+
+        return measuredHeight * CGFloat(maxLines)
     }
 
     private func showLoadingView() {
@@ -204,30 +241,20 @@ extension RecipeCardCollectionViewCell {
     static func carouselCellSize(availableWidth: CGFloat) -> CGSize {
         let itemHeight: CGFloat = 250
         let suggestedItemWidth: CGFloat = 180
-        let minimumCellPerRow = 2
+        let minimumCellPerRow = 2.5
         
-        let newAvailableWidth = availableWidth - (suggestedItemWidth * 0.5)
+        let idealColumnPerRow = availableWidth / suggestedItemWidth
         
-        var cellPerRow = Int(ceil(newAvailableWidth / suggestedItemWidth))
+        var cellPerRow = ceil(idealColumnPerRow)
         if cellPerRow < minimumCellPerRow {
             cellPerRow = minimumCellPerRow
+        } else {
+            cellPerRow = cellPerRow - 0.5
         }
         
-        let widthCell = availableWidth / CGFloat(cellPerRow)
+        let finalWidth = (availableWidth - ((cellPerRow - 1) * Constant.horizontalSpacing)) / cellPerRow
         
-        var finalCellWidth = suggestedItemWidth
-        if widthCell > suggestedItemWidth {
-            let overflow = widthCell - suggestedItemWidth
-            
-            finalCellWidth = suggestedItemWidth - (overflow * CGFloat(cellPerRow)) - Constant.horizontalSpacing * CGFloat(cellPerRow)
-            
-        } else if widthCell < suggestedItemWidth {
-            let overflow = suggestedItemWidth - widthCell
-
-            finalCellWidth = suggestedItemWidth + (overflow * CGFloat(cellPerRow)) - Constant.horizontalSpacing * (CGFloat(cellPerRow) - 0.5)
-        }
-        
-        return CGSize(width: finalCellWidth, height: itemHeight)
+        return CGSize(width: finalWidth, height: itemHeight)
     }
     
     static func recentCellSize(availableWidth: CGFloat) -> CGSize {

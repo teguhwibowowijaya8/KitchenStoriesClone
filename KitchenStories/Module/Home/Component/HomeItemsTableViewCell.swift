@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SkeletonView
 
 protocol HomeItemTableCellDelegate {
     func handleFeedItemSelected(recipeId: Int, recipeName: String)
@@ -29,7 +28,6 @@ class HomeItemsTableViewCell: UITableViewCell {
         flowLayout.scrollDirection = .horizontal
         
         let itemsCollectionView = DynamicHeightCollectionView(frame: .zero, collectionViewLayout: flowLayout)
-//        itemsCollectionView.isSkeletonable = true
         itemsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
         itemsCollectionView.collectionViewLayout = flowLayout
@@ -52,31 +50,30 @@ class HomeItemsTableViewCell: UITableViewCell {
         return itemsCollectionView
     }()
     
-    lazy var itemCollectionViewHeight: NSLayoutConstraint = {
-        let itemCollectionViewHeight = itemsCollectionView.heightAnchor.constraint(equalToConstant: 20)
-        itemCollectionViewHeight.priority = .init(rawValue: 999)
-        itemCollectionViewHeight.isActive = true
-        return itemCollectionViewHeight
-    }()
+    var itemCollectionViewHeight: NSLayoutConstraint?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        addSubviews()
+        setComponentsConstraints()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        getCellSizeForType()
-        setCollectionViewHeightConstraint()
-        setCollectionScrollDirection()
-        layoutIfNeeded()
+        itemCollectionViewHeight?.isActive = false
+        itemCollectionViewHeight = nil
+        
+        feed = nil
+//        screenSize = nil
+        cellSize = .zero
+        isLoading = true
+
         itemsCollectionView.reloadData()
     }
     
@@ -90,10 +87,10 @@ class HomeItemsTableViewCell: UITableViewCell {
         self.isLoading = isLoading
         getCellSizeForType()
         
-        addSubviews()
-        setComponentsConstraints()
         setCollectionScrollDirection()
+        setCollectionViewHeightConstraint()
         layoutIfNeeded()
+        itemsCollectionView.reloadData()
     }
     
     private func setCollectionScrollDirection() {
@@ -112,7 +109,6 @@ class HomeItemsTableViewCell: UITableViewCell {
     }
     
     private func setComponentsConstraints() {
-        setCollectionViewHeightConstraint()
         
         NSLayoutConstraint.activate([
             itemsCollectionView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -124,13 +120,13 @@ class HomeItemsTableViewCell: UITableViewCell {
     
     private func setCollectionViewHeightConstraint() {
         if feed?.type == .recent {
-            itemCollectionViewHeight.isActive = false
+            itemCollectionViewHeight?.isActive = false
             return
         }
 
         let collectionViewHeight = cellSize.height + (verticalSpacing * 2)
-        itemCollectionViewHeight.constant = collectionViewHeight
-        itemCollectionViewHeight.isActive = true
+        itemCollectionViewHeight = itemsCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight)
+        itemCollectionViewHeight?.isActive = true
     }
 }
 
@@ -188,19 +184,7 @@ extension HomeItemsTableViewCell: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension HomeItemsTableViewCell: SkeletonCollectionViewDataSource {
-    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
-        guard let feedType = feed?.type else { return "" }
-        
-        switch feedType {
-//        case .featured:
-//            return FeaturedItemCollectionViewCell.identifier
-        case .shoppableCarousel:
-            return ShopableItemCollectionViewCell.identifier
-        default:
-            return RecipeCardCollectionViewCell.identifier
-        }
-    }
+extension HomeItemsTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isLoading == true { return feed?.minItems ?? 0 }

@@ -8,8 +8,7 @@
 import UIKit
 
 protocol ServingStepperDelegate {
-    func didMinButtonSelected(_ value: Int)
-    func didPlusButtonSelected(_ value: Int)
+    func handleServingValueChanged(_ value: Int)
 }
 
 class ServingStepper: UIView {
@@ -178,7 +177,7 @@ class ServingStepper: UIView {
                 value = maxValue
             } else { value += 1 }
         }
-        delegate?.didMinButtonSelected(value)
+        delegate?.handleServingValueChanged(value)
     }
     
     func showLoadingView() {

@@ -33,8 +33,7 @@ class DetailHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var recipeDescriptionTextView: UITextView! {
         didSet {
             recipeDescriptionTextView.font = .systemFont(ofSize: 13)
-            recipeDescriptionTextView.contentInset = .zero
-            recipeDescriptionTextView.textContainerInset = .zero
+            recipeDescriptionTextView.removePadding()
         }
     }
     
