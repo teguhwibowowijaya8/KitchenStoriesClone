@@ -179,6 +179,7 @@ extension HomeViewController {
             paddingTop: headerTopPadding,
             paddingBottom: headerBottomPadding
         )
+        itemsHeaderCell.delegate = self
         
         return itemsHeaderCell
     }
@@ -204,10 +205,34 @@ extension HomeViewController {
     }
 }
 
+extension HomeViewController: HeaderTitleCellDelegate {
+    func handleOnSeeAllButtonSelected(title: String) {
+        guard let feed = homeViewModel.getFeedBasedOn(title: title)
+        else { return }
+        
+        var startRecentFeedFrom: Int? = nil
+        var showAllRecipesType: ShowAllRecipesType = .withoutFetchMore
+        if feed.type == .recent,
+           let feeds = homeViewModel.feeds?.results {
+            let recentFeeds = homeViewModel.recentFeeds.itemList
+            startRecentFeedFrom = feeds.count + recentFeeds.count
+            showAllRecipesType = .canFetchMore
+        }
+        
+        let showAllFeedRecipesVc = ShowAllFeedRecipesViewController(
+            showAllRecipesType: showAllRecipesType,
+            recipes: feed.itemList,
+            startRecentFeedFrom: startRecentFeedFrom
+        )
+        showAllFeedRecipesVc.title = feed.name
+        
+        navigationController?.pushViewController(showAllFeedRecipesVc, animated: true)
+    }
+}
+
 extension HomeViewController: HomeItemTableCellDelegate {
     func handleFeedItemSelected(recipeId: Int, recipeName: String) {
-        let recipeDetailVC = RecipeDetailViewController()
-        recipeDetailVC.recipeId = recipeId
+        let recipeDetailVC = RecipeDetailViewController(recipeId: recipeId)
         recipeDetailVC.title = recipeName
         
         self.navigationController?.pushViewController(recipeDetailVC, animated: true)

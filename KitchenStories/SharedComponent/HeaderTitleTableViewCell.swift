@@ -8,7 +8,7 @@
 import UIKit
 
 protocol HeaderTitleCellDelegate {
-    func handleOnSeeAllButtonSelected()
+    func handleOnSeeAllButtonSelected(title: String)
 }
 
 class HeaderTitleTableViewCell: UITableViewCell {
@@ -93,7 +93,9 @@ class HeaderTitleTableViewCell: UITableViewCell {
     }
     
     @objc func onSeeAllButtonSelected(_ sender: UIButton) {
-        delegate?.handleOnSeeAllButtonSelected()
+        if let title = headerTitleLabel.text {
+            delegate?.handleOnSeeAllButtonSelected(title: title)
+        }
     }
     
     private func addSubviews() {

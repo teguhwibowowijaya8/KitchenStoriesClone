@@ -9,7 +9,7 @@ import Foundation
 
 struct TipModel: Codable {
     let tipId: Int
-    let authorAvatarUrlString: String
+    let authorAvatarUrlString: String?
     let authorName: String
     let tipBody: String
     

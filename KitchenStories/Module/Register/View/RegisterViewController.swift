@@ -9,11 +9,7 @@ import UIKit
 
 class RegisterViewController: UIViewController {
     
-    private let registerTitleLabelText = "to discover all our tastebud tickling recipes and features."
-    private let termsAndConditionText = "By signing up I accept the terms of use and the data privacy policy"
-    private let alreadyHaveAnAccountText = "Already have an account?"
-    
-    private var registerViewModel: RegisterViewModel?
+    private var registerViewModel: RegisterViewModel!
     
     @IBOutlet weak var backgroundImageView: BackgroundImageView! {
         didSet {
@@ -39,7 +35,6 @@ class RegisterViewController: UIViewController {
 
     @IBOutlet weak var registerSubitleLabel: UILabel! {
         didSet {
-            registerSubitleLabel.text = registerTitleLabelText
             registerSubitleLabel.font = .boldSystemFont(ofSize: 16)
             registerSubitleLabel.numberOfLines = 0
             registerSubitleLabel.textColor = .white
@@ -91,10 +86,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var registerSecondSubtitleTextView: UITextView! {
         didSet {
             registerSecondSubtitleTextView.backgroundColor = .clear
-            registerSecondSubtitleTextView.attributedText = secondSubtitleAttributedString()
             registerSecondSubtitleTextView.textAlignment = .center
-            registerSecondSubtitleTextView.textContainerInset = .zero
-            registerSecondSubtitleTextView.contentInset = .zero
+            registerSecondSubtitleTextView.removePadding()
         }
     }
     
@@ -121,11 +114,18 @@ class RegisterViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         setupViewModel()
+        setupComponentsText()
     }
     
     private func setupViewModel() {
         registerViewModel = RegisterViewModel()
         registerViewModel?.delegate = self
+    }
+    
+    private func setupComponentsText() {
+        registerSubitleLabel.text = registerViewModel.registerTitleLabelText
+        
+        registerSecondSubtitleTextView.attributedText = secondSubtitleAttributedString()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -155,12 +155,12 @@ class RegisterViewController: UIViewController {
     }
     
     private func secondSubtitleAttributedString() -> NSAttributedString {
-        let secondSubtitleAttributedString = NSMutableAttributedString(string: termsAndConditionText, attributes: [
+        let secondSubtitleAttributedString = NSMutableAttributedString(string: registerViewModel.termsAndConditionText, attributes: [
             .font: UIFont.systemFont(ofSize: 12),
             .foregroundColor: UIColor.white
         ])
         
-        let alreadyHaveAnAccountString = NSAttributedString(string: "\n\n\(alreadyHaveAnAccountText)", attributes: [
+        let alreadyHaveAnAccountString = NSAttributedString(string: "\n\n\(registerViewModel.alreadyHaveAnAccountText)", attributes: [
             .font: UIFont.systemFont(ofSize: 16, weight: .semibold),
             .foregroundColor: UIColor.white
         ])
@@ -172,23 +172,19 @@ class RegisterViewController: UIViewController {
 
 extension RegisterViewController: RegisterViewModelDelegate {
     func handleOnRegisterCompleted() {
+        self.enableForm()
+        
         if let errorMessage = registerViewModel?.errorMessage {
             DispatchQueue.main.async {
                 self.errorMessageLabel.text = errorMessage
                 self.errorMessageLabel.isHidden = false
-                self.enableForm()
                 return
             }
         } else {
             self.errorMessageLabel.isHidden = true
             let tabBarVc = TabBarController()
-//            let rootVC = UINavigationController(rootViewController: tabBarVc)
-//            self.navigationController?.pushViewController(rootVC, animated: true)
-            UIView.animate(withDuration: 0.5, delay: 0.5, options: .transitionCrossDissolve) {
-                let window = (UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate).window
-                window?.rootViewController = tabBarVc
-                window?.makeKeyAndVisible()
-            }
+            
+            Utilities.changeViewControllerRoot(to: tabBarVc)
         }
     }
     

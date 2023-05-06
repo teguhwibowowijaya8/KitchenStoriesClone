@@ -57,7 +57,7 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
             shopIngredientsButton.layer.cornerRadius = Constant.cornerRadius
             shopIngredientsButton.setAttributedTitle(
                 NSAttributedString(
-                    string: "Shop Ingredients",
+                    string: "Show Recipes",
                     attributes: [
                         .font: UIFont.systemFont(ofSize: 14, weight: .semibold)
                     ]

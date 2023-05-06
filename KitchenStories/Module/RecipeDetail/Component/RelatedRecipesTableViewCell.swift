@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol RelatedRecipesTableCellDelegate {
+    func showRelatedDetailRecipe(of recipeId: Int)
+}
+
 class RelatedRecipesTableViewCell: UITableViewCell {
     static let identifier = "RelatedRecipesTableViewCell"
     
@@ -18,6 +22,8 @@ class RelatedRecipesTableViewCell: UITableViewCell {
     private var isLoading: Bool!
     private var relatedRecipes: RelatedRecipesModel?
     
+    var delegate: RelatedRecipesTableCellDelegate?
+    
     private lazy var relatedRecipesCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -27,6 +33,7 @@ class RelatedRecipesTableViewCell: UITableViewCell {
         
         relatedRecipesCollectionView.delegate = self
         relatedRecipesCollectionView.dataSource = self
+        relatedRecipesCollectionView.showsHorizontalScrollIndicator = false
         
         return relatedRecipesCollectionView
     }()
@@ -128,5 +135,10 @@ extension RelatedRecipesTableViewCell: UICollectionViewDataSource {
         return recipeCardCell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if isLoading == false,
+           let recipeId = relatedRecipes?.results[indexPath.row].id {
+            delegate?.showRelatedDetailRecipe(of: recipeId)
+        }
+    }
 }

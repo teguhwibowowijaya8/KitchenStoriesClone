@@ -24,7 +24,7 @@ enum RecipeDetailSection: Int {
 
 class RecipeDetailViewController: UIViewController {
     
-    var recipeId: Int!
+    var recipeId: Int
     
     private var recipeDetailViewModel: RecipeDetailViewModel!
     private var preparationCellBackgroundColor: UIColor = .gray.withAlphaComponent(0.3)
@@ -36,13 +36,26 @@ class RecipeDetailViewController: UIViewController {
         
         return recipeDetailTableView
     }()
-
+    
+    init(recipeId: Int) {
+        self.recipeId = recipeId
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        view.backgroundColor = .systemBackground
         setupViewModel()
         setupTableView()
+        addSubviews()
+        setComponentsConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,21 +71,24 @@ class RecipeDetailViewController: UIViewController {
     }
     
     private func setupTableView() {
+        recipeDetailTableView.delegate = self
+        recipeDetailTableView.dataSource = self
+        recipeDetailTableView.separatorStyle = .none
         
+        registerTableViewCell()
+    }
+    
+    private func addSubviews() {
         self.view.addSubview(recipeDetailTableView)
-        
+    }
+    
+    private func setComponentsConstraints() {
         NSLayoutConstraint.activate([
             recipeDetailTableView.topAnchor.constraint(equalTo: view.topAnchor),
             recipeDetailTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             recipeDetailTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             recipeDetailTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        
-        recipeDetailTableView.delegate = self
-        recipeDetailTableView.dataSource = self
-        recipeDetailTableView.separatorStyle = .none
-        
-        registerTableViewCell()
     }
     
     private func registerTableViewCell() {
@@ -215,7 +231,7 @@ extension RecipeDetailViewController {
         var showSeeAllButton: Bool = false
         var title: String = "Title"
         var paddingTop: CGFloat = HeaderTitleTableViewCell.defaultPaddingTop
-        var paddingBottom: CGFloat = HeaderTitleTableViewCell.defaultPaddingBottom
+        let paddingBottom: CGFloat = HeaderTitleTableViewCell.defaultPaddingBottom
         
         switch section {
         case .relatedRecipesHeader:
@@ -223,6 +239,7 @@ extension RecipeDetailViewController {
             if let relatedRecipes = recipeDetailViewModel.relatedRecipes,
                relatedRecipes.count > recipeDetailViewModel.maxRelatedRecipesShown {
                 showSeeAllButton = true
+                headerTitleCell.delegate = self
             }
             
         case .preparationsHeader:
@@ -367,6 +384,7 @@ extension RecipeDetailViewController {
             screenSize: view.safeAreaLayoutGuide.layoutFrame.size,
             isLoading: recipeDetailViewModel.isLoading
         )
+        relatedRecipesCell.delegate = self
         
         return relatedRecipesCell
     }
@@ -408,6 +426,25 @@ extension RecipeDetailViewController: ServingStepperDelegate {
     func handleServingValueChanged(_ value: Int) {
         recipeDetailViewModel.changeServingNums(to: value)
     }
-    
+}
+
+extension RecipeDetailViewController: HeaderTitleCellDelegate {
+    func handleOnSeeAllButtonSelected(title: String) {
+        if recipeDetailViewModel.isLoading == false,
+           let recipes = recipeDetailViewModel.relatedRecipes?.results {
+            let showAllRecipesVc = ShowAllFeedRecipesViewController(showAllRecipesType: .withoutFetchMore, recipes: recipes)
+            showAllRecipesVc.title = title
+            
+            navigationController?.pushViewController(showAllRecipesVc, animated: true)
+        }
+    }
+}
+
+extension RecipeDetailViewController: RelatedRecipesTableCellDelegate {
+    func showRelatedDetailRecipe(of recipeId: Int) {
+        let recipeDetailVc = RecipeDetailViewController(recipeId: recipeId)
+        
+        navigationController?.pushViewController(recipeDetailVc, animated: true)
+    }
     
 }

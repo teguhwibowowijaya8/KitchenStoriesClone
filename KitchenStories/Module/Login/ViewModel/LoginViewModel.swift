@@ -13,6 +13,12 @@ protocol LoginViewModelDelegate {
 }
 
 class LoginViewModel {
+    
+    let loginTitleLabelText = "to discover all our tastebud tickling recipes and features."
+    let termsAndConditionText = "By signing up I accept the terms of use and the data privacy policy"
+    let doesntHaveAnAccountText = "Doesn't have an account?"
+    let forgotPasswordLabelText = "Already have an account, but forgot your password?"
+    
     var errorMessage: String?
     var delegate: LoginViewModelDelegate?
     

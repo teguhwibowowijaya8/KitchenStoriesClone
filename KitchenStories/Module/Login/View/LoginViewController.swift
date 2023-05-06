@@ -14,12 +14,7 @@ enum LoginNextPage: Int {
 
 class LoginViewController: UIViewController {
     
-    private let loginTitleLabelText = "to discover all our tastebud tickling recipes and features."
-    private let termsAndConditionText = "By signing up I accept the terms of use and the data privacy policy"
-    private let doesntHaveAnAccountText = "Doesn't have an account?"
-    private let forgotPasswordLabelText = "Already have an account, but forgot your password?"
-    
-    private var loginViewModel: LoginViewModel?
+    private var loginViewModel: LoginViewModel!
     
     @IBOutlet weak var backgroundImageView: BackgroundImageView! {
         didSet {
@@ -45,7 +40,6 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var loginSubitleLabel: UILabel! {
         didSet {
-            loginSubitleLabel.text = loginTitleLabelText
             loginSubitleLabel.font = .boldSystemFont(ofSize: 16)
             loginSubitleLabel.numberOfLines = 0
             loginSubitleLabel.textColor = .white
@@ -89,10 +83,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginSecondSubtitleTextView: UITextView! {
         didSet {
             loginSecondSubtitleTextView.backgroundColor = .clear
-            loginSecondSubtitleTextView.attributedText = secondSubtitleAttributedString()
             loginSecondSubtitleTextView.textAlignment = .center
-            loginSecondSubtitleTextView.textContainerInset = .zero
-            loginSecondSubtitleTextView.contentInset = .zero
+            loginSecondSubtitleTextView.removePadding()
         }
     }
     
@@ -118,7 +110,6 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var forgotPasswordLabel: UILabel! {
         didSet {
-            forgotPasswordLabel.text = forgotPasswordLabelText
             forgotPasswordLabel.font = .systemFont(ofSize: 16, weight: .semibold)
             forgotPasswordLabel.textColor = .white
             forgotPasswordLabel.numberOfLines = 0
@@ -149,6 +140,7 @@ class LoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         setupViewModel()
+        setupComponentsText()
     }
     
     @objc func onSelectedToNextPage(_ sender: UIButton) {
@@ -183,18 +175,24 @@ class LoginViewController: UIViewController {
         loginViewModel?.delegate = self
     }
     
+    private func setupComponentsText() {
+        loginSubitleLabel.text = loginViewModel.loginTitleLabelText
+        forgotPasswordLabel.text = loginViewModel.forgotPasswordLabelText
+        loginSecondSubtitleTextView.attributedText = secondSubtitleAttributedString()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
     }
     
     private func secondSubtitleAttributedString() -> NSAttributedString {
-        let secondSubtitleAttributedString = NSMutableAttributedString(string: termsAndConditionText, attributes: [
+        let secondSubtitleAttributedString = NSMutableAttributedString(string: loginViewModel.termsAndConditionText, attributes: [
             .font: UIFont.systemFont(ofSize: 12),
             .foregroundColor: UIColor.white
         ])
         
-        let alreadyHaveAnAccountString = NSAttributedString(string: "\n\n\(doesntHaveAnAccountText)", attributes: [
+        let alreadyHaveAnAccountString = NSAttributedString(string: "\n\n\(loginViewModel.doesntHaveAnAccountText)", attributes: [
             .font: UIFont.systemFont(ofSize: 16, weight: .semibold),
             .foregroundColor: UIColor.white
         ])
@@ -206,22 +204,17 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: LoginViewModelDelegate {
     func handleUserSignInUserCompleted() {
+        self.enableForm()
         if let errorMessage = loginViewModel?.errorMessage {
             DispatchQueue.main.async {
                 self.errorMessageLabel.text = errorMessage
                 self.errorMessageLabel.isHidden = false
-                self.enableForm()
             }
         } else {
             self.errorMessageLabel.isHidden = true
             let tabBarVc = TabBarController()
-//            let rootVC = UINavigationController(rootViewController: tabBarVc)
-//            self.navigationController?.pushViewController(rootVC, animated: true)
-            UIView.animate(withDuration: 0.5, delay: 0.5, options: .transitionCrossDissolve) {
-                let window = (UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate).window
-                window?.rootViewController = tabBarVc
-                window?.makeKeyAndVisible()
-            }
+            
+            Utilities.changeViewControllerRoot(to: tabBarVc)
         }
     }
     

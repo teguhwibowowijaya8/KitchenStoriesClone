@@ -14,6 +14,10 @@ protocol RegisterViewModelDelegate {
 
 class RegisterViewModel {
     
+    let registerTitleLabelText = "to discover all our tastebud tickling recipes and features."
+    let termsAndConditionText = "By signing up I accept the terms of use and the data privacy policy"
+    let alreadyHaveAnAccountText = "Already have an account?"
+    
     var errorMessage: String? = nil
     var delegate: RegisterViewModelDelegate?
     

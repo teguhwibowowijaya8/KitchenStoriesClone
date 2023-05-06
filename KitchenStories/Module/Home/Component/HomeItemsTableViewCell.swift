@@ -215,8 +215,11 @@ extension HomeItemsTableViewCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let feedItem = feed?.itemList[indexPath.row]
+        guard isLoading == false,
+              let feed = feed
         else { return }
+        
+        let feedItem = feed.itemList[indexPath.row]
         delegate?.handleFeedItemSelected(recipeId: feedItem.id, recipeName: feedItem.name)
     }
 }

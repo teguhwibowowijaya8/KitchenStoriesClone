@@ -75,4 +75,18 @@ class HomeViewModel {
             self?.delegate?.handleFetchFeedsCompleted()
         }
     }
+    
+    func getFeedBasedOn(title: String) -> FeedModel? {
+        if title.lowercased() == recentFeeds.name?.lowercased() {
+            return recentFeeds
+        }
+        
+        guard let feeds = feeds
+        else { return nil }
+        
+        let feed = feeds.results.first {
+            $0.name?.lowercased() == title.lowercased()
+        }
+        return feed ?? nil
+    }
 }

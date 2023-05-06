@@ -9,7 +9,7 @@ import UIKit
 
 struct RecipeTipCellParams {
     let totalTipsCount: Int
-    let topTipImageUrl: String
+    let topTipImageUrl: String?
     let topTipName: String
     let topTipDescription: String
 }
@@ -98,11 +98,13 @@ class RecipeTipTableViewCell: UITableViewCell {
                 showAllTipsButton.isHidden = true
             }
             
-            topTipImageView.loadImageFromUrl(
-                recipeTopTip.topTipImageUrl,
-                defaultImage: defaultTopTipImage,
-                getImageNetworkService: getNetworkImageService
-            )
+            if let topTipImageUrlString = recipeTopTip.topTipImageUrl {
+                topTipImageView.loadImageFromUrl(
+                    topTipImageUrlString,
+                    defaultImage: defaultTopTipImage,
+                    getImageNetworkService: getNetworkImageService
+                )
+            }
             
             tipsTitleLabel.attributedText = tipsTitleText(with: recipeTopTip.totalTipsCount)
             topTipNameLabel.text = recipeTopTip.topTipName

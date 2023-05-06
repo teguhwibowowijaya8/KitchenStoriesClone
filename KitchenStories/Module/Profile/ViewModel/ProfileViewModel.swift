@@ -6,6 +6,11 @@
 //
 
 import Foundation
+import FirebaseAuth
+
+protocol ProfileViewModelDelegate {
+    func handleOnSuccessSignOut()
+}
 
 struct ProfileViewModel {
     var totalSections: Int = 4
@@ -13,6 +18,7 @@ struct ProfileViewModel {
     var settingSections: [SettingSectionModel]
     var userProfile: UserProfile?
     var compositions: [ProfileViewSection]
+    var delegate: ProfileViewModelDelegate?
     
     init() {
         settingSections = [
@@ -43,6 +49,15 @@ struct ProfileViewModel {
     }
     
     func getUserProfile() {
-        
+        print("user: \(Auth.auth().currentUser)")
+    }
+    
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+            delegate?.handleOnSuccessSignOut()
+        } catch let error as NSError {
+            print(error)
+        }
     }
 }

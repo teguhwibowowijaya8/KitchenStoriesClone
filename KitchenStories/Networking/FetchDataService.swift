@@ -43,6 +43,7 @@ struct FetchDataService: FetchDataProtocol {
         
         return URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
+                print("fetch error: \(error)")
                 return onCompletion(.failure(
                     .fetchError(error.localizedDescription)
                 ))

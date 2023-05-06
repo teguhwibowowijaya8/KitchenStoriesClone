@@ -165,12 +165,27 @@ class RecipeDetailViewModel {
                     }
                 }
                 
+            case .nutritionsInfoHeader:
+                guard recipeDetail.nutrition != nil
+                else { continue }
+                detailsSection.append(.nutritionsInfoHeader)
+                detailsSection.append(.nutritionsBody)
+                
+            case .nutritionsBody:
+                continue
+                
             case .topTip:
                 guard recipeTips != nil
                 else { continue }
                 detailsSection.append(.topTip)
                 
-            case .preparationsBody:
+            case .relatedRecipesHeader:
+                guard relatedRecipes != nil
+                else { continue }
+                detailsSection.append(.relatedRecipesHeader)
+                detailsSection.append(.relatedRecipesBody)
+                
+            case .relatedRecipesBody:
                 continue
                 
             case .preparationsHeader:
@@ -181,6 +196,9 @@ class RecipeDetailViewModel {
                     detailsSection.append(.preparationsHeader)
                     detailsSection.append(.preparationsBody)
                 }
+                
+            case .preparationsBody:
+                continue
                 
             default:
                 detailsSection.append(section)

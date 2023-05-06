@@ -49,6 +49,8 @@ class ProfileViewController: UIViewController {
     
     private func setupViewModel() {
         profileViewModel = ProfileViewModel()
+        profileViewModel.delegate = self
+        profileViewModel.getUserProfile()
     }
     
     private func setupTableView() {
@@ -76,6 +78,14 @@ class ProfileViewController: UIViewController {
         ])
     }
 
+}
+
+extension ProfileViewController: ProfileViewModelDelegate {
+    func handleOnSuccessSignOut() {
+        let welcomeVc = WelcomeViewController(nibName: WelcomeViewController.identifier, bundle: nil)
+        
+        Utilities.changeViewControllerRoot(to: welcomeVc)
+    }
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -122,8 +132,18 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         case .profileAccount:
             tableView.deselectRow(at: indexPath, animated: true)
             
+            if let userProfile = profileViewModel.userProfile {
+                let profileDetailVc = ProfileDetailViewController(userProfile: userProfile)
+                profileDetailVc.title = "Profile Detail"
+                self.navigationController?.pushViewController(profileDetailVc, animated: true)
+            }
+            
         case .profileSettings:
             if indexPath.row != 0 { tableView.deselectRow(at: indexPath, animated: true) }
+            
+            if profileViewModel.settingSections[indexPath.section - 1].settings[indexPath.row - 1].type == .logOut {
+                profileViewModel.signOut()
+            }
         }
     }
     

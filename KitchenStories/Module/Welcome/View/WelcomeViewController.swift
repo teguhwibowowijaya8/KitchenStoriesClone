@@ -13,18 +13,9 @@ enum SignButtonTag: Int {
 }
 
 class WelcomeViewController: UIViewController {
+    static let identifier = "WelcomeViewController"
     
-    private let greetingsTitle = [
-        "Get Inspired",
-        "Sharpen your skills",
-        "Share your recipes"
-    ]
-    
-    private let greetingsSubtitle = [
-        "Discover delicious reciped and stunning food stories",
-        "With our cooking videos and top tips",
-        "With our international community"
-    ]
+    private var welcomeViewModel: WelcomeViewModel!
     
     @IBOutlet weak var backgroundImageView: BackgroundImageView!
     
@@ -50,7 +41,6 @@ class WelcomeViewController: UIViewController {
         didSet {
             welcomeGreetingsPageControl.pageIndicatorTintColor = .gray
             welcomeGreetingsPageControl.currentPageIndicatorTintColor = .white
-            welcomeGreetingsPageControl.numberOfPages = greetingsTitle.count
             welcomeGreetingsPageControl.currentPage = 0
             
             backgroundImageView.image = BackgroundImage.getBy(index: welcomeGreetingsPageControl.currentPage)?.image
@@ -79,7 +69,17 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupViewModel()
         setupCollectionView()
+        setPageControlCount()
+    }
+    
+    private func setupViewModel() {
+        welcomeViewModel = WelcomeViewModel()
+    }
+    
+    private func setPageControlCount() {
+        welcomeGreetingsPageControl.numberOfPages = welcomeViewModel.greetingsTitle.count
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -164,7 +164,7 @@ extension WelcomeViewController:  UICollectionViewDelegateFlowLayout {
 
 extension WelcomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        greetingsTitle.count
+        return welcomeViewModel.greetingsTitle.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -172,16 +172,12 @@ extension WelcomeViewController: UICollectionViewDataSource {
         else { return UICollectionViewCell() }
         
         welcomeGreetingCell.setCell(
-            title: greetingsTitle[indexPath.row],
-            subtitle: greetingsSubtitle[indexPath.row]
+            title: welcomeViewModel.greetingsTitle[indexPath.row],
+            subtitle: welcomeViewModel.greetingsSubtitle[indexPath.row]
         )
         
         return welcomeGreetingCell
     }
-    
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        welcomeGreetingsPageControl.currentPage = Int(welcomeGreetingsCollectionView.contentOffset.x) / Int(welcomeGreetingsCollectionView.frame.width)
-//    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         

@@ -13,6 +13,8 @@ protocol GetAPIProtocol {
         withModel model: T.Type,
         onCompletion: @escaping (_ apiData: T?, _ errorMessage: String?) -> Void
     )
+    
+    func cancel()
 }
 
 class GetAPIService: GetAPIProtocol {

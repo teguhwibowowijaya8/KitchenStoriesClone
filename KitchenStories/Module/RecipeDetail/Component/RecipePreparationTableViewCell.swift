@@ -46,9 +46,6 @@ class RecipePreparationTableViewCell: UITableViewCell {
         preparationDescriptionTextView.contentInset = .zero
         preparationDescriptionTextView.textContainerInset = .zero
         
-        preparationDescriptionTextView.setContentHuggingPriority(.required, for: .vertical)
-        preparationDescriptionTextView.setContentCompressionResistancePriority(.required, for: .vertical)
-        
         return preparationDescriptionTextView
     }()
     
@@ -57,7 +54,7 @@ class RecipePreparationTableViewCell: UITableViewCell {
         preparationStackView.translatesAutoresizingMaskIntoConstraints = false
         
         preparationStackView.axis = .horizontal
-        preparationStackView.distribution = .fillProportionally
+        preparationStackView.distribution = .fill
         preparationStackView.alignment = .top
         preparationStackView.spacing = 8
         
