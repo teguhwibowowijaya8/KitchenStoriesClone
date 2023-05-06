@@ -97,10 +97,10 @@
             <connections>
                 <outlet property="containerView" destination="Sm7-3u-TrV" id="zGs-Ce-yL2"/>
                 <outlet property="imageContainerView" destination="y3k-fK-g2r" id="p0R-Dn-3JJ"/>
-                <outlet property="itemFeedCreditsLabel" destination="MwT-mV-I6e" id="T3f-Yt-fHj"/>
-                <outlet property="itemImageView" destination="Zwy-mA-uir" id="m0r-54-5hD"/>
-                <outlet property="itemIsLikedButton" destination="EUr-Hf-QzG" id="vYV-wk-djR"/>
-                <outlet property="itemNameLabel" destination="CPd-wo-kd5" id="QDd-6A-8Qz"/>
+                <outlet property="recipeFeedCreditsTextView" destination="MwT-mV-I6e" id="KmM-cm-1ef"/>
+                <outlet property="recipeImageView" destination="Zwy-mA-uir" id="7hm-n0-ENn"/>
+                <outlet property="recipeIsLikedButton" destination="EUr-Hf-QzG" id="YK5-Dz-YjE"/>
+                <outlet property="recipeNameTextView" destination="CPd-wo-kd5" id="Sj4-wC-Fki"/>
                 <outlet property="textViewsContainer" destination="91f-lA-W8D" id="qBH-N7-vIj"/>
                 <outlet property="textViewsContainerHeight" destination="OnO-eN-Z5h" id="CcP-4L-AP1"/>
             </connections>

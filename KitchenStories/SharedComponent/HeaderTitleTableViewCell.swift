@@ -15,6 +15,9 @@ class HeaderTitleTableViewCell: UITableViewCell {
     
     static let identifier = "HeaderTitleTableViewCell"
     
+    static let defaultPaddingTop: CGFloat = 5
+    static let defaultPaddingBottom: CGFloat = 5
+    
     var delegate: HeaderTitleCellDelegate?
     
     private lazy var headerTitleLabel: UILabel = {
@@ -67,11 +70,16 @@ class HeaderTitleTableViewCell: UITableViewCell {
     
     func setupCell(
         title: String? = nil,
-        showSeeAllButton: Bool = true,
-        isLoading: Bool = false
+        showSeeAllButton: Bool = false,
+        isLoading: Bool = false,
+        paddingTop: CGFloat = HeaderTitleTableViewCell.defaultPaddingTop,
+        paddingBottom: CGFloat = HeaderTitleTableViewCell.defaultPaddingBottom
     ) {
         addSubviews()
-        setComponentsConstraints()
+        setComponentsConstraints(
+            paddingTop: paddingTop,
+            paddingBottom: paddingBottom
+        )
         
         guard isLoading == false
         else {
@@ -94,12 +102,15 @@ class HeaderTitleTableViewCell: UITableViewCell {
         headerStackContainerView.addArrangedSubview(headerSeeAllButton)
     }
     
-    private func setComponentsConstraints() {
+    private func setComponentsConstraints(
+        paddingTop: CGFloat,
+        paddingBottom: CGFloat
+    ) {
         NSLayoutConstraint.activate([
-            headerStackContainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
+            headerStackContainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: paddingTop),
             headerStackContainerView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 10),
             headerStackContainerView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -10),
-            headerStackContainerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            headerStackContainerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -paddingBottom),
         ])
     }
     

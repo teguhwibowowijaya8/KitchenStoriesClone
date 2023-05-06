@@ -8,8 +8,13 @@
 import UIKit
 
 enum HomeTableRowType: Int {
-    case itemsHeader
-    case itemsBody
+    case feedsHeader
+    case feedsBody
+}
+
+enum FeedsBodyType {
+    case horizontal
+    case vertical
 }
 
 class HomeViewController: UIViewController {
@@ -17,7 +22,10 @@ class HomeViewController: UIViewController {
     static let tabImage = UIImage(systemName: "house")
     static let tabSelectedImage = UIImage(systemName: "house.fill")
     
-    private var homeViewModel: HomeViewModel?
+    private let headerTopPadding: CGFloat = 15
+    private let headerBottomPadding: CGFloat = 0
+    
+    private var homeViewModel: HomeViewModel!
     
     private lazy var homeTableView: UITableView = {
         let homeTableView = UITableView()
@@ -42,9 +50,9 @@ class HomeViewController: UIViewController {
     
     private func setupViewModel() {
         homeViewModel = HomeViewModel()
-        homeViewModel?.delegate = self
+        homeViewModel.delegate = self
         
-        homeViewModel?.fetchFeeds()
+        homeViewModel.fetchFeeds()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -81,7 +89,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: HomeViewModelDelegate {
     func handleFetchFeedsCompleted() {
-        if let errorMessage = homeViewModel?.errorMessage {
+        if let errorMessage = homeViewModel.errorMessage {
             print(errorMessage)
         } else {
             DispatchQueue.main.async {
@@ -93,8 +101,9 @@ extension HomeViewController: HomeViewModelDelegate {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sectionCount = homeViewModel?.feeds?.results.count
-        else { return homeViewModel?.dummyFeeds.results.count ?? 0 }
+        guard let sectionCount = homeViewModel.feeds?.results.count
+        else { return homeViewModel.dummyFeeds.results.count }
+        // + 1 is recent feeds
         return sectionCount + 1
     }
     
@@ -103,60 +112,35 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let viewModel = homeViewModel
-        else { return UITableViewCell() }
         
         let feed: FeedModel
         
-        if let feeds = viewModel.feeds?.results {
+        if let feeds = homeViewModel.feeds?.results {
             if indexPath.section < feeds.count {
                 feed = feeds[indexPath.section]
             } else {
-                feed = viewModel.recentFeeds
+                feed = homeViewModel.recentFeeds
             }
         } else {
-            feed = viewModel.dummyFeeds.results[indexPath.section]
+            feed = homeViewModel.dummyFeeds.results[indexPath.section]
         }
         
         switch HomeTableRowType(rawValue: indexPath.row) {
-        case .itemsHeader:
-            guard let itemsHeaderCell = tableView.dequeueReusableCell(withIdentifier: HeaderTitleTableViewCell.identifier) as? HeaderTitleTableViewCell
-            else { return UITableViewCell() }
-            
-            let headerTitle: String
-            
-            if let title = feed.name {
-                headerTitle = title
-            } else {
-                let type = feed.type.rawValue
-                headerTitle = type.capitalized(with: .current)
-            }
-            
-            itemsHeaderCell.setupCell(
-                title: headerTitle,
-                showSeeAllButton: feed.itemList.count > feed.minimumShowItems,
-                isLoading: viewModel.isLoading
+        case .feedsHeader:
+            return feedsHeaderCell(
+                tableView,
+                cellForRowAt: indexPath,
+                feed: feed
             )
             
-            return itemsHeaderCell
-            
-        case .itemsBody:
-            guard let itemsBodyCell = tableView.dequeueReusableCell(withIdentifier: HomeItemsTableViewCell.identifier) as? HomeItemsTableViewCell
-            else { return UITableViewCell() }
-            
-            let screenSize = view.safeAreaLayoutGuide.layoutFrame.size
-            
-            itemsBodyCell.setupCell(
-                feed: feed,
-                screenSize: screenSize,
-                isLoading: viewModel.isLoading
+        case .feedsBody:
+            return feedsBodyCell(
+                tableView,
+                cellForRowAt: indexPath,
+                feed: feed
             )
-            itemsBodyCell.delegate = self
             
-            return itemsBodyCell
-            
-            
-        case .none:
+        default:
             return UITableViewCell()
         }
     }
@@ -167,6 +151,56 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+}
+
+extension HomeViewController {
+    private func feedsHeaderCell(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath,
+        feed: FeedModel
+    ) -> UITableViewCell {
+        guard let itemsHeaderCell = tableView.dequeueReusableCell(withIdentifier: HeaderTitleTableViewCell.identifier) as? HeaderTitleTableViewCell
+        else { return UITableViewCell() }
+        
+        let headerTitle: String
+        
+        if let title = feed.name {
+            headerTitle = title
+        } else {
+            let type = feed.type.rawValue
+            headerTitle = type.capitalized(with: .current)
+        }
+        
+        itemsHeaderCell.setupCell(
+            title: headerTitle,
+            showSeeAllButton: feed.itemList.count > feed.minimumShowItems,
+            isLoading: homeViewModel.isLoading,
+            paddingTop: headerTopPadding,
+            paddingBottom: headerBottomPadding
+        )
+        
+        return itemsHeaderCell
+    }
+    
+    private func feedsBodyCell(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath,
+        feed: FeedModel
+    ) -> UITableViewCell {
+        guard let itemsBodyCell = tableView.dequeueReusableCell(withIdentifier: HomeItemsTableViewCell.identifier) as? HomeItemsTableViewCell
+        else { return UITableViewCell() }
+        
+        let screenSize = view.safeAreaLayoutGuide.layoutFrame.size
+        
+        itemsBodyCell.setupCell(
+            feed: feed,
+            screenSize: screenSize,
+            isLoading: homeViewModel.isLoading
+        )
+        itemsBodyCell.delegate = self
+        
+        return itemsBodyCell
     }
 }
 

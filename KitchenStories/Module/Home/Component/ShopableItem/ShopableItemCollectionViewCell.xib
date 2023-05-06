@@ -81,9 +81,9 @@
             <size key="customSize" width="359" height="218"/>
             <connections>
                 <outlet property="containerView" destination="UYm-QJ-Jgg" id="0No-12-z1C"/>
-                <outlet property="itemImageView" destination="0yb-3X-wLc" id="EBn-TK-KOd"/>
-                <outlet property="itemNameLabel" destination="fXb-qY-sQB" id="qKz-jY-F5Y"/>
-                <outlet property="itemRecipesCountLabel" destination="9Qu-dG-hsa" id="I7y-8H-CLI"/>
+                <outlet property="recipeImageView" destination="0yb-3X-wLc" id="fBv-QZ-lnz"/>
+                <outlet property="recipeNameLabel" destination="fXb-qY-sQB" id="jUa-5E-1gw"/>
+                <outlet property="recipeRecipesCountLabel" destination="9Qu-dG-hsa" id="UJi-r0-VSI"/>
                 <outlet property="shopIngredientsButton" destination="pWg-jA-0BA" id="DRr-FV-fgg"/>
             </connections>
             <point key="canvasLocation" x="185.49618320610685" y="78.873239436619727"/>

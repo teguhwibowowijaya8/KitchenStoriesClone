@@ -38,14 +38,15 @@ class HomeItemsTableViewCell: UITableViewCell {
 //        let featuredCell = UINib(nibName: FeaturedItemCollectionViewCell.identifier, bundle: nil)
 //        itemsCollectionView.register(featuredCell, forCellWithReuseIdentifier: FeaturedItemCollectionViewCell.identifier)
         
+//        let carouselCell = UINib(nibName: CarouselItemCollectionViewCell.identifier, bundle: nil)
+//        itemsCollectionView.register(carouselCell, forCellWithReuseIdentifier: CarouselItemCollectionViewCell.identifier)
+        
         let recipeCardCell = UINib(nibName: RecipeCardCollectionViewCell.identifier, bundle: nil)
         itemsCollectionView.register(recipeCardCell, forCellWithReuseIdentifier: RecipeCardCollectionViewCell.identifier)
         
         let shopableCell = UINib(nibName: ShopableItemCollectionViewCell.identifier, bundle: nil)
         itemsCollectionView.register(shopableCell, forCellWithReuseIdentifier: ShopableItemCollectionViewCell.identifier)
         
-//        let carouselCell = UINib(nibName: CarouselItemCollectionViewCell.identifier, bundle: nil)
-//        itemsCollectionView.register(carouselCell, forCellWithReuseIdentifier: CarouselItemCollectionViewCell.identifier)
         
         return itemsCollectionView
     }()
@@ -70,7 +71,6 @@ class HomeItemsTableViewCell: UITableViewCell {
         itemCollectionViewHeight = nil
         
         feed = nil
-//        screenSize = nil
         cellSize = .zero
         isLoading = true
 
@@ -198,61 +198,19 @@ extension HomeItemsTableViewCell: UICollectionViewDataSource {
         guard let feed = feed
         else { return UICollectionViewCell() }
         
-        let feedItem: RecipeModel? = isLoading ? nil : feed.itemList[indexPath.row]
-        
         switch feed.type {
-        case .shoppableCarousel:
-            guard let shopableCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopableItemCollectionViewCell.identifier, for: indexPath) as? ShopableItemCollectionViewCell
-            else { return UICollectionViewCell() }
-            
-            shopableCell.setupCell(
-                imageUrlString: feedItem?.thumbnailUrlString,
-                itemName: feedItem?.name,
-                recipesCount: feedItem?.recipes?.count ?? 0
+        case .featured, .carousel, .recent:
+            return recipeCardCell(
+                collectionView,
+                cellForItemAt: indexPath,
+                feedType: feed.type
             )
             
-            return shopableCell
+        case .shoppableCarousel:
+            return shopableCell(collectionView, cellForItemAt: indexPath)
             
         default:
-            guard let recipeCardCell = collectionView.dequeueReusableCell(withReuseIdentifier: RecipeCardCollectionViewCell.identifier, for: indexPath) as? RecipeCardCollectionViewCell
-            else { return UICollectionViewCell() }
-            
-            guard let feedItem = feedItem
-            else {
-                recipeCardCell.setupCell(recipe: nil, isLoading: true)
-                return recipeCardCell
-            }
-            
-            var recipeCardParams: RecipeCardCellParams?
-            switch feed.type {
-            case .featured:
-                recipeCardParams = RecipeCardCellParams(
-                    imageUrlString: feedItem.thumbnailUrlString,
-                    itemName: feedItem.name,
-                    itemFeedCredits: feedItem.creditsNames,
-                    backgroundColor: .blue.withAlphaComponent(0.5),
-                    recipeNameFont: .boldSystemFont(ofSize: 25),
-                    maxLines: 0
-                )
-                
-            case .recent, .carousel:
-                recipeCardParams = RecipeCardCellParams(
-                    imageUrlString: feedItem.thumbnailUrlString,
-                    itemName: feedItem.name,
-                    alignLabel: .center,
-                    imageHeightEqualToContainerMultiplier: 0.7
-                )
-                
-            default:
-                return UICollectionViewCell()
-            }
-            
-            recipeCardCell.setupCell(
-                recipe: recipeCardParams,
-                isLoading: isLoading
-            )
-            
-            return recipeCardCell
+            return UICollectionViewCell()
         }
     }
     
@@ -260,5 +218,79 @@ extension HomeItemsTableViewCell: UICollectionViewDataSource {
         guard let feedItem = feed?.itemList[indexPath.row]
         else { return }
         delegate?.handleFeedItemSelected(recipeId: feedItem.id, recipeName: feedItem.name)
+    }
+}
+
+extension HomeItemsTableViewCell {
+    private func shopableCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let shopableCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopableItemCollectionViewCell.identifier, for: indexPath) as? ShopableItemCollectionViewCell
+        else { return UICollectionViewCell() }
+        
+        var shoppableCellParams: ShopableItemCellParams?
+        guard isLoading == false,
+              let feedItem = feed?.itemList[indexPath.row]
+        else {
+            shopableCell.setupCell(recipe: shoppableCellParams, isLoading: isLoading)
+            return shopableCell
+        }
+        
+        shoppableCellParams = ShopableItemCellParams(
+            imageUrlString: feedItem.thumbnailUrlString,
+            recipeName: feedItem.name,
+            recipesCount: feedItem.recipes?.count ?? 0
+        )
+        
+        shopableCell.setupCell(
+            recipe: shoppableCellParams,
+            isLoading: isLoading
+        )
+        
+        return shopableCell
+    }
+    
+    private func recipeCardCell(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath,
+        feedType: FeedType
+    ) -> UICollectionViewCell {
+        guard let recipeCardCell = collectionView.dequeueReusableCell(withReuseIdentifier: RecipeCardCollectionViewCell.identifier, for: indexPath) as? RecipeCardCollectionViewCell
+        else { return UICollectionViewCell() }
+        
+        var recipeCardParams: RecipeCardCellParams?
+        guard isLoading == false,
+              let feedItem = feed?.itemList[indexPath.row]
+        else {
+            recipeCardCell.setupCell(recipe: recipeCardParams, isLoading: isLoading)
+            return recipeCardCell
+        }
+        
+        switch feedType {
+        case .featured:
+            recipeCardParams = RecipeCardCellParams(
+                imageUrlString: feedItem.thumbnailUrlString,
+                recipeName: feedItem.name,
+                recipeFeedCredits: feedItem.creditsNames,
+                backgroundColor: .blue.withAlphaComponent(0.5),
+                recipeNameFont: .boldSystemFont(ofSize: 25),
+                maxLines: 0
+            )
+            
+        case .recent, .carousel:
+            recipeCardParams = RecipeCardCellParams(
+                imageUrlString: feedItem.thumbnailUrlString,
+                recipeName: feedItem.name,
+                alignLabel: .center
+            )
+            
+        default:
+            return UICollectionViewCell()
+        }
+        
+        recipeCardCell.setupCell(
+            recipe: recipeCardParams,
+            isLoading: isLoading
+        )
+        
+        return recipeCardCell
     }
 }

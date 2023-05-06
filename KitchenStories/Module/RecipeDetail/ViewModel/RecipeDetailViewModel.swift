@@ -41,9 +41,6 @@ class RecipeDetailViewModel {
     
     var ingredientHeaderSectionIndexes: [Int:Int] = [:]
     var ingredientBodySectionIndexes: [Int:Int] = [:]
-    //    var dummyDetail: RecipeDetailModel
-    //    var dummyTips: RecipeTipsModel
-    //    var dummyRelatedRecipe: RelatedRecipesModel
     
     init(recipeId: Int, getAPIService: GetAPIProtocol = GetAPIService()) {
         self.recipeId = recipeId

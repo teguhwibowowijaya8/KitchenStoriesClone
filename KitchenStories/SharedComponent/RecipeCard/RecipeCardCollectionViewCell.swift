@@ -9,23 +9,21 @@ import UIKit
 
 struct RecipeCardCellParams {
     let imageUrlString: String
-    let itemName: String
+    let recipeName: String
     var isLiked: Bool = false
-    var itemFeedCredits: String? = nil
+    var recipeFeedCredits: String? = nil
     var backgroundColor: UIColor = .clear
     var alignLabel: NSTextAlignment = .left
     var recipeNameFont: UIFont = .boldSystemFont(ofSize: 15)
     var recipeCreditFont: UIFont = .systemFont(ofSize: 12)
     var maxLines: Int = 3
-    var imageHeight: CGFloat?
-    var imageHeightEqualToContainerMultiplier: CGFloat?
 }
 
 class RecipeCardCollectionViewCell: UICollectionViewCell {
     static let identifier = "RecipeCardCollectionViewCell"
     
-    private let itemIsLikedImage = UIImage(systemName: "heart.fill")
-    private let itemIsNotLikedImage = UIImage(systemName: "heart")
+    private let recipeIsLikedImage = UIImage(systemName: "heart.fill")
+    private let recipeIsNotLikedImage = UIImage(systemName: "heart")
     
     private var getNetworkImageService = GetNetworkImageService()
     
@@ -40,56 +38,44 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var imageContainerView: UIView!
     
-    @IBOutlet weak var itemImageView: UIImageView! {
+    @IBOutlet weak var recipeImageView: UIImageView! {
         didSet {
-            itemImageView.contentMode = .scaleAspectFill
+            recipeImageView.contentMode = .scaleAspectFill
         }
     }
     
-    @IBOutlet weak var itemIsLikedButton: UIButton! {
+    @IBOutlet weak var recipeIsLikedButton: UIButton! {
         didSet {
-            itemIsLikedButton.tintColor = .red.withAlphaComponent(0.5)
-            itemIsLikedButton.setImage(isLikedImage(), for: .normal)
-            itemIsLikedButton.layer.cornerRadius = itemIsLikedButton.frame.height / 2
-            itemIsLikedButton.backgroundColor = .white
+            recipeIsLikedButton.tintColor = .red.withAlphaComponent(0.5)
+            recipeIsLikedButton.setImage(isLikedImage(), for: .normal)
+            recipeIsLikedButton.layer.cornerRadius = recipeIsLikedButton.frame.height / 2
+            recipeIsLikedButton.backgroundColor = .white
         }
     }
     
     @IBOutlet weak var textViewsContainer: UIStackView!
     
-    @IBOutlet weak var itemNameLabel: UITextView! {
+    @IBOutlet weak var recipeNameTextView: UITextView! {
         didSet {
-            itemNameLabel.removePadding()
+            recipeNameTextView.removePadding()
         }
     }
     
-    @IBOutlet weak var itemFeedCreditsLabel: UITextView! {
+    @IBOutlet weak var recipeFeedCreditsTextView: UITextView! {
         didSet {
-            itemFeedCreditsLabel.removePadding()
-            itemFeedCreditsLabel.isHidden = true
+            recipeFeedCreditsTextView.removePadding()
+            recipeFeedCreditsTextView.isHidden = true
         }
     }
-    
     
     @IBOutlet weak var textViewsContainerHeight: NSLayoutConstraint!
     
-//    @IBOutlet var recipeImageHeightConstraint: NSLayoutConstraint!
-//
-//    @IBOutlet weak var recipeImageHeightEqualContainerConstraint: NSLayoutConstraint!
-    
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-        itemImageView.image = nil
-//        recipeImageHeightConstraint?.isActive = false
-//        recipeImageHeightConstraint = nil
         textViewsContainerHeight.constant = 20
-        itemFeedCreditsLabel.isHidden = true
+        recipeFeedCreditsTextView.isHidden = true
+        recipeImageView.image = nil
         getNetworkImageService.cancel()
-        
-//        recipeImageHeightConstraint = imageContainerView.heightAnchor.constraint(equalToConstant: containerView.bounds.height * 0.7)
-//        recipeImageHeightConstraint?.isActive = false
-        
     }
     
     func setupCell(
@@ -107,75 +93,51 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
         
         containerView.backgroundColor = recipe.backgroundColor
         
-        itemImageView.loadImageFromUrl(
+        recipeImageView.loadImageFromUrl(
             recipe.imageUrlString,
             defaultImage: nil,
             getImageNetworkService: getNetworkImageService
         )
         
-        itemNameLabel.text = recipe.itemName
-        itemNameLabel.textAlignment = recipe.alignLabel
-        itemNameLabel.textContainer.maximumNumberOfLines = recipe.maxLines
-        itemNameLabel.font = recipe.recipeNameFont
+        recipeNameTextView.text = recipe.recipeName
+        recipeNameTextView.textAlignment = recipe.alignLabel
+        recipeNameTextView.textContainer.maximumNumberOfLines = recipe.maxLines
+        recipeNameTextView.font = recipe.recipeNameFont
         
         let isLikedButtonImage = isLikedImage(recipe.isLiked)
-        itemIsLikedButton.setImage(isLikedButtonImage, for: .normal)
+        recipeIsLikedButton.setImage(isLikedButtonImage, for: .normal)
         
-        if let itemFeedCredits = recipe.itemFeedCredits {
-            itemFeedCreditsLabel.text = "Presented by \(itemFeedCredits)"
-            itemFeedCreditsLabel.font = recipe.recipeCreditFont
-            itemFeedCreditsLabel.isHidden = false
-            itemFeedCreditsLabel.textAlignment = recipe.alignLabel
-            itemFeedCreditsLabel.textContainer.maximumNumberOfLines = recipe.maxLines
+        if let recipeFeedCredits = recipe.recipeFeedCredits {
+            recipeFeedCreditsTextView.text = "Presented by \(recipeFeedCredits)"
+            recipeFeedCreditsTextView.font = recipe.recipeCreditFont
+            recipeFeedCreditsTextView.isHidden = false
+            recipeFeedCreditsTextView.textAlignment = recipe.alignLabel
+            recipeFeedCreditsTextView.textContainer.maximumNumberOfLines = recipe.maxLines
         }
         
         if recipe.maxLines != 0 {
             var textContainerHeight: CGFloat
             
-            textContainerHeight = getTextHeight(of: recipe.recipeNameFont.pointSize, maxLines: recipe.maxLines, desiredText: recipe.itemName)
+            textContainerHeight = getTextHeight(of: recipe.recipeNameFont.pointSize, maxLines: recipe.maxLines, desiredText: recipe.recipeName)
             
-            if let itemFeedCredits = recipe.itemFeedCredits {
-                textContainerHeight += getTextHeight(of: recipe.recipeCreditFont.pointSize, maxLines: recipe.maxLines, desiredText: itemFeedCredits)
+            if let recipeFeedCredits = recipe.recipeFeedCredits {
+                textContainerHeight += getTextHeight(of: recipe.recipeCreditFont.pointSize, maxLines: recipe.maxLines, desiredText: recipeFeedCredits)
                 textContainerHeight += textViewsContainer.spacing
             }
             
             textViewsContainerHeight.constant = textContainerHeight
         }
-        
-//        setImageHeightConstraint(constant: recipe.imageHeight, multiplier: recipe.imageHeightEqualToContainerMultiplier)
     }
     
-//    private func setImageHeightConstraint(constant: CGFloat?, multiplier: CGFloat?) {
-//
-//        if let imageHeightConstant = constant {
-//            self.recipeImageHeightConstraint?.constant = imageHeightConstant
-//            self.recipeImageHeightConstraint.priority = .required
-//
-//            self.recipeImageHeightEqualContainerConstraint.priority = .init(999)
-//
-//        } else if let imageMultiplierToContainer = multiplier {
-//            self.recipeImageHeightConstraint?.constant = self.containerView.bounds.height * imageMultiplierToContainer
-//            self.recipeImageHeightConstraint.priority = .required
-//
-//            self.recipeImageHeightEqualContainerConstraint.priority = .init(999)
-//
-//        } else {
-//
-//            self.recipeImageHeightEqualContainerConstraint.priority = .init(999)
-//            self.recipeImageHeightConstraint.priority = .init(999)
-////            self.recipeImageHeightConstraint?.constant = defaultImageHeight
-//        }
-//    }
-    
     private func getTextHeight(of textSize: CGFloat, maxLines: Int, desiredText: String) -> CGFloat {
-        let singleLineTextView = UITextView(frame: CGRect(x: 0, y: 0, width: itemNameLabel.frame.width, height: .greatestFiniteMagnitude))
+        let singleLineTextView = UITextView(frame: CGRect(x: 0, y: 0, width: recipeNameTextView.frame.width, height: .greatestFiniteMagnitude))
         
         singleLineTextView.isEditable = false
         singleLineTextView.isSelectable = false
         singleLineTextView.isScrollEnabled = false
         singleLineTextView.removePadding()
         
-        singleLineTextView.font = itemNameLabel.font
+        singleLineTextView.font = recipeNameTextView.font
         singleLineTextView.text = "A"
         singleLineTextView.sizeToFit()
         let measuredHeight = singleLineTextView.frame.height
@@ -188,39 +150,39 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
         containerView.layer.borderWidth = 0.5
         containerView.layer.borderColor = Constant.loadingColor.cgColor
         
-        itemImageView.backgroundColor = Constant.loadingColor
-        itemNameLabel.backgroundColor = Constant.loadingColor
-        itemFeedCreditsLabel.backgroundColor = Constant.loadingColor
+        recipeImageView.backgroundColor = Constant.loadingColor
+        recipeNameTextView.backgroundColor = Constant.loadingColor
+        recipeFeedCreditsTextView.backgroundColor = Constant.loadingColor
         
-        itemNameLabel.text = Constant.placholderText1
-        itemFeedCreditsLabel.text = Constant.placholderText2
+        recipeNameTextView.text = Constant.placholderText1
+        recipeFeedCreditsTextView.text = Constant.placholderText2
         
-        itemIsLikedButton.isHidden = true
-        itemNameLabel.textColor = .clear
-        itemFeedCreditsLabel.textColor = .clear
-        itemIsLikedButton.tintColor = .clear
-        itemIsLikedButton.isUserInteractionEnabled = false
+        recipeIsLikedButton.isHidden = true
+        recipeNameTextView.textColor = .clear
+        recipeFeedCreditsTextView.textColor = .clear
+        recipeIsLikedButton.tintColor = .clear
+        recipeIsLikedButton.isUserInteractionEnabled = false
     }
     
     private func removeLoadingView() {
         containerView.layer.borderWidth = 0
         containerView.layer.borderColor = UIColor.clear.cgColor
         
-        itemImageView.backgroundColor = .clear
-        itemNameLabel.backgroundColor = .clear
-        itemFeedCreditsLabel.backgroundColor = .clear
+        recipeImageView.backgroundColor = .clear
+        recipeNameTextView.backgroundColor = .clear
+        recipeFeedCreditsTextView.backgroundColor = .clear
         
-        itemNameLabel.textColor = .label
-        itemFeedCreditsLabel.textColor = .label
+        recipeNameTextView.textColor = .label
+        recipeFeedCreditsTextView.textColor = .label
         
-        itemIsLikedButton.isHidden = false
-        itemIsLikedButton.tintColor = Constant.secondaryColor
-        itemIsLikedButton.isUserInteractionEnabled = true
+        recipeIsLikedButton.isHidden = false
+        recipeIsLikedButton.tintColor = Constant.secondaryColor
+        recipeIsLikedButton.isUserInteractionEnabled = true
     }
     
     private func isLikedImage(_ isLiked: Bool = false) -> UIImage? {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .bold, scale: .medium)
-        let image = isLiked ? itemIsLikedImage : itemIsNotLikedImage
+        let image = isLiked ? recipeIsLikedImage : recipeIsNotLikedImage
         
         return image?.withConfiguration(imageConfig)
     }

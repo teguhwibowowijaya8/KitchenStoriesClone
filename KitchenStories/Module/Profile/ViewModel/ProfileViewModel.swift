@@ -17,19 +17,19 @@ struct ProfileViewModel {
     init() {
         settingSections = [
             SettingSectionModel(section: .account, settings: [
-                SettingModel(type: .logOut, symbolImageName: "person.fill", tintColor: .red)
+                SettingModel(type: .logOut, symbolImageName: "arrow.left.square", tintColor: .red)
             ]),
             SettingSectionModel(section: .system, settings: [
-                SettingModel(type: .languages, symbolImageName: "person.fill"),
-                SettingModel(type: .measurementSystem, symbolImageName: "person.fill"),
-                SettingModel(type: .notification, symbolImageName: "person.fill"),
-                SettingModel(type: .display, symbolImageName: "person.fill"),
-                SettingModel(type: .dietaryRestriction, symbolImageName: "person.fill")
+                SettingModel(type: .languages, symbolImageName: "globe"),
+                SettingModel(type: .measurementSystem, symbolImageName: "scalemass"),
+                SettingModel(type: .notification, symbolImageName: "bell.circle.fill"),
+                SettingModel(type: .display, symbolImageName: "lightbulb.slash.fill"),
+                SettingModel(type: .dietaryRestriction, symbolImageName: "leaf.arrow.circlepath")
             ]),
             SettingSectionModel(section: .more, settings: [
-                SettingModel(type: .aboutUs, symbolImageName: "person.fill"),
-                SettingModel(type: .faq, symbolImageName: "person.fill"),
-                SettingModel(type: .legalInformation, symbolImageName: "person.fill")
+                SettingModel(type: .aboutUs, symbolImageName: "info.circle.fill"),
+                SettingModel(type: .faq, symbolImageName: "questionmark.circle.fill"),
+                SettingModel(type: .legalInformation, symbolImageName: "doc.text.magnifyingglass")
             ])
         ]
         

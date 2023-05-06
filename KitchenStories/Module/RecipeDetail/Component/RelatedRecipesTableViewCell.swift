@@ -118,11 +118,9 @@ extension RelatedRecipesTableViewCell: UICollectionViewDataSource {
         if let recipeOfIndex = relatedRecipes?.results[indexPath.row] {
             recipeCardParams = RecipeCardCellParams(
                 imageUrlString: recipeOfIndex.thumbnailUrlString,
-                itemName: recipeOfIndex.name,
-                alignLabel: .center,
-                imageHeightEqualToContainerMultiplier: 0.7
+                recipeName: recipeOfIndex.name,
+                alignLabel: .center
             )
-            print("relatedRecipeName: \(recipeOfIndex.name)")
         }
         
         recipeCardCell.setupCell(recipe: recipeCardParams, isLoading: isLoading)

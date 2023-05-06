@@ -45,6 +45,7 @@
 		7ABBC6D22A05752300A4D146 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6D12A05752300A4D146 /* SettingModel.swift */; };
 		7ABBC6D42A05757F00A4D146 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6D32A05757F00A4D146 /* SettingSectionModel.swift */; };
 		7ABBC6D62A05773B00A4D146 /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6D52A05773B00A4D146 /* UserProfileModel.swift */; };
+		7ABBC6DA2A060CEC00A4D146 /* BackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6D92A060CEC00A4D146 /* BackgroundImage.swift */; };
 		7AC5933A29E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933929E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift */; };
 		7AC5933C29E309A000667F3E /* RoundedCornersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */; };
 		7AC5933F29E3B43A00667F3E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC5933E29E3B43A00667F3E /* RegisterViewModel.swift */; };
@@ -138,6 +139,7 @@
 		7ABBC6D12A05752300A4D146 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		7ABBC6D32A05757F00A4D146 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
 		7ABBC6D52A05773B00A4D146 /* UserProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
+		7ABBC6D92A060CEC00A4D146 /* BackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImage.swift; sourceTree = "<group>"; };
 		7AC5933929E3009800667F3E /* WelcomeGreetingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeGreetingCollectionViewCell.swift; sourceTree = "<group>"; };
 		7AC5933B29E309A000667F3E /* RoundedCornersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersButton.swift; sourceTree = "<group>"; };
 		7AC5933E29E3B43A00667F3E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				7ABA0F9729DE5A1600E58FBA /* Constant.swift */,
+				7ABBC6D92A060CEC00A4D146 /* BackgroundImage.swift */,
 				7A06F65029E7BFB8004FE00F /* LoadingFeeds.swift */,
 			);
 			path = Constant;
@@ -447,6 +450,24 @@
 				7ABBC6D52A05773B00A4D146 /* UserProfileModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		7ABBC6D72A06074500A4D146 /* DetailHeader */ = {
+			isa = PBXGroup;
+			children = (
+				7AC632E129EE3D6B009ABB08 /* DetailHeaderTableViewCell.swift */,
+				7AC632E229EE3D6B009ABB08 /* DetailHeaderTableViewCell.xib */,
+			);
+			path = DetailHeader;
+			sourceTree = "<group>";
+		};
+		7ABBC6D82A06075400A4D146 /* RecipeTip */ = {
+			isa = PBXGroup;
+			children = (
+				7AF7DC7329FE9EC900068D3B /* RecipeTipTableViewCell.swift */,
+				7AF7DC7429FE9EC900068D3B /* RecipeTipTableViewCell.xib */,
+			);
+			path = RecipeTip;
 			sourceTree = "<group>";
 		};
 		7AC5933829E3004000667F3E /* Component */ = {
@@ -581,15 +602,13 @@
 		7AC632E029ED4E0D009ABB08 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				7AC632E129EE3D6B009ABB08 /* DetailHeaderTableViewCell.swift */,
-				7AC632E229EE3D6B009ABB08 /* DetailHeaderTableViewCell.xib */,
+				7ABBC6D72A06074500A4D146 /* DetailHeader */,
 				7AF7DC6929FC08BA00068D3B /* ServingsStepper.swift */,
 				7AF7DC6B29FC1EDF00068D3B /* ServingsCountTableViewCell.swift */,
 				7AF7DC6D29FC89AD00068D3B /* IngredientTableViewCell.swift */,
 				7AF7DC6F29FD7A8800068D3B /* NutritionInfoHeaderTableViewCell.swift */,
 				7AF7DC7129FE6CDF00068D3B /* AddToGroceryBagTableViewCell.swift */,
-				7AF7DC7329FE9EC900068D3B /* RecipeTipTableViewCell.swift */,
-				7AF7DC7429FE9EC900068D3B /* RecipeTipTableViewCell.xib */,
+				7ABBC6D82A06075400A4D146 /* RecipeTip */,
 				7AF7DC7929FECAAE00068D3B /* RelatedRecipesTableViewCell.swift */,
 				7AF7DC7B2A000CC300068D3B /* RecipePreparationTableViewCell.swift */,
 			);
@@ -791,6 +810,7 @@
 				7AF7DC7529FE9EC900068D3B /* RecipeTipTableViewCell.swift in Sources */,
 				7AE178C129E2661D00706D64 /* LoginViewController.swift in Sources */,
 				7AF7DC7A29FECAAE00068D3B /* RelatedRecipesTableViewCell.swift in Sources */,
+				7ABBC6DA2A060CEC00A4D146 /* BackgroundImage.swift in Sources */,
 				7AF7DC8E2A00CD6A00068D3B /* NutritionModel.swift in Sources */,
 				7ABA0F9329DE574700E58FBA /* ProfileViewController.swift in Sources */,
 				7AF7DC6C29FC1EDF00068D3B /* ServingsCountTableViewCell.swift in Sources */,

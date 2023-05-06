@@ -29,7 +29,7 @@ protocol FetchDataProtocol {
 }
 
 struct FetchDataService: FetchDataProtocol {
-    private let apiKey = "9d830ce831msh2c613b2106cf494p103820jsn992626608337"
+    private let apiKey = "d91d592452msh9fc43a93245c25cp10e3cbjsn80a9b39e0ebb"
     private let apiHost = "tasty.p.rapidapi.com"
     
     func fetch(

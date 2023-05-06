@@ -17,6 +17,9 @@ class ProfileViewController: UIViewController {
     static let tabImage = UIImage(systemName: "person")
     static let tabSelectedImage = UIImage(systemName: "person.fill")
     
+    private let headerVerticalSpacing: CGFloat = 5
+    private let headerSeparatorHeight: CGFloat = 1
+    
     private var profileViewModel: ProfileViewModel!
     
     private lazy var profileTableView: UITableView = {
@@ -52,6 +55,8 @@ class ProfileViewController: UIViewController {
         profileTableView.delegate = self
         profileTableView.dataSource = self
         profileTableView.separatorStyle = .none
+        profileTableView.contentInsetAdjustmentBehavior = .never
+        profileTableView.sectionHeaderTopPadding = 0
         
         profileTableView.register(ProfileAccountTableViewCell.self, forCellReuseIdentifier: ProfileAccountTableViewCell.identifier)
         profileTableView.register(ProfileSettingTableViewCell.self, forCellReuseIdentifier: ProfileSettingTableViewCell.identifier)
@@ -129,18 +134,24 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         
         let wraperView = UIView()
         wraperView.addSubview(separatorView)
+        
+        let headerTopSpacing = section == 0 ? 0 : headerVerticalSpacing
         NSLayoutConstraint.activate([
-            separatorView.topAnchor.constraint(equalTo: wraperView.topAnchor),
+            separatorView.topAnchor.constraint(equalTo: wraperView.topAnchor, constant: headerTopSpacing),
             separatorView.leftAnchor.constraint(equalTo: wraperView.leftAnchor, constant: Constant.horizontalSpacing),
             separatorView.rightAnchor.constraint(equalTo: wraperView.rightAnchor, constant: -Constant.horizontalSpacing),
-            separatorView.bottomAnchor.constraint(equalTo: wraperView.bottomAnchor),
+            separatorView.bottomAnchor.constraint(equalTo: wraperView.bottomAnchor, constant: -headerVerticalSpacing),
         ])
         
         return wraperView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 1
+        if section != 0 {
+            return headerSeparatorHeight + (headerVerticalSpacing * 2)
+        }
+        
+        return headerSeparatorHeight + headerVerticalSpacing
     }
 }
 
@@ -164,7 +175,7 @@ extension ProfileViewController {
         else { return UITableViewCell() }
         
         let settingOfIndex = profileViewModel.settingSections[indexPath.section - 1].settings[indexPath.row - 1]
-        let profileSettingParams = ProfileSettingCellParams(settingImageSymbolName: settingOfIndex.symbolImageName, settingName: settingOfIndex.type.rawValue)
+        let profileSettingParams = ProfileSettingCellParams(settingImageSymbolName: settingOfIndex.symbolImageName, settingName: settingOfIndex.type.rawValue, settingTintColor: settingOfIndex.tintColor)
         
         profileSettingCell.setupCell(profileSetting: profileSettingParams, isLoading: profileViewModel.isLoading)
         

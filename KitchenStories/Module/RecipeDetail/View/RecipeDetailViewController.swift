@@ -214,6 +214,8 @@ extension RecipeDetailViewController {
         
         var showSeeAllButton: Bool = false
         var title: String = "Title"
+        var paddingTop: CGFloat = HeaderTitleTableViewCell.defaultPaddingTop
+        var paddingBottom: CGFloat = HeaderTitleTableViewCell.defaultPaddingBottom
         
         switch section {
         case .relatedRecipesHeader:
@@ -226,6 +228,7 @@ extension RecipeDetailViewController {
         case .preparationsHeader:
             title = "Preparation"
             headerTitleCell.backgroundColor = preparationCellBackgroundColor
+            paddingTop = 15
             
         case .ingredientsHeader:
             if let recipeDetail = recipeDetailViewModel.recipeDetail,
@@ -241,7 +244,9 @@ extension RecipeDetailViewController {
         headerTitleCell.setupCell(
             title: title,
             showSeeAllButton: showSeeAllButton,
-            isLoading: recipeDetailViewModel.isLoading
+            isLoading: recipeDetailViewModel.isLoading,
+            paddingTop: paddingTop,
+            paddingBottom: paddingBottom
         )
         
         return headerTitleCell

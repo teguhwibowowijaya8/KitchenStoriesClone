@@ -19,6 +19,9 @@ class ProfileSettingTableViewCell: UITableViewCell {
     private let settingImageHeight: CGFloat = 25
     private let settingNameLabelSize: CGFloat = 16
     
+    private let horizontalSpacing: CGFloat = 20
+    private let verticalSpacing: CGFloat = 8
+    
     private lazy var horizontalStackContainer: UIStackView = {
        let horizontalStackContainer = UIStackView()
         horizontalStackContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -71,10 +74,10 @@ class ProfileSettingTableViewCell: UITableViewCell {
 
     private func setComponentsConstraints() {
         NSLayoutConstraint.activate([
-            horizontalStackContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
-            horizontalStackContainer.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: Constant.horizontalSpacing),
-            horizontalStackContainer.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -Constant.horizontalSpacing),
-            horizontalStackContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8),
+            horizontalStackContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: verticalSpacing),
+            horizontalStackContainer.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: horizontalSpacing),
+            horizontalStackContainer.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -horizontalSpacing),
+            horizontalStackContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -verticalSpacing),
         ])
     }
     
@@ -95,7 +98,7 @@ class ProfileSettingTableViewCell: UITableViewCell {
         settingNameLabel.text = profileSetting.settingName
         
         settingImageView.tintColor = profileSetting.settingTintColor
-        settingNameLabel.tintColor = profileSetting.settingTintColor
+        settingNameLabel.textColor = profileSetting.settingTintColor
     }
     
     private func showLoadingView() {

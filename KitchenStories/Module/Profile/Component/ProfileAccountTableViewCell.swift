@@ -166,7 +166,7 @@ class ProfileAccountTableViewCell: UITableViewCell {
             userImageView.isHidden = false
             defaultImageLabel.isHidden = true
         } else {
-            defaultImageLabel.text = profileAccount.abbreviation.capitalized
+            defaultImageLabel.text = profileAccount.abbreviation.uppercased()
             userImageView.isHidden = true
             defaultImageLabel.isHidden = false
         }

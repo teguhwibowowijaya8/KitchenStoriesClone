@@ -55,4 +55,8 @@ class GetAPIService: GetAPIProtocol {
         
         dataTask?.resume()
     }
+    
+    func cancel() {
+        dataTask?.cancel()
+    }
 }

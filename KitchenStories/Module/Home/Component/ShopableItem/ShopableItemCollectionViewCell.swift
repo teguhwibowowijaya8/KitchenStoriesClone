@@ -7,10 +7,14 @@
 
 import UIKit
 
+struct ShopableItemCellParams {
+    let imageUrlString: String
+    let recipeName: String
+    let recipesCount: Int
+}
+
 class ShopableItemCollectionViewCell: UICollectionViewCell {
     static let identifier = "ShopableItemCollectionViewCell"
-    
-    private let defaultItemImage = UIImage(systemName: "fork.knife.circle")
     
     private var getNetworkImageService = GetNetworkImageService()
     private let containerBackgroundColor: UIColor = .gray.withAlphaComponent(0.2)
@@ -22,26 +26,26 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    @IBOutlet weak var itemImageView: UIImageView! {
+    @IBOutlet weak var recipeImageView: UIImageView! {
         didSet {
-            itemImageView.contentMode = .scaleAspectFill
-            itemImageView.layer.cornerRadius = Constant.cornerRadius
+            recipeImageView.contentMode = .scaleAspectFill
+            recipeImageView.layer.cornerRadius = Constant.cornerRadius
         }
     }
     
-    @IBOutlet weak var itemNameLabel: UILabel! {
+    @IBOutlet weak var recipeNameLabel: UILabel! {
         didSet {
-            itemNameLabel.font = .boldSystemFont(ofSize: 16)
-            itemNameLabel.numberOfLines = 4
+            recipeNameLabel.font = .boldSystemFont(ofSize: 16)
+            recipeNameLabel.numberOfLines = 4
         }
     }
     
     
-    @IBOutlet weak var itemRecipesCountLabel: UILabel! {
+    @IBOutlet weak var recipeRecipesCountLabel: UILabel! {
         didSet {
-            itemRecipesCountLabel.font = .systemFont(ofSize: 12)
-            itemRecipesCountLabel.textColor = .darkGray
-            itemRecipesCountLabel.adjustsFontSizeToFitWidth = true
+            recipeRecipesCountLabel.font = .systemFont(ofSize: 12)
+            recipeRecipesCountLabel.textColor = .darkGray
+            recipeRecipesCountLabel.adjustsFontSizeToFitWidth = true
         }
     }
     
@@ -71,18 +75,16 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        itemImageView.image = nil
+        recipeImageView.image = nil
         getNetworkImageService.cancel()
     }
     
     func setupCell(
-        imageUrlString: String? = nil,
-        itemName: String? = nil,
-        recipesCount: Int? = nil
+        recipe: ShopableItemCellParams?,
+        isLoading: Bool
     ) {
-        guard let imageUrlString = imageUrlString,
-              let itemName = itemName,
-              let recipesCount = recipesCount
+        guard isLoading == false,
+              let recipe = recipe
         else {
             showLoadingView()
             return
@@ -90,31 +92,31 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
         
         removeLoadingView()
         
-        itemImageView.loadImageFromUrl(
-            imageUrlString,
-            defaultImage: defaultItemImage,
+        recipeImageView.loadImageFromUrl(
+            recipe.imageUrlString,
+            defaultImage: nil,
             getImageNetworkService: getNetworkImageService
         )
         
-        itemNameLabel.text = itemName
-        itemRecipesCountLabel.text = "\(recipesCount) recipes"
+        recipeNameLabel.text = recipe.recipeName
+        recipeRecipesCountLabel.text = "\(recipe.recipesCount) recipes"
     }
     
     private func showLoadingView() {
         containerView.backgroundColor = .clear
         containerView.layer.borderColor = Constant.loadingColor.cgColor
         containerView.layer.borderWidth = 0.5
-        itemImageView.backgroundColor = Constant.loadingColor
-        itemNameLabel.backgroundColor = Constant.loadingColor
-        itemRecipesCountLabel.backgroundColor = Constant.loadingColor
+        recipeImageView.backgroundColor = Constant.loadingColor
+        recipeNameLabel.backgroundColor = Constant.loadingColor
+        recipeRecipesCountLabel.backgroundColor = Constant.loadingColor
         shopIngredientsButton.backgroundColor = Constant.loadingColor
         
-        itemNameLabel.text = Constant.placholderText2
-        itemRecipesCountLabel.text = Constant.placholderText1
-        itemImageView.image = nil
+        recipeNameLabel.text = Constant.placholderText2
+        recipeRecipesCountLabel.text = Constant.placholderText1
+        recipeImageView.image = nil
         
-        itemNameLabel.textColor = .clear
-        itemRecipesCountLabel.textColor = .clear
+        recipeNameLabel.textColor = .clear
+        recipeRecipesCountLabel.textColor = .clear
         shopIngredientsButton.tintColor = .clear
         shopIngredientsButton.isUserInteractionEnabled = false
     }
@@ -122,13 +124,13 @@ class ShopableItemCollectionViewCell: UICollectionViewCell {
     private func removeLoadingView() {
         containerView.layer.borderColor = UIColor.clear.cgColor
         containerView.layer.borderWidth = 0
-        itemImageView.backgroundColor = containerBackgroundColor
-        itemNameLabel.backgroundColor = .clear
-        itemRecipesCountLabel.backgroundColor = .clear
+        recipeImageView.backgroundColor = containerBackgroundColor
+        recipeNameLabel.backgroundColor = .clear
+        recipeRecipesCountLabel.backgroundColor = .clear
         shopIngredientsButton.backgroundColor = Constant.secondaryColor
         
-        itemNameLabel.textColor = .label
-        itemRecipesCountLabel.textColor = .label
+        recipeNameLabel.textColor = .label
+        recipeRecipesCountLabel.textColor = .label
         shopIngredientsButton.tintColor = .white
         shopIngredientsButton.isUserInteractionEnabled = true
     }
