@@ -12,15 +12,18 @@ struct IngredientComponentModel: Codable {
     let ingredient: IngredientModel
     let extraComment: String?
     let position: Int
-    let measurements: [MeasurementModel]
+    var measurements: [MeasurementModel]
     
     func measurementString(servingCount: Int) -> String? {
         var measurementString: String = ""
-        for (index, measurement) in measurements.enumerated() {
-            if index == 0 {
-                measurementString = measurement.measurementString
+        for measurement in measurements {
+            let measurementOfIndex = measurement.measurementString(servingCount: servingCount)
+            if measurementOfIndex == "" { continue }
+            
+            if measurementString == "" {
+                measurementString = measurementOfIndex
             } else {
-                measurementString += " (\(measurement.measurementString))"
+                measurementString += " (\(measurementOfIndex))"
             }
         }
         

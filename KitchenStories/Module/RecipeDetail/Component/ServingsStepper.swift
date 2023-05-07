@@ -30,7 +30,7 @@ class ServingStepper: UIView {
             }
         }
     }
-    private var maxValue: Int = 100 {
+    private var maxValue: Int = 1000 {
         didSet {
             if value > maxValue {
                 value = maxValue
@@ -170,11 +170,11 @@ class ServingStepper: UIView {
     @objc func handlePlusMinButtonSelected(_ sender: UIButton) {
         if sender.currentImage == minusImage.withConfiguration(imageButtonConfig) {
             if value <= minValue {
-                value = minValue
+                return
             } else { value -= 1 }
         } else if sender.currentImage == plusImage.withConfiguration(imageButtonConfig) {
             if value >= maxValue {
-                value = maxValue
+                return
             } else { value += 1 }
         }
         delegate?.handleServingValueChanged(value)

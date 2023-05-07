@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserProfile: Codable {
+struct UserProfileModel: Codable {
     var id: String
     var name: String
     var imageUrlString: String?

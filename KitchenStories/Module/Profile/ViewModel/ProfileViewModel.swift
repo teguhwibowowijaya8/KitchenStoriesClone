@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseFirestore
 
 protocol ProfileViewModelDelegate {
     func handleOnSuccessSignOut()
@@ -16,7 +17,7 @@ struct ProfileViewModel {
     var totalSections: Int = 4
     var isLoading: Bool = false
     var settingSections: [SettingSectionModel]
-    var userProfile: UserProfile?
+    var userProfile: UserProfileModel?
     var compositions: [ProfileViewSection]
     var delegate: ProfileViewModelDelegate?
     
@@ -45,11 +46,33 @@ struct ProfileViewModel {
             compositions.append(.profileSettings)
         }
         
-        userProfile = UserProfile(id: "12345", name: "Mas Wadidaw Kejar Aku Nih", email: "maswadidaw98@gmail.com", username: "maswadidaw98", gender: "Male")
+        userProfile = UserProfileModel(id: "12345", name: "Mas Wadidaw Kejar Aku Nih", email: "maswadidaw98@gmail.com", username: "maswadidaw98", gender: "Male")
     }
     
     func getUserProfile() {
-        print("user: \(Auth.auth().currentUser)")
+//        if let uid = Auth.auth().currentUser?.uid {
+//            let db = Firestore.firestore()
+//            db.collection("users").document(uid).getDocument { query, error in
+//                if let error = error {
+//                    print(error)
+//                    return
+//                } else if let profileDocument = query,
+//                          let profile = profileDocument.data(),
+//                          let encodedData = try? JSONEncoder().encode(profile) {
+//                    let result = Result {
+//                        let user = try JSONDecoder().decode(RegisterUserModel.self, from: encodedData)
+//                    }
+//                    
+//                    switch result {
+//                    case .success(let user):
+//                        return user
+//                    case .failure(let error):
+//                        print("Error decoding user: \(error)")
+//                        return nil
+//                    }
+//                }
+//            }
+//        }
     }
     
     func signOut() {

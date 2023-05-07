@@ -41,18 +41,36 @@ class RegisterViewController: UIViewController {
         }
     }
     
+    
+    @IBOutlet weak var registerFullnameTextField: BottomBorderTextField! {
+        didSet {
+            registerFullnameTextField.setPlaceholder("Full Name")
+            registerFullnameTextField.textContentType = .name
+            registerFullnameTextField.tintColor = .white
+        }
+    }
+    
     @IBOutlet weak var registerEmailTextField: BottomBorderTextField! {
         didSet {
             registerEmailTextField.setPlaceholder("Email")
+            registerEmailTextField.textContentType = .emailAddress
         }
     }
+    
     
     @IBOutlet weak var registerUsernameTextField: BottomBorderTextField! {
         didSet {
             registerUsernameTextField.setPlaceholder("Username")
-            registerUsernameTextField.isHidden = true
-            registerUsernameTextField.textContentType = .emailAddress
+            registerUsernameTextField.textContentType = .username
             registerUsernameTextField.tintColor = .white
+        }
+    }
+    
+    
+    @IBOutlet weak var registerGenderTextField: BottomBorderTextField! {
+        didSet {
+            registerGenderTextField.setPlaceholder("Gender")
+            registerGenderTextField.tintColor = .white
         }
     }
     
@@ -140,11 +158,16 @@ class RegisterViewController: UIViewController {
     
     @objc func onRegisterButtonSelected(_ sender: UIButton) {
         guard let email = registerEmailTextField.text,
-              let password = registerPasswordTextField.text
+              let password = registerPasswordTextField.text,
+              let username = registerUsernameTextField.text,
+              let fullname = registerFullnameTextField.text,
+              let gender = registerGenderTextField.text
         else { return }
         
+        let registerUser = RegisterUserModel(fullname: fullname, email: email, username: username, gender: gender)
+        
         disableForm()
-        registerViewModel?.registerUser(email: email, password: password)
+        registerViewModel?.registerUser(registerUser: registerUser, password: password)
     }
     
     private func disableForm() {

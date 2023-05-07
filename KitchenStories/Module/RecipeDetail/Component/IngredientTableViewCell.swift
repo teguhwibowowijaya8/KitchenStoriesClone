@@ -76,7 +76,7 @@ class IngredientTableViewCell: UITableViewCell {
             removeLoadingView()
             
             ingredientNameLabel.text = ingredient.ingredientName
-            if let ingredientRatio = ingredient.ingredientRatio {
+            if let ingredientRatio = ingredient.ingredientRatio, ingredientRatio != "" {
                 ingredientRatioLabel.text = ingredientRatio
             } else {
                 ingredientRatioLabel.isHidden = true

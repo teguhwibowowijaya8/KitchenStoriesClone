@@ -18,7 +18,7 @@ struct RecipeDetailModel: Codable {
     let recipes: [RecipeModel]?
     let description: String?
 
-    let featuredIn: [FeaturedInModel]
+    let featuredIn: [FeaturedInModel]?
     var numServings: Int?
     let servingsNounSingular: String?
     let servingsNounPlural: String?
@@ -67,6 +67,8 @@ struct RecipeDetailModel: Codable {
     }
     
     var featureInCompilations: String? {
+        guard let featuredIn = featuredIn
+        else { return nil }
         let featuredInCount = featuredIn.count
         
         if featuredInCount == 1 { return featuredIn.first?.name }

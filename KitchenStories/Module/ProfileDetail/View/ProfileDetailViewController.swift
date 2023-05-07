@@ -15,7 +15,7 @@ enum ProfileDetailSection {
 
 class ProfileDetailViewController: UIViewController {
     
-    var userProfile: UserProfile
+    var userProfile: UserProfileModel
     
     private var profileDetailViewModel: ProfileDetailViewModel!
     
@@ -30,7 +30,7 @@ class ProfileDetailViewController: UIViewController {
         return profileDetailTableView
     }()
     
-    init(userProfile: UserProfile) {
+    init(userProfile: UserProfileModel) {
         self.userProfile = userProfile
         
         super.init(nibName: nil, bundle: nil)

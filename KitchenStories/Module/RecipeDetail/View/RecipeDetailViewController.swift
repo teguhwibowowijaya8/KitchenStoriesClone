@@ -248,9 +248,8 @@ extension RecipeDetailViewController {
             paddingTop = 15
             
         case .ingredientsHeader:
-            if let recipeDetail = recipeDetailViewModel.recipeDetail,
-               let recipeHeaderSection = recipeDetailViewModel.ingredientHeaderSectionIndexes[indexPath.section],
-               let ingredientSections = recipeDetail.ingredientSections,
+            if let recipeHeaderSection = recipeDetailViewModel.ingredientHeaderSectionIndexes[indexPath.section],
+               let ingredientSections = recipeDetailViewModel.ingredientsPerServing,
                let headerTitle = ingredientSections[recipeHeaderSection].name {
                 title = headerTitle
             }
@@ -277,7 +276,7 @@ extension RecipeDetailViewController {
         
         if let recipeDetail = recipeDetailViewModel.recipeDetail {
             serving = ServingsCountCellParams(
-                servingCount: recipeDetail.numServings ?? 1,
+                servingCount: recipeDetailViewModel.servingCount,
                 servingNounSingular: recipeDetail.servingsNounSingular ?? "serving",
                 servingNounPlural: recipeDetail.servingsNounPlural ?? "servings"
             )
@@ -294,8 +293,7 @@ extension RecipeDetailViewController {
         else { return UITableViewCell() }
         
         var ingredient: IngredientCellParams? = nil
-        if let recipeDetail = recipeDetailViewModel.recipeDetail,
-           let ingredientSections = recipeDetail.ingredientSections,
+        if let ingredientSections = recipeDetailViewModel.ingredientsPerServing,
            let ingredientsBodySection = recipeDetailViewModel.ingredientBodySectionIndexes[indexPath.section] {
             let ingredientSection = ingredientSections[ingredientsBodySection]
             let ingredientOfIndex = ingredientSection.components[indexPath.row]
@@ -305,6 +303,8 @@ extension RecipeDetailViewController {
                 ingredientName = "\(ingredientName), \(extraComment)"
             }
             
+            print("body update")
+            print(recipeDetailViewModel.servingCount)
             ingredient = IngredientCellParams(
                 ingredientName: ingredientName,
                 ingredientRatio: ingredientOfIndex.measurementString(servingCount: recipeDetailViewModel.servingCount)
@@ -425,6 +425,12 @@ extension RecipeDetailViewController: NutritionInfoHeaderCellDelegate {
 extension RecipeDetailViewController: ServingStepperDelegate {
     func handleServingValueChanged(_ value: Int) {
         recipeDetailViewModel.changeServingNums(to: value)
+        var reloadSections = [Int]()
+        for ingredientBodySection in recipeDetailViewModel.ingredientBodySectionIndexes {
+            reloadSections.append(ingredientBodySection.key)
+        }
+        print("body index: \(recipeDetailViewModel.ingredientBodySectionIndexes)")
+        recipeDetailTableView.reloadSections(IndexSet(reloadSections), with: .none)
     }
 }
 

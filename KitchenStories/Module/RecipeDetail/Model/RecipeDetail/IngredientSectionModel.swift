@@ -8,7 +8,7 @@
 import Foundation
 
 struct IngredientSectionModel: Codable {
-    let components: [IngredientComponentModel]
+    var components: [IngredientComponentModel]
     let name: String?
     let position: Int
     

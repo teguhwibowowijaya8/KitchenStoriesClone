@@ -37,6 +37,8 @@ class RecipeDetailViewModel {
     var detailsSection: [RecipeDetailSection] = []
     var defaultSection: [RecipeDetailSection] = []
     
+    var ingredientsPerServing: [IngredientSectionModel]?
+    
     var servingCount: Int = 1
     
     var ingredientHeaderSectionIndexes: [Int:Int] = [:]
@@ -72,7 +74,7 @@ class RecipeDetailViewModel {
     }
     
     func changeServingNums(to value: Int) {
-        recipeDetail?.numServings = value
+        servingCount = value
     }
     
     func getSectionIndex(of section: RecipeDetailSection) -> Int? {
@@ -98,11 +100,16 @@ class RecipeDetailViewModel {
         
         dispatchGroup.enter()
         getRecipeDetailService.detail(recipeId: recipeId) { recipeDetail, errorMessage in
+            print("hereeeee")
             if let errorMessage = errorMessage {
+                print("hereeeeeeeeee error")
+                print("hereeee errorMsg: \(errorMessage)")
                 self.recipeDetailErrorMessage = errorMessage
             } else if let recipeDetail = recipeDetail {
                 self.recipeDetail = recipeDetail
                 self.servingCount = recipeDetail.numServings ?? 1
+                print("hereeeeeeeeee")
+                self.setIngredientsPerServing()
             }
             dispatchGroup.leave()
         }
@@ -135,6 +142,28 @@ class RecipeDetailViewModel {
             self.isLoading = false
             self.delegate?.handleOnDetailsFetchCompleted()
             return
+        }
+    }
+    
+    func setIngredientsPerServing() {
+        guard let recipeDetail = recipeDetail,
+              let ingredientsSections = recipeDetail.ingredientSections,
+              let numServings = recipeDetail.numServings
+        else { return }
+        
+        self.ingredientsPerServing = ingredientsSections
+        
+        for (sectionIdx, ingredientsSection) in ingredientsSections.enumerated() {
+            for (componentIdx, component) in ingredientsSection.components.enumerated() {
+                for (measurementIdx, measurement) in component.measurements.enumerated() {
+                    guard measurement.quantity != "",
+                          measurement.quantity != "0",
+                        let quantityDouble = measurement.quantity.numericValue()
+                    else { continue }
+
+                    ingredientsPerServing?[sectionIdx].components[componentIdx].measurements[measurementIdx].quantityDouble = quantityDouble / Double(numServings)
+                }
+            }
         }
     }
     
@@ -205,12 +234,4 @@ class RecipeDetailViewModel {
             }
         }
     }
-    
-    //    private func setDummyData() {
-    //        dummyDetail = RecipeDetailModel(id: 1, userRatings: nil, name: "", thumbnailUrlString: "", credits: [], brand: nil, price: nil, recipes: nil, featuredIn: [], numServings: 0, servingsNounSingular: "serving", servingsNounPlural: "servings", videoUrl: nil, description: nil, ingredients: [], nutrition: NutritionModel(calories: 0, carbohydrates: 0, fat: 0, protein: 0, sugar: 0, fiber: 0), instructions: [])
-    //
-    //        dummyTips = RecipeTipsModel(count: 1, result: [])
-    //
-    //        dummyRelatedRecipe = RelatedRecipesModel(count: 5, results: [])
-    //    }
 }

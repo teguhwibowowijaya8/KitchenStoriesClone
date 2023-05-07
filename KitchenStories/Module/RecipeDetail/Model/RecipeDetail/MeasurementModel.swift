@@ -11,13 +11,24 @@ struct MeasurementModel: Codable {
     let id: Int
     var quantity: String
     let unit: MeasurementUnitModel
+    var quantityDouble: Double?
     
-    var measurementString: String {
-        print("measurementQtyOrigin: \(quantity)")
-        if let quantityDouble = Double(quantity) {
-            print("measurementQtyDouble: \(quantityDouble)")
-        }
+    
+    func measurementString(servingCount: Int) -> String {
+        guard let quantityDouble = quantityDouble
+        else { return "" }
         
-        return "\(quantity) \(unit.name)"
+        let finalQuantity = quantityDouble * Double(servingCount)
+        let quantityString = String(format: "%.2f", finalQuantity)
+//        var quantityString = finalQuantity.fractionString()
+//        if unit.system == .metric
+//            { quantityString = String(finalQuantity) }
+        return "\(quantityString) \(unit.name)"
+    }
+    
+    enum CodingKeys: CodingKey {
+        case id
+        case quantity
+        case unit
     }
 }

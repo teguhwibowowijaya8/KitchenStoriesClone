@@ -78,17 +78,6 @@ class ServingsCountTableViewCell: UITableViewCell {
         
         return horizontalStackView
     }()
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     func setupCell(
         serving: ServingsCountCellParams?,
@@ -132,6 +121,7 @@ class ServingsCountTableViewCell: UITableViewCell {
         servingTitleLabel.textColor = .clear
         servingTitleLabel.backgroundColor = Constant.loadingColor
         
+        servingCountLabel.text = "0 serving"
         servingCountLabel.textColor = .clear
         servingCountLabel.backgroundColor = Constant.loadingColor
         

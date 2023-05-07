@@ -23,7 +23,7 @@ struct ProfileDetailViewModel {
     var textFieldCompositions: [ProfileTextFieldType]
     
     
-    init(userProfile: UserProfile) {
+    init(userProfile: UserProfileModel) {
         userDetails = [
             1: (title: "Name", value: userProfile.name),
             2: (title: "Email", value: userProfile.email),
