@@ -16,7 +16,8 @@ struct RecipeModel: Codable {
     let brand: RecipeCreditModel?
     let price: RecipeIngredientsPriceModel?
     let recipes: [RecipeModel]?
-    
+    let description: String?
+
     var creditsNames: String? {
         let creditsCount = credits.count
         
@@ -39,6 +40,13 @@ struct RecipeModel: Codable {
         return fullNames
     }
     
+    var cleanDescription: String? {
+        if let description = description {
+            return Utilities.cleanStringFromUrl(string: description)
+        }
+        return nil
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case userRatings = "user_ratings"
@@ -48,5 +56,6 @@ struct RecipeModel: Codable {
         case brand
         case price
         case recipes
+        case description
     }
 }

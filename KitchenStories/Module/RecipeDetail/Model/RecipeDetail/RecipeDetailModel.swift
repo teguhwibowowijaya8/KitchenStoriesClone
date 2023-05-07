@@ -16,13 +16,13 @@ struct RecipeDetailModel: Codable {
     let brand: RecipeCreditModel?
     let price: RecipeIngredientsPriceModel?
     let recipes: [RecipeModel]?
-    
+    let description: String?
+
     let featuredIn: [FeaturedInModel]
     var numServings: Int?
     let servingsNounSingular: String?
     let servingsNounPlural: String?
     let videoUrl: String?
-    let description: String?
     let ingredientSections: [IngredientSectionModel]?
     let nutrition: NutritionModel?
     let instructions: [InstructionModel]?
@@ -57,6 +57,13 @@ struct RecipeDetailModel: Codable {
         }
         
         return fullNames
+    }
+    
+    var cleanDescription: String? {
+        if let description = description {
+            return Utilities.cleanStringFromUrl(string: description)
+        }
+        return nil
     }
     
     var featureInCompilations: String? {

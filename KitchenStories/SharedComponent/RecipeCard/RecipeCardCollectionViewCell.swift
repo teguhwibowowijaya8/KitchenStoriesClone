@@ -118,31 +118,23 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
         if recipe.maxLines != 0 {
             var textContainerHeight: CGFloat
             
-            textContainerHeight = getTextHeight(of: recipe.recipeNameFont.pointSize, maxLines: recipe.maxLines, desiredText: recipe.recipeName)
+            textContainerHeight = Utilities.getTextViewHeight(
+                textSize: recipe.recipeNameFont.pointSize,
+                maxLines: recipe.maxLines,
+                availableWidth: recipeNameTextView.frame.width
+            )
             
-            if let recipeFeedCredits = recipe.recipeFeedCredits {
-                textContainerHeight += getTextHeight(of: recipe.recipeCreditFont.pointSize, maxLines: recipe.maxLines, desiredText: recipeFeedCredits)
+            if recipe.recipeFeedCredits != nil {
+                textContainerHeight += Utilities.getTextViewHeight(
+                    textSize: recipe.recipeCreditFont.pointSize,
+                    maxLines: recipe.maxLines,
+                    availableWidth: recipeFeedCreditsTextView.frame.width
+                )
                 textContainerHeight += textViewsContainer.spacing
             }
             
             textViewsContainerHeight.constant = textContainerHeight
         }
-    }
-    
-    private func getTextHeight(of textSize: CGFloat, maxLines: Int, desiredText: String) -> CGFloat {
-        let singleLineTextView = UITextView(frame: CGRect(x: 0, y: 0, width: recipeNameTextView.frame.width, height: .greatestFiniteMagnitude))
-        
-        singleLineTextView.isEditable = false
-        singleLineTextView.isSelectable = false
-        singleLineTextView.isScrollEnabled = false
-        singleLineTextView.removePadding()
-        
-        singleLineTextView.font = recipeNameTextView.font
-        singleLineTextView.text = "A"
-        singleLineTextView.sizeToFit()
-        let measuredHeight = singleLineTextView.frame.height
-
-        return measuredHeight * CGFloat(maxLines)
     }
 
     private func showLoadingView() {

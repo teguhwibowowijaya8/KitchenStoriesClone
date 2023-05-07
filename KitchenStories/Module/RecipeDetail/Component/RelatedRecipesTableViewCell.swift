@@ -8,7 +8,7 @@
 import UIKit
 
 protocol RelatedRecipesTableCellDelegate {
-    func showRelatedDetailRecipe(of recipeId: Int)
+    func showRelatedDetailRecipe(_ recipe: RecipeModel)
 }
 
 class RelatedRecipesTableViewCell: UITableViewCell {
@@ -137,8 +137,8 @@ extension RelatedRecipesTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isLoading == false,
-           let recipeId = relatedRecipes?.results[indexPath.row].id {
-            delegate?.showRelatedDetailRecipe(of: recipeId)
+           let recipe = relatedRecipes?.results[indexPath.row] {
+            delegate?.showRelatedDetailRecipe(recipe)
         }
     }
 }

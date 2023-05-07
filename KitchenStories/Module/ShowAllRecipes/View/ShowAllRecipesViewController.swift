@@ -1,5 +1,5 @@
 //
-//  ShowAllFeedRecipesViewController.swift
+//  ShowAllRecipesViewController.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 06/05/23.
@@ -12,7 +12,7 @@ enum ShowAllRecipesType {
     case withoutFetchMore
 }
 
-class ShowAllFeedRecipesViewController: UIViewController {
+class ShowAllRecipesViewController: UIViewController {
     
     let showAllRecipesType: ShowAllRecipesType
     let recipes: [RecipeModel]
@@ -20,7 +20,7 @@ class ShowAllFeedRecipesViewController: UIViewController {
     
     private let recipeCardCellIdentifier = RecipeCardCollectionViewCell.identifier
     
-    private var showAllFeedRecipesViewModel: ShowAllFeedRecipesViewModel!
+    private var showAllFeedRecipesViewModel: ShowAllRecipesViewModel!
     
     private lazy var showAllRecipesCollectionView: UICollectionView = {
         let showAllRecipesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -60,7 +60,7 @@ class ShowAllFeedRecipesViewController: UIViewController {
     }
     
     private func setupViewModel() {
-        showAllFeedRecipesViewModel = ShowAllFeedRecipesViewModel(
+        showAllFeedRecipesViewModel = ShowAllRecipesViewModel(
             showAllRecipesType: showAllRecipesType,
             recipes: recipes,
             startGetRecentFrom: startRecentFeedFrom
@@ -95,19 +95,33 @@ class ShowAllFeedRecipesViewController: UIViewController {
 
 }
 
-extension ShowAllFeedRecipesViewController: ShowAllFeedRecipesViewModelDelegate {
+extension ShowAllRecipesViewController: ShowAllFeedRecipesViewModelDelegate {
     func handleOnGetRecentFeedCompleted() {
         if let errorMessage = showAllFeedRecipesViewModel.errorMessage {
             print(errorMessage)
-        }
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.showAllRecipesCollectionView.reloadData()
+            let fromCount = showAllFeedRecipesViewModel.oldRecipesCount
+            let toCount = (fromCount-1) + showAllFeedRecipesViewModel.sizeEachFetch
+            let loadingIndexPaths = (fromCount..<toCount).map { return IndexPath(item: $0, section: 0) }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.showAllRecipesCollectionView.performBatchUpdates({
+                    self?.showAllRecipesCollectionView.deleteItems(at: loadingIndexPaths)
+                })
+            }
+        } else {
+            let newIndexPaths = (showAllFeedRecipesViewModel.oldRecipesCount..<showAllFeedRecipesViewModel.recipes.count).map {
+                return IndexPath(item: $0, section: 0)
+            }
+            DispatchQueue.main.async { [weak self] in
+                self?.showAllRecipesCollectionView.performBatchUpdates({
+                    self?.showAllRecipesCollectionView.insertItems(at: newIndexPaths)
+                })
+            }
         }
     }
 }
 
-extension ShowAllFeedRecipesViewController: UICollectionViewDelegateFlowLayout {
+extension ShowAllRecipesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let spacing = Constant.horizontalSpacing
         return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
@@ -128,10 +142,12 @@ extension ShowAllFeedRecipesViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension ShowAllFeedRecipesViewController: UICollectionViewDataSource {
+extension ShowAllRecipesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let recipesCount = showAllFeedRecipesViewModel.recipes.count
-        return showAllFeedRecipesViewModel.isLoading ? recipesCount + 10 : recipesCount
+        return showAllFeedRecipesViewModel.isLoading ?
+            recipesCount + showAllFeedRecipesViewModel.sizeEachFetch :
+            recipesCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -170,8 +186,8 @@ extension ShowAllFeedRecipesViewController: UICollectionViewDataSource {
               indexPath.row < showAllFeedRecipesViewModel.recipes.count
         else { return }
         
-        let selectedRecipeId = showAllFeedRecipesViewModel.recipes[indexPath.row].id
-        let recipeDetailVc = RecipeDetailViewController(recipeId: selectedRecipeId)
+        let selectedRecipe = showAllFeedRecipesViewModel.recipes[indexPath.row]
+        let recipeDetailVc = Utilities.recipeDetailController(recipe: selectedRecipe)
         
         navigationController?.pushViewController(recipeDetailVc, animated: true)
     }

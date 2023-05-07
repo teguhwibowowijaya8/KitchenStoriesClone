@@ -8,7 +8,7 @@
 import UIKit
 
 protocol HomeItemTableCellDelegate {
-    func handleFeedItemSelected(recipeId: Int, recipeName: String)
+    func handleFeedItemSelected(recipe: RecipeModel)
 }
 
 class HomeItemsTableViewCell: UITableViewCell {
@@ -220,7 +220,7 @@ extension HomeItemsTableViewCell: UICollectionViewDataSource {
         else { return }
         
         let feedItem = feed.itemList[indexPath.row]
-        delegate?.handleFeedItemSelected(recipeId: feedItem.id, recipeName: feedItem.name)
+        delegate?.handleFeedItemSelected(recipe: feedItem)
     }
 }
 

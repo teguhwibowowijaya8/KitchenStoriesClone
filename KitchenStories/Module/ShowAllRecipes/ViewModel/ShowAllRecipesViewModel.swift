@@ -1,5 +1,5 @@
 //
-//  ShowAllFeedRecipesViewModel.swift
+//  ShowAllRecipesViewModel.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 06/05/23.
@@ -11,7 +11,7 @@ protocol ShowAllFeedRecipesViewModelDelegate {
     func handleOnGetRecentFeedCompleted()
 }
 
-class ShowAllFeedRecipesViewModel {
+class ShowAllRecipesViewModel {
     var isLoading: Bool = false
     let showAllRecipesType: ShowAllRecipesType
     var recipes: [RecipeModel]
@@ -21,6 +21,7 @@ class ShowAllFeedRecipesViewModel {
     var getFeedsAPIService: GetFeedAPIService
     var isVegetarian: Bool = false
     var sizeEachFetch: Int = 10
+    var oldRecipesCount: Int
     
     init(
         showAllRecipesType: ShowAllRecipesType,
@@ -32,6 +33,7 @@ class ShowAllFeedRecipesViewModel {
         self.recipes = recipes
         self.startGetRecentFrom = startGetRecentFrom
         self.getFeedsAPIService = GetFeedAPIService(getAPIService: getAPIService)
+        self.oldRecipesCount = recipes.count
     }
     
     func getRecentFeeds() {
@@ -42,6 +44,7 @@ class ShowAllFeedRecipesViewModel {
         
         isLoading = true
         errorMessage = nil
+        oldRecipesCount = recipes.count
         
         getFeedsAPIService.feeds(isVegetarian: isVegetarian, size: sizeEachFetch, from: startGetRecentFrom) { _, recentFeeds, errorMessage in
             if let errorMessage = errorMessage {

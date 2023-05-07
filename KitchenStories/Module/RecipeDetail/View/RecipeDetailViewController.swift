@@ -210,7 +210,7 @@ extension RecipeDetailViewController {
             headerDetail = DetailHeaderParams(
                 recipeName: recipeDetail.name,
                 recipeImageUrlString: recipeDetail.thumbnailUrlString,
-                recipeDescription: recipeDetail.description,
+                recipeDescription: recipeDetail.cleanDescription,
                 isCommunityRecipe: recipeDetail.isCommunityMemberRecipe,
                 communityMemberName: recipeDetail.creditsNames,
                 wouldMakeAgainPercentage: recipeDetail.userRatings?.percentage
@@ -432,7 +432,7 @@ extension RecipeDetailViewController: HeaderTitleCellDelegate {
     func handleOnSeeAllButtonSelected(title: String) {
         if recipeDetailViewModel.isLoading == false,
            let recipes = recipeDetailViewModel.relatedRecipes?.results {
-            let showAllRecipesVc = ShowAllFeedRecipesViewController(showAllRecipesType: .withoutFetchMore, recipes: recipes)
+            let showAllRecipesVc = ShowAllRecipesViewController(showAllRecipesType: .withoutFetchMore, recipes: recipes)
             showAllRecipesVc.title = title
             
             navigationController?.pushViewController(showAllRecipesVc, animated: true)
@@ -441,8 +441,8 @@ extension RecipeDetailViewController: HeaderTitleCellDelegate {
 }
 
 extension RecipeDetailViewController: RelatedRecipesTableCellDelegate {
-    func showRelatedDetailRecipe(of recipeId: Int) {
-        let recipeDetailVc = RecipeDetailViewController(recipeId: recipeId)
+    func showRelatedDetailRecipe(_ recipe: RecipeModel) {
+        let recipeDetailVc = Utilities.recipeDetailController(recipe: recipe)
         
         navigationController?.pushViewController(recipeDetailVc, animated: true)
     }

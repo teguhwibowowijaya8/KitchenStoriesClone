@@ -219,7 +219,7 @@ extension HomeViewController: HeaderTitleCellDelegate {
             showAllRecipesType = .canFetchMore
         }
         
-        let showAllFeedRecipesVc = ShowAllFeedRecipesViewController(
+        let showAllFeedRecipesVc = ShowAllRecipesViewController(
             showAllRecipesType: showAllRecipesType,
             recipes: feed.itemList,
             startRecentFeedFrom: startRecentFeedFrom
@@ -231,10 +231,9 @@ extension HomeViewController: HeaderTitleCellDelegate {
 }
 
 extension HomeViewController: HomeItemTableCellDelegate {
-    func handleFeedItemSelected(recipeId: Int, recipeName: String) {
-        let recipeDetailVC = RecipeDetailViewController(recipeId: recipeId)
-        recipeDetailVC.title = recipeName
+    func handleFeedItemSelected(recipe: RecipeModel) {
+        let recipeDetailVc = Utilities.recipeDetailController(recipe: recipe)
         
-        self.navigationController?.pushViewController(recipeDetailVC, animated: true)
+        self.navigationController?.pushViewController(recipeDetailVc, animated: true)
     }
 }
