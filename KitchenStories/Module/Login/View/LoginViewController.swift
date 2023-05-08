@@ -179,6 +179,7 @@ class LoginViewController: UIViewController {
         loginSubitleLabel.text = loginViewModel.loginTitleLabelText
         forgotPasswordLabel.text = loginViewModel.forgotPasswordLabelText
         loginSecondSubtitleTextView.attributedText = secondSubtitleAttributedString()
+        loginSecondSubtitleTextView.textAlignment = .center
     }
     
     override func viewWillAppear(_ animated: Bool) {

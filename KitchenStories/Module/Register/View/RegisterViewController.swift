@@ -144,6 +144,7 @@ class RegisterViewController: UIViewController {
         registerSubitleLabel.text = registerViewModel.registerTitleLabelText
         
         registerSecondSubtitleTextView.attributedText = secondSubtitleAttributedString()
+        registerSecondSubtitleTextView.textAlignment = .center
     }
     
     override func viewWillAppear(_ animated: Bool) {
