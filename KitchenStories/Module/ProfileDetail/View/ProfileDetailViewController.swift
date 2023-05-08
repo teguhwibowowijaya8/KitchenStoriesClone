@@ -116,7 +116,7 @@ extension ProfileDetailViewController {
         
         let profilePhotoParams = ProfilePhotoCellParams(
             userImageUrlString: userProfile.imageUrlString,
-            userNameAbbreviation: userProfile.abbreviation
+            userNameAbbreviation: userProfile.abbreviation.uppercased()
         )
         
         profilePhotoCell.setupCell(
@@ -140,7 +140,11 @@ extension ProfileDetailViewController {
         let infoType = profileDetailViewModel.textFieldCompositions[indexPath.section - 1]
         let errorMessage = profileDetailViewModel.fieldErrorMessage[infoType] ?? nil
         
-        let profileInfoParams = ProfileInfoCellParams(fieldName: profileInfo.title, fieldDefaultValue: profileInfo.value, fieldErrorMessage: errorMessage)
+        let profileInfoParams = ProfileInfoCellParams(
+            fieldName: profileInfo.title,
+            fieldDefaultValue: profileInfo.value,
+            fieldErrorMessage: errorMessage
+        )
         
         profileInfoCell.setupCell(fieldInfo: profileInfoParams, isLoading: profileDetailViewModel.isLoading)
         

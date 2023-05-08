@@ -8,18 +8,21 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+//import FirebaseFirestoreSwift
 
 protocol ProfileViewModelDelegate {
+    func handleOnFetchUserCompleted()
     func handleOnSuccessSignOut()
 }
 
-struct ProfileViewModel {
+class ProfileViewModel {
     var totalSections: Int = 4
     var isLoading: Bool = false
     var settingSections: [SettingSectionModel]
     var userProfile: UserProfileModel?
     var compositions: [ProfileViewSection]
     var delegate: ProfileViewModelDelegate?
+    var errorMessage: String?
     
     init() {
         settingSections = [
@@ -46,33 +49,47 @@ struct ProfileViewModel {
             compositions.append(.profileSettings)
         }
         
-        userProfile = UserProfileModel(id: "12345", name: "Mas Wadidaw Kejar Aku Nih", email: "maswadidaw98@gmail.com", username: "maswadidaw98", gender: "Male")
+        //        userProfile = UserProfileModel(id: "12345", name: "Mas Wadidaw Kejar Aku Nih", email: "maswadidaw98@gmail.com", username: "maswadidaw98", gender: "Male")
     }
     
     func getUserProfile() {
-//        if let uid = Auth.auth().currentUser?.uid {
-//            let db = Firestore.firestore()
-//            db.collection("users").document(uid).getDocument { query, error in
-//                if let error = error {
-//                    print(error)
-//                    return
-//                } else if let profileDocument = query,
-//                          let profile = profileDocument.data(),
-//                          let encodedData = try? JSONEncoder().encode(profile) {
-//                    let result = Result {
-//                        let user = try JSONDecoder().decode(RegisterUserModel.self, from: encodedData)
-//                    }
-//                    
-//                    switch result {
-//                    case .success(let user):
-//                        return user
-//                    case .failure(let error):
-//                        print("Error decoding user: \(error)")
-//                        return nil
-//                    }
-//                }
-//            }
-//        }
+        guard isLoading == false
+        else { return }
+        
+        isLoading = true
+        errorMessage = nil
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            let db = Firestore.firestore()
+            db.collection("users").document(uid).getDocument { query, error in
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    self.delegate?.handleOnFetchUserCompleted()
+                    
+                } else if let profileDocument = query,
+                          let profile = profileDocument.data() {
+                    self.userProfile = UserProfileModel(
+                        uid: uid,
+                        dictionary: profile
+                    )
+                }
+                self.isLoading = false
+                self.delegate?.handleOnFetchUserCompleted()
+            }
+        }
+        
+        //        if let uid = Auth.auth().currentUser?.uid {
+        //            let db = Firestore.firestore()
+        //            db.collection("users").document(uid).getDocument(as: RegisterUserModel.self) { result in
+        //                switch result {
+        //                case .success(let user):
+        //                    self.userProfile = UserProfileModel(id: uid, name: user.fullname, email: user.email, username: user.username, gender: user.gender)
+        //
+        //                case .failure(let error):
+        //                    self.errorMessage = error.localizedDescription
+        //                }
+        //            }
+        //        }
     }
     
     func signOut() {

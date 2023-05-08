@@ -51,6 +51,7 @@ class ProfilePhotoTableViewCell: UITableViewCell {
         
         defaultImageLabel.isHidden = true
         defaultImageLabel.font = .boldSystemFont(ofSize: 35)
+        defaultImageLabel.textAlignment = .center
         defaultImageLabel.adjustsFontSizeToFitWidth = true
         defaultImageLabel.textColor = .black
         

@@ -29,8 +29,6 @@ class LoginViewModel {
             [weak self] result, error in
             if let error = error {
                 self?.errorMessage = error.localizedDescription
-            } else {
-                print(result?.user.uid)
             }
             
             self?.delegate?.handleUserSignInUserCompleted()

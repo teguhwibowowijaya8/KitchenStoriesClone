@@ -100,15 +100,11 @@ class RecipeDetailViewModel {
         
         dispatchGroup.enter()
         getRecipeDetailService.detail(recipeId: recipeId) { recipeDetail, errorMessage in
-            print("hereeeee")
             if let errorMessage = errorMessage {
-                print("hereeeeeeeeee error")
-                print("hereeee errorMsg: \(errorMessage)")
                 self.recipeDetailErrorMessage = errorMessage
             } else if let recipeDetail = recipeDetail {
                 self.recipeDetail = recipeDetail
                 self.servingCount = recipeDetail.numServings ?? 1
-                print("hereeeeeeeeee")
                 self.setIngredientsPerServing()
             }
             dispatchGroup.leave()
@@ -136,9 +132,6 @@ class RecipeDetailViewModel {
         
         dispatchGroup.notify(queue: DispatchQueue.global()) {
             self.setDetailsSection()
-            print("sections: \n\(self.detailsSection)")
-            print("top tip fetch error: \(self.recipeTipsErrorMessage)")
-            print("related recipes fetch error: \(self.relatedRecipesErrorMessage)")
             self.isLoading = false
             self.delegate?.handleOnDetailsFetchCompleted()
             return

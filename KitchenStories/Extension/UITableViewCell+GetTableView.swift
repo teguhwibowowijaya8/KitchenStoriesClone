@@ -1,5 +1,5 @@
 //
-//  UITableViewCell+getTableView.swift
+//  UITableViewCell+GetTableView.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 24/04/23.

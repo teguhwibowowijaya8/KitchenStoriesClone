@@ -1,5 +1,5 @@
 //
-//  UIImageView+loadImageFromUrl.swift
+//  UIImageView+LoadImageFromUrl.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 06/04/23.

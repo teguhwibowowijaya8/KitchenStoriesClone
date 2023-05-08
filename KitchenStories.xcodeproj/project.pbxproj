@@ -37,16 +37,16 @@
 		7ABA0FA429DE787700E58FBA /* ParseDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FA329DE787700E58FBA /* ParseDataService.swift */; };
 		7ABA0FA629DE7AAA00E58FBA /* GetAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FA529DE7AAA00E58FBA /* GetAPIService.swift */; };
 		7ABA0FA829DE81C900E58FBA /* GetNetworkImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FA729DE81C900E58FBA /* GetNetworkImageService.swift */; };
-		7ABA0FAB29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FAA29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift */; };
+		7ABA0FAB29DE85F100E58FBA /* UIImageView+LoadImageFromUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FAA29DE85F100E58FBA /* UIImageView+LoadImageFromUrl.swift */; };
 		7ABA0FAE29DE8BF000E58FBA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABA0FAD29DE8BF000E58FBA /* FirebaseAuth */; };
 		7ABA0FB029DE8BF000E58FBA /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABA0FAF29DE8BF000E58FBA /* FirebaseDatabase */; };
 		7ABA0FB229DE8BF000E58FBA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7ABA0FB129DE8BF000E58FBA /* FirebaseFirestore */; };
 		7ABA0FB829DEABCF00E58FBA /* BottomBorderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA0FB729DEABCF00E58FBA /* BottomBorderTextField.swift */; };
 		7ABBC6BD2A03910C00A4D146 /* RecipeCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6BB2A03910C00A4D146 /* RecipeCardCollectionViewCell.swift */; };
 		7ABBC6BE2A03910C00A4D146 /* RecipeCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ABBC6BC2A03910C00A4D146 /* RecipeCardCollectionViewCell.xib */; };
-		7ABBC6C02A041C9100A4D146 /* String+numericValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6BF2A041C9100A4D146 /* String+numericValue.swift */; };
-		7ABBC6C22A041CBE00A4D146 /* Double+fractionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6C12A041CBE00A4D146 /* Double+fractionString.swift */; };
-		7ABBC6C42A04A0FA00A4D146 /* UITextView+removePadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6C32A04A0FA00A4D146 /* UITextView+removePadding.swift */; };
+		7ABBC6C02A041C9100A4D146 /* String+NumericValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6BF2A041C9100A4D146 /* String+NumericValue.swift */; };
+		7ABBC6C22A041CBE00A4D146 /* Double+FractionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6C12A041CBE00A4D146 /* Double+FractionString.swift */; };
+		7ABBC6C42A04A0FA00A4D146 /* UITextView+RemovePadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6C32A04A0FA00A4D146 /* UITextView+RemovePadding.swift */; };
 		7ABBC6C92A05006C00A4D146 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6C82A05006C00A4D146 /* ProfileViewModel.swift */; };
 		7ABBC6CB2A05022F00A4D146 /* ProfileAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6CA2A05022F00A4D146 /* ProfileAccountTableViewCell.swift */; };
 		7ABBC6CD2A0566D700A4D146 /* ProfileSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBC6CC2A0566D600A4D146 /* ProfileSettingTableViewCell.swift */; };
@@ -84,9 +84,9 @@
 		7AC5AB3929E1553A00C30433 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC5AB3729E1553A00C30433 /* WelcomeViewController.xib */; };
 		7AC632E329EE3D6B009ABB08 /* DetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC632E129EE3D6B009ABB08 /* DetailHeaderTableViewCell.swift */; };
 		7AC632E429EE3D6B009ABB08 /* DetailHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC632E229EE3D6B009ABB08 /* DetailHeaderTableViewCell.xib */; };
-		7AC632E829F6C8D7009ABB08 /* UITableView+updateRowHeightWithoutReloading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC632E729F6C8D7009ABB08 /* UITableView+updateRowHeightWithoutReloading.swift */; };
-		7AC632EA29F6E042009ABB08 /* UIView+getParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC632E929F6E042009ABB08 /* UIView+getParentViewController.swift */; };
-		7AC632EC29F6E0F1009ABB08 /* UITableViewCell+getTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC632EB29F6E0F1009ABB08 /* UITableViewCell+getTableView.swift */; };
+		7AC632E829F6C8D7009ABB08 /* UITableView+UpdateRowHeightWithoutReloading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC632E729F6C8D7009ABB08 /* UITableView+UpdateRowHeightWithoutReloading.swift */; };
+		7AC632EA29F6E042009ABB08 /* UIView+GetParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC632E929F6E042009ABB08 /* UIView+GetParentViewController.swift */; };
+		7AC632EC29F6E0F1009ABB08 /* UITableViewCell+GetTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC632EB29F6E0F1009ABB08 /* UITableViewCell+GetTableView.swift */; };
 		7AE178C129E2661D00706D64 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE178BF29E2661D00706D64 /* LoginViewController.swift */; };
 		7AE178C229E2661D00706D64 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE178C029E2661D00706D64 /* LoginViewController.xib */; };
 		7AE178C429E2664100706D64 /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE178C329E2664100706D64 /* BackgroundImageView.swift */; };
@@ -150,13 +150,13 @@
 		7ABA0FA329DE787700E58FBA /* ParseDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseDataService.swift; sourceTree = "<group>"; };
 		7ABA0FA529DE7AAA00E58FBA /* GetAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAPIService.swift; sourceTree = "<group>"; };
 		7ABA0FA729DE81C900E58FBA /* GetNetworkImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNetworkImageService.swift; sourceTree = "<group>"; };
-		7ABA0FAA29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+loadImageFromUrl.swift"; sourceTree = "<group>"; };
+		7ABA0FAA29DE85F100E58FBA /* UIImageView+LoadImageFromUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+LoadImageFromUrl.swift"; sourceTree = "<group>"; };
 		7ABA0FB729DEABCF00E58FBA /* BottomBorderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBorderTextField.swift; sourceTree = "<group>"; };
 		7ABBC6BB2A03910C00A4D146 /* RecipeCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		7ABBC6BC2A03910C00A4D146 /* RecipeCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeCardCollectionViewCell.xib; sourceTree = "<group>"; };
-		7ABBC6BF2A041C9100A4D146 /* String+numericValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+numericValue.swift"; sourceTree = "<group>"; };
-		7ABBC6C12A041CBE00A4D146 /* Double+fractionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+fractionString.swift"; sourceTree = "<group>"; };
-		7ABBC6C32A04A0FA00A4D146 /* UITextView+removePadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+removePadding.swift"; sourceTree = "<group>"; };
+		7ABBC6BF2A041C9100A4D146 /* String+NumericValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+NumericValue.swift"; sourceTree = "<group>"; };
+		7ABBC6C12A041CBE00A4D146 /* Double+FractionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+FractionString.swift"; sourceTree = "<group>"; };
+		7ABBC6C32A04A0FA00A4D146 /* UITextView+RemovePadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+RemovePadding.swift"; sourceTree = "<group>"; };
 		7ABBC6C82A05006C00A4D146 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		7ABBC6CA2A05022F00A4D146 /* ProfileAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAccountTableViewCell.swift; sourceTree = "<group>"; };
 		7ABBC6CC2A0566D600A4D146 /* ProfileSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -194,9 +194,9 @@
 		7AC5AB3729E1553A00C30433 /* WelcomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeViewController.xib; sourceTree = "<group>"; };
 		7AC632E129EE3D6B009ABB08 /* DetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		7AC632E229EE3D6B009ABB08 /* DetailHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailHeaderTableViewCell.xib; sourceTree = "<group>"; };
-		7AC632E729F6C8D7009ABB08 /* UITableView+updateRowHeightWithoutReloading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+updateRowHeightWithoutReloading.swift"; sourceTree = "<group>"; };
-		7AC632E929F6E042009ABB08 /* UIView+getParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+getParentViewController.swift"; sourceTree = "<group>"; };
-		7AC632EB29F6E0F1009ABB08 /* UITableViewCell+getTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+getTableView.swift"; sourceTree = "<group>"; };
+		7AC632E729F6C8D7009ABB08 /* UITableView+UpdateRowHeightWithoutReloading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+UpdateRowHeightWithoutReloading.swift"; sourceTree = "<group>"; };
+		7AC632E929F6E042009ABB08 /* UIView+GetParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+GetParentViewController.swift"; sourceTree = "<group>"; };
+		7AC632EB29F6E0F1009ABB08 /* UITableViewCell+GetTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+GetTableView.swift"; sourceTree = "<group>"; };
 		7AE178BF29E2661D00706D64 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7AE178C029E2661D00706D64 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		7AE178C329E2664100706D64 /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
@@ -497,13 +497,13 @@
 		7ABA0FA929DE845900E58FBA /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				7ABA0FAA29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift */,
-				7AC632E729F6C8D7009ABB08 /* UITableView+updateRowHeightWithoutReloading.swift */,
-				7AC632E929F6E042009ABB08 /* UIView+getParentViewController.swift */,
-				7AC632EB29F6E0F1009ABB08 /* UITableViewCell+getTableView.swift */,
-				7ABBC6BF2A041C9100A4D146 /* String+numericValue.swift */,
-				7ABBC6C12A041CBE00A4D146 /* Double+fractionString.swift */,
-				7ABBC6C32A04A0FA00A4D146 /* UITextView+removePadding.swift */,
+				7ABA0FAA29DE85F100E58FBA /* UIImageView+LoadImageFromUrl.swift */,
+				7AC632E729F6C8D7009ABB08 /* UITableView+UpdateRowHeightWithoutReloading.swift */,
+				7AC632E929F6E042009ABB08 /* UIView+GetParentViewController.swift */,
+				7AC632EB29F6E0F1009ABB08 /* UITableViewCell+GetTableView.swift */,
+				7ABBC6BF2A041C9100A4D146 /* String+NumericValue.swift */,
+				7ABBC6C12A041CBE00A4D146 /* Double+FractionString.swift */,
+				7ABBC6C32A04A0FA00A4D146 /* UITextView+RemovePadding.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -945,7 +945,7 @@
 				7A0F22502A07AAF9007D54FB /* RecipesTitleCollectionReusableView.swift in Sources */,
 				7AF7DC7029FD7A8800068D3B /* NutritionInfoHeaderTableViewCell.swift in Sources */,
 				7ABBC6BD2A03910C00A4D146 /* RecipeCardCollectionViewCell.swift in Sources */,
-				7ABBC6C22A041CBE00A4D146 /* Double+fractionString.swift in Sources */,
+				7ABBC6C22A041CBE00A4D146 /* Double+FractionString.swift in Sources */,
 				7ABA0FA629DE7AAA00E58FBA /* GetAPIService.swift in Sources */,
 				7ABA0FA829DE81C900E58FBA /* GetNetworkImageService.swift in Sources */,
 				7ABA0FA429DE787700E58FBA /* ParseDataService.swift in Sources */,
@@ -962,7 +962,7 @@
 				7AF7DC822A00C18300068D3B /* RecipeDetailModel.swift in Sources */,
 				7AF7DC842A00C69F00068D3B /* IngredientSectionModel.swift in Sources */,
 				7AC5935429E4F5B100667F3E /* RecipeRatingModel.swift in Sources */,
-				7ABBC6C42A04A0FA00A4D146 /* UITextView+removePadding.swift in Sources */,
+				7ABBC6C42A04A0FA00A4D146 /* UITextView+RemovePadding.swift in Sources */,
 				7ABBC6E22A06101700A4D146 /* ProfileDetailViewModel.swift in Sources */,
 				7AF7DC8A2A00C98700068D3B /* MeasurementModel.swift in Sources */,
 				7AF7DC922A00D08A00068D3B /* InstructionModel.swift in Sources */,
@@ -973,7 +973,7 @@
 				7AE178C429E2664100706D64 /* BackgroundImageView.swift in Sources */,
 				7ABA0F9829DE5A1600E58FBA /* Constant.swift in Sources */,
 				7AC5935229E4F49000667F3E /* RecipeIngredientsPriceModel.swift in Sources */,
-				7AC632EC29F6E0F1009ABB08 /* UITableViewCell+getTableView.swift in Sources */,
+				7AC632EC29F6E0F1009ABB08 /* UITableViewCell+GetTableView.swift in Sources */,
 				7A0F22412A06B387007D54FB /* ShowAllRecipesViewController.swift in Sources */,
 				7ABBC6D62A05773B00A4D146 /* UserProfileModel.swift in Sources */,
 				7AC5935D29E514A000667F3E /* HomeItemsTableViewCell.swift in Sources */,
@@ -981,7 +981,7 @@
 				7ABBC6C92A05006C00A4D146 /* ProfileViewModel.swift in Sources */,
 				7A0F223D2A06A46F007D54FB /* ShowAllRecipesViewModel.swift in Sources */,
 				7AF7DCA52A00F92B00068D3B /* GetRelatedRecipesAPIService.swift in Sources */,
-				7AC632EA29F6E042009ABB08 /* UIView+getParentViewController.swift in Sources */,
+				7AC632EA29F6E042009ABB08 /* UIView+GetParentViewController.swift in Sources */,
 				7A06F64B29E7B2B1004FE00F /* DynamicHeightCollectionView.swift in Sources */,
 				7AC5933F29E3B43A00667F3E /* RegisterViewModel.swift in Sources */,
 				7ABBC6EF2A06367300A4D146 /* ProfileDetailViewController.swift in Sources */,
@@ -989,7 +989,7 @@
 				7ABBC6D22A05752300A4D146 /* SettingModel.swift in Sources */,
 				7A0F224C2A075758007D54FB /* RecipesOfRecipeViewModel.swift in Sources */,
 				7ABA0FA229DE6D4A00E58FBA /* FetchDataService.swift in Sources */,
-				7ABA0FAB29DE85F100E58FBA /* UIImageView+loadImageFromUrl.swift in Sources */,
+				7ABA0FAB29DE85F100E58FBA /* UIImageView+LoadImageFromUrl.swift in Sources */,
 				7AF7DC862A00C7EE00068D3B /* IngredientComponentModel.swift in Sources */,
 				7AF7DC6A29FC08BA00068D3B /* ServingsStepper.swift in Sources */,
 				7A0F22492A07444B007D54FB /* RecipesOfRecipeViewController.swift in Sources */,
@@ -1007,7 +1007,7 @@
 				7ABBC6F52A066FE600A4D146 /* SaveUserProfileTableViewCell.swift in Sources */,
 				7AF7DC6C29FC1EDF00068D3B /* ServingsCountTableViewCell.swift in Sources */,
 				7ABA0F7029DD53F500E58FBA /* SceneDelegate.swift in Sources */,
-				7ABBC6C02A041C9100A4D146 /* String+numericValue.swift in Sources */,
+				7ABBC6C02A041C9100A4D146 /* String+NumericValue.swift in Sources */,
 				7ABBC6CB2A05022F00A4D146 /* ProfileAccountTableViewCell.swift in Sources */,
 				7AC5935629E4F7FB00667F3E /* RecipeCreditModel.swift in Sources */,
 				7AF7DC6E29FC89AD00068D3B /* IngredientTableViewCell.swift in Sources */,
@@ -1020,7 +1020,7 @@
 				7ABA0F9029DE55E400E58FBA /* HomeViewController.swift in Sources */,
 				7AF7DCA32A00F6F600068D3B /* GetRecipeTipsAPIService.swift in Sources */,
 				7AC5934E29E4F2AB00667F3E /* FeedModel.swift in Sources */,
-				7AC632E829F6C8D7009ABB08 /* UITableView+updateRowHeightWithoutReloading.swift in Sources */,
+				7AC632E829F6C8D7009ABB08 /* UITableView+UpdateRowHeightWithoutReloading.swift in Sources */,
 				7AC5934C29E4F26900667F3E /* FeedResultsModel.swift in Sources */,
 				7AC5934229E3CA0200667F3E /* LoginViewModel.swift in Sources */,
 			);

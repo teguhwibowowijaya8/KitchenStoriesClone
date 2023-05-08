@@ -1,5 +1,5 @@
 //
-//  String+numericValue.swift
+//  String+NumericValue.swift
 //  KitchenStories
 //
 //  Created by Teguh Wibowo Wijaya on 05/05/23.

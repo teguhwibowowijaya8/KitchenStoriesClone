@@ -81,6 +81,16 @@ class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: ProfileViewModelDelegate {
+    func handleOnFetchUserCompleted() {
+        if let errorMessage = profileViewModel.errorMessage {
+            print("error: \(errorMessage)")
+        } else {
+            DispatchQueue.main.async {
+                self.profileTableView.reloadData()
+            }
+        }
+    }
+    
     func handleOnSuccessSignOut() {
         let welcomeVc = WelcomeViewController(nibName: WelcomeViewController.identifier, bundle: nil)
         
@@ -182,7 +192,11 @@ extension ProfileViewController {
         
         var profileAccountParams: ProfileAccountCellParams?
         if let profile = profileViewModel.userProfile {
-            profileAccountParams = ProfileAccountCellParams(userImageUrlString: profile.imageUrlString, userName: profile.name, abbreviation: profile.abbreviation)
+            profileAccountParams = ProfileAccountCellParams(
+                userImageUrlString: profile.imageUrlString,
+                userName: profile.name,
+                abbreviation: profile.abbreviation
+            )
         }
         
         profileAccountCell.setupCell(profileAccount: profileAccountParams, isLoading: profileViewModel.isLoading)
@@ -195,7 +209,11 @@ extension ProfileViewController {
         else { return UITableViewCell() }
         
         let settingOfIndex = profileViewModel.settingSections[indexPath.section - 1].settings[indexPath.row - 1]
-        let profileSettingParams = ProfileSettingCellParams(settingImageSymbolName: settingOfIndex.symbolImageName, settingName: settingOfIndex.type.rawValue, settingTintColor: settingOfIndex.tintColor)
+        let profileSettingParams = ProfileSettingCellParams(
+            settingImageSymbolName: settingOfIndex.symbolImageName,
+            settingName: settingOfIndex.type.rawValue,
+            settingTintColor: settingOfIndex.tintColor
+        )
         
         profileSettingCell.setupCell(profileSetting: profileSettingParams, isLoading: profileViewModel.isLoading)
         

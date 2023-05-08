@@ -178,14 +178,12 @@ extension RecipesFromRecipeOfCollectionViewCell {
     ) -> CGFloat {
         var finalHeight: CGFloat = screenWidth
         
-        print("before: \(finalHeight)")
         let textsWidth: CGFloat = screenWidth - (Constant.horizontalSpacing * 2)
         finalHeight += Utilities.getLabelHeight(
             textSize: RecipesFromRecipeOfCollectionViewCell.recipeNameSize,
             maxLines: 0,
             desiredText: recipe.name,
             availableWidth: textsWidth)
-        print("after \(finalHeight)")
         
         
         if let recipeDescription = recipe.description {

@@ -303,8 +303,6 @@ extension RecipeDetailViewController {
                 ingredientName = "\(ingredientName), \(extraComment)"
             }
             
-            print("body update")
-            print(recipeDetailViewModel.servingCount)
             ingredient = IngredientCellParams(
                 ingredientName: ingredientName,
                 ingredientRatio: ingredientOfIndex.measurementString(servingCount: recipeDetailViewModel.servingCount)
@@ -429,7 +427,6 @@ extension RecipeDetailViewController: ServingStepperDelegate {
         for ingredientBodySection in recipeDetailViewModel.ingredientBodySectionIndexes {
             reloadSections.append(ingredientBodySection.key)
         }
-        print("body index: \(recipeDetailViewModel.ingredientBodySectionIndexes)")
         recipeDetailTableView.reloadSections(IndexSet(reloadSections), with: .none)
     }
 }

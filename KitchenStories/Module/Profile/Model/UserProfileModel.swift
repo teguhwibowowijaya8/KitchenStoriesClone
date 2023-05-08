@@ -23,4 +23,14 @@ struct UserProfileModel: Codable {
         
         return firstCharOfWords
     }
+    
+    init(uid: String, dictionary: [String: Any?]) {
+        self.id = uid
+        self.name = dictionary["fullname"] as? String ?? ""
+        self.imageUrlString = dictionary["imageUrl"] as? String ?? nil
+        self.email = dictionary["email"] as? String ?? ""
+        self.username = dictionary["username"] as? String ?? ""
+        self.gender = dictionary["gender"] as? String ?? ""
+        
+    }
 }
