@@ -61,20 +61,20 @@ class ProfileViewModel {
         
         if let uid = Auth.auth().currentUser?.uid {
             let db = Firestore.firestore()
-            db.collection("users").document(uid).getDocument { query, error in
+            db.collection("users").document(uid).getDocument { [weak self] query, error in
                 if let error = error {
-                    self.errorMessage = error.localizedDescription
-                    self.delegate?.handleOnFetchUserCompleted()
+                    self?.errorMessage = error.localizedDescription
+                    self?.delegate?.handleOnFetchUserCompleted()
                     
                 } else if let profileDocument = query,
                           let profile = profileDocument.data() {
-                    self.userProfile = UserProfileModel(
+                    self?.userProfile = UserProfileModel(
                         uid: uid,
                         dictionary: profile
                     )
                 }
-                self.isLoading = false
-                self.delegate?.handleOnFetchUserCompleted()
+                self?.isLoading = false
+                self?.delegate?.handleOnFetchUserCompleted()
             }
         }
         

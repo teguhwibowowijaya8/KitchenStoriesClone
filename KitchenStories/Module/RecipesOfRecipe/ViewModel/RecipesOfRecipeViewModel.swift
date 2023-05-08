@@ -17,6 +17,9 @@ struct RecipesOfRecipeViewModel {
             .recipesFromRecipeOf,
             .recipesOfRecipe
         ]
-        dummyRecipeParams = RecipesFromRecipeOfCellParams(name: "Recipe Title", imageUrlString: "")
+        dummyRecipeParams = RecipesFromRecipeOfCellParams(
+            name: "Recipe Title",
+            imageUrlString: ""
+        )
     }
 }

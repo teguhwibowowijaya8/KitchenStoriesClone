@@ -46,15 +46,15 @@ class ShowAllRecipesViewModel {
         errorMessage = nil
         oldRecipesCount = recipes.count
         
-        getFeedsAPIService.feeds(isVegetarian: isVegetarian, size: sizeEachFetch, from: startGetRecentFrom) { _, recentFeeds, errorMessage in
+        getFeedsAPIService.feeds(isVegetarian: isVegetarian, size: sizeEachFetch, from: startGetRecentFrom) { [weak self] _, recentFeeds, errorMessage in
             if let errorMessage = errorMessage {
-                self.errorMessage = errorMessage
+                self?.errorMessage = errorMessage
             } else if let recentFeeds = recentFeeds {
-                self.startGetRecentFrom = startGetRecentFrom + recentFeeds.count
-                self.recipes.append(contentsOf: recentFeeds)
+                self?.startGetRecentFrom = startGetRecentFrom + recentFeeds.count
+                self?.recipes.append(contentsOf: recentFeeds)
             }
-            self.isLoading = false
-            self.delegate?.handleOnGetRecentFeedCompleted()
+            self?.isLoading = false
+            self?.delegate?.handleOnGetRecentFeedCompleted()
         }
     }
 }

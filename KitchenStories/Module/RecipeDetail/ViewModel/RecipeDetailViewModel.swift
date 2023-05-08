@@ -99,41 +99,41 @@ class RecipeDetailViewModel {
         let dispatchGroup = DispatchGroup()
         
         dispatchGroup.enter()
-        getRecipeDetailService.detail(recipeId: recipeId) { recipeDetail, errorMessage in
+        getRecipeDetailService.detail(recipeId: recipeId) { [weak self] recipeDetail, errorMessage in
             if let errorMessage = errorMessage {
-                self.recipeDetailErrorMessage = errorMessage
+                self?.recipeDetailErrorMessage = errorMessage
             } else if let recipeDetail = recipeDetail {
-                self.recipeDetail = recipeDetail
-                self.servingCount = recipeDetail.numServings ?? 1
-                self.setIngredientsPerServing()
+                self?.recipeDetail = recipeDetail
+                self?.servingCount = recipeDetail.numServings ?? 1
+                self?.setIngredientsPerServing()
             }
             dispatchGroup.leave()
         }
         
         dispatchGroup.enter()
-        getRecipeTipsService.recipeTips(recipeId: recipeId, from: tipsFrom, size: tipsSize) { recipeTips, errorMessage in
+        getRecipeTipsService.recipeTips(recipeId: recipeId, from: tipsFrom, size: tipsSize) { [weak self] recipeTips, errorMessage in
             if let errorMessage = errorMessage {
-                self.recipeTipsErrorMessage = errorMessage
+                self?.recipeTipsErrorMessage = errorMessage
             } else if let recipeTips = recipeTips {
-                self.recipeTips = recipeTips
+                self?.recipeTips = recipeTips
             }
             dispatchGroup.leave()
         }
         
         dispatchGroup.enter()
-        getRelatedRecipesService.relatedRecipes(recipeId: recipeId) { relatedRecipes, errorMessage in
+        getRelatedRecipesService.relatedRecipes(recipeId: recipeId) { [weak self] relatedRecipes, errorMessage in
             if let errorMessage = errorMessage {
-                self.relatedRecipesErrorMessage = errorMessage
+                self?.relatedRecipesErrorMessage = errorMessage
             } else if let relatedRecipes = relatedRecipes {
-                self.relatedRecipes = relatedRecipes
+                self?.relatedRecipes = relatedRecipes
             }
             dispatchGroup.leave()
         }
         
-        dispatchGroup.notify(queue: DispatchQueue.global()) {
-            self.setDetailsSection()
-            self.isLoading = false
-            self.delegate?.handleOnDetailsFetchCompleted()
+        dispatchGroup.notify(queue: DispatchQueue.global()) { [weak self] in
+            self?.setDetailsSection()
+            self?.isLoading = false
+            self?.delegate?.handleOnDetailsFetchCompleted()
             return
         }
     }
