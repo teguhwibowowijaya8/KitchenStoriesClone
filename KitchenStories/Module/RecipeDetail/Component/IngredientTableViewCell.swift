@@ -49,38 +49,34 @@ class IngredientTableViewCell: UITableViewCell {
         return containerStackView
     }()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addSubviews()
+        setComponentsConstraints()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func setupCell(
         ingredient: IngredientCellParams?,
         isLoading: Bool
     ) {
-        addSubviews()
-        setComponentsConstraints()
-        
-        if isLoading {
+        guard isLoading == false,
+            let ingredient = ingredient
+        else {
             showLoadingView()
             return
         }
+    
+        removeLoadingView()
         
-        if let ingredient = ingredient {
-            removeLoadingView()
-            
-            ingredientNameLabel.text = ingredient.ingredientName
-            if let ingredientRatio = ingredient.ingredientRatio, ingredientRatio != "" {
-                ingredientRatioLabel.text = ingredientRatio
-            } else {
-                ingredientRatioLabel.isHidden = true
-            }
+        ingredientNameLabel.text = ingredient.ingredientName
+        if let ingredientRatio = ingredient.ingredientRatio, ingredientRatio != "" {
+            ingredientRatioLabel.text = ingredientRatio
+        } else {
+            ingredientRatioLabel.isHidden = true
         }
     }
     

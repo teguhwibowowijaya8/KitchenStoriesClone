@@ -17,7 +17,7 @@ struct IngredientComponentModel: Codable {
     var ingredientName: String {
         let capitalizedName = ingredient.name.capitalized
         let removeNewLineComment = extraComment?.replacingOccurrences(of: "\n", with: "")
-        if var extraComment = removeNewLineComment, extraComment != "" {
+        if let extraComment = removeNewLineComment, extraComment != "" {
             return "\(capitalizedName), \(extraComment)"
         }
         

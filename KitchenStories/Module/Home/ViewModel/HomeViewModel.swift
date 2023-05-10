@@ -17,7 +17,7 @@ class HomeViewModel {
     var isLoading: Bool = false
     
     var feeds: FeedResultsModel?
-    var recentFeeds: FeedModel
+    var recentFeeds: FeedModel?
     var dummyFeeds: FeedResultsModel
     
     private var getAPIService: GetAPIProtocol
@@ -31,14 +31,6 @@ class HomeViewModel {
         self.getAPIService = getAPIService
         getFeedsAPIService = GetFeedAPIService(getAPIService: self.getAPIService)
         
-        recentFeeds = FeedModel(
-            type: FeedType.recent,
-            name: "Recent",
-            category: "recent",
-            minItems: 0,
-            item: nil,
-            items: [RecipeModel]()
-        )
         dummyFeeds = LoadingFeeds.feeds
     }
     
@@ -60,13 +52,21 @@ class HomeViewModel {
                 if let feedResult = feedResult {
                     if self?.feeds == nil {
                         self?.feeds = feedResult
+                        self?.recentFeeds = FeedModel(
+                            type: FeedType.recent,
+                            name: "Recent",
+                            category: "recent",
+                            minItems: 0,
+                            item: nil,
+                            items: [RecipeModel]()
+                        )
                     } else {
                         self?.feeds?.results.append(contentsOf: feedResult.results)
                     }
                 }
                 
                 if let recentFeedsResult = recentFeedsResult {
-                    self?.recentFeeds.items?.append(contentsOf: recentFeedsResult)
+                    self?.recentFeeds?.items?.append(contentsOf: recentFeedsResult)
                 }
                 
                 self?.fetchFrom += (feedResult?.results.count ?? 0) + (recentFeedsResult?.count ?? 0)
@@ -77,7 +77,7 @@ class HomeViewModel {
     }
     
     func getFeedBasedOn(title: String) -> FeedModel? {
-        if title.lowercased() == recentFeeds.name?.lowercased() {
+        if title.lowercased() == recentFeeds?.name?.lowercased() {
             return recentFeeds
         }
         

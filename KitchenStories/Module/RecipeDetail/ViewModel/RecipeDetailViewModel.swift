@@ -173,7 +173,7 @@ class RecipeDetailViewModel {
                 continue
                 
             case .ingredientsHeader:
-                guard let ingredientSections = recipeDetail.ingredientSections
+                guard let ingredientSections = ingredientsPerServing
                 else { continue }
                 
                 let ingredientSectionCount = ingredientSections.count

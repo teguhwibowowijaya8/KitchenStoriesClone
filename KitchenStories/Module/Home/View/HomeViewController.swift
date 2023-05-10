@@ -117,12 +117,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let feed: FeedModel
         
-        if let feeds = homeViewModel.feeds?.results {
-            if indexPath.section < feeds.count {
-                feed = feeds[indexPath.section]
-            } else {
-                feed = homeViewModel.recentFeeds
-            }
+        if let feeds = homeViewModel.feeds?.results,
+           indexPath.section < feeds.count {
+            feed = feeds[indexPath.section]
+        } else if let recentFeeds = homeViewModel.recentFeeds {
+            feed = recentFeeds
         } else {
             feed = homeViewModel.dummyFeeds.results[indexPath.section]
         }
@@ -215,8 +214,8 @@ extension HomeViewController: HeaderTitleCellDelegate {
         var startRecentFeedFrom: Int? = nil
         var showAllRecipesType: ShowAllRecipesType = .withoutFetchMore
         if feed.type == .recent,
-           let feeds = homeViewModel.feeds?.results {
-            let recentFeeds = homeViewModel.recentFeeds.itemList
+           let feeds = homeViewModel.feeds?.results,
+           let recentFeeds = homeViewModel.recentFeeds?.itemList {
             startRecentFeedFrom = feeds.count + recentFeeds.count
             showAllRecipesType = .canFetchMore
         }

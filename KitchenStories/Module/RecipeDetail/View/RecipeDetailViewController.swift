@@ -132,8 +132,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch recipeDetailViewModel.detailsSection[section] {
         case .ingredientsBody:
-            if let recipeDetail = recipeDetailViewModel.recipeDetail,
-               let ingredientSections = recipeDetail.ingredientSections,
+            if let ingredientSections = recipeDetailViewModel.ingredientsPerServing,
                 let ingredientBodySection = recipeDetailViewModel.ingredientBodySectionIndexes[section] {
                 return ingredientSections[ingredientBodySection].components.count
             } else if recipeDetailViewModel.isLoading {
@@ -352,7 +351,8 @@ extension RecipeDetailViewController {
         else { return UITableViewCell() }
         
         var recipeTopTip: RecipeTipCellParams? = nil
-        if let recipeTips = recipeDetailViewModel.recipeTips {
+        if let recipeTips = recipeDetailViewModel.recipeTips,
+            indexPath.row < recipeTips.results.count {
             let topTip = recipeTips.results[indexPath.row]
             recipeTopTip = RecipeTipCellParams(
                 totalTipsCount: recipeTips.count,
