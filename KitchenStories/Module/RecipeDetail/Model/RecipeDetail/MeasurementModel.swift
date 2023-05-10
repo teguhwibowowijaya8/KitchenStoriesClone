@@ -19,10 +19,7 @@ struct MeasurementModel: Codable {
         else { return "" }
         
         let finalQuantity = quantityDouble * Double(servingCount)
-        let quantityString = String(format: "%.2f", finalQuantity)
-//        var quantityString = finalQuantity.fractionString()
-//        if unit.system == .metric
-//            { quantityString = String(finalQuantity) }
+        let quantityString = finalQuantity.fractionString()
         return "\(quantityString) \(unit.name)"
     }
     

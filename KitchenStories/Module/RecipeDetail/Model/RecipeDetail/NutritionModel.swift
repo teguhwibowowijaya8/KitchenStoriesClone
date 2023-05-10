@@ -43,7 +43,6 @@ struct NutritionModel: Codable {
                 value: value
             )
         }
-        print("nutritions: \(nutritions)")
         return nutritions
     }
     

@@ -127,8 +127,6 @@ class RecipeDetailViewModel {
             } else if let relatedRecipes = relatedRecipes,
                         relatedRecipes.count > 0 &&
                         relatedRecipes.results.count > 0 {
-                print("related recipes: \(relatedRecipes)")
-                print("related recipes count: \(relatedRecipes.count)")
                 self?.relatedRecipes = relatedRecipes
             }
             dispatchGroup.leave()

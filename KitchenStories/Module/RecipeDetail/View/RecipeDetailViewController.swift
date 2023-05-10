@@ -298,13 +298,8 @@ extension RecipeDetailViewController {
             let ingredientSection = ingredientSections[ingredientsBodySection]
             let ingredientOfIndex = ingredientSection.components[indexPath.row]
             
-            var ingredientName: String = ingredientOfIndex.ingredient.name.capitalized(with: .current)
-            if let extraComment = ingredientOfIndex.extraComment, ingredientOfIndex.extraComment != "" {
-                ingredientName = "\(ingredientName), \(extraComment)"
-            }
-            
             ingredient = IngredientCellParams(
-                ingredientName: ingredientName,
+                ingredientName: ingredientOfIndex.ingredientName,
                 ingredientRatio: ingredientOfIndex.measurementString(servingCount: recipeDetailViewModel.servingCount)
             )
         }
