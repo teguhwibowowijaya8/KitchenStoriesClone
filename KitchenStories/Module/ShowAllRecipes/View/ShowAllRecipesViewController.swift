@@ -57,6 +57,8 @@ class ShowAllRecipesViewController: UIViewController {
         
         navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.prefersLargeTitles = false
+        
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func setupViewModel() {

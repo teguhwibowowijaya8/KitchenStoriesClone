@@ -29,9 +29,9 @@ class RegisterViewModel {
             [weak self] result, error in
             if let error = error {
                 self?.errorMessage = error.localizedDescription
-                return
+                self?.delegate?.handleOnRegisterCompleted()
+                
             } else if let result = result {
-                print(result.user.uid)
                 let uid = result.user.uid
                 let db = Firestore.firestore()
                 do {
@@ -42,17 +42,16 @@ class RegisterViewModel {
                         db.collection("users").document(uid).setData(dictionaryProfile) { firestoreError in
                             if let firestoreError = firestoreError {
                                 self?.errorMessage = "Error add data to Database: \(firestoreError.localizedDescription)"
-                                return
+                                self?.delegate?.handleOnRegisterCompleted()
                             }
                             
-                            self?.delegate?.handleOnRegisterCompleted()
-                            return
                         }
                     }
                 } catch let error {
                     self?.errorMessage = "Error encode Data: \(error.localizedDescription)"
-                    return
+                    self?.delegate?.handleOnRegisterCompleted()
                 }
+                
             }
         }
     }

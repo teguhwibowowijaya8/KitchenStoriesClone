@@ -64,7 +64,6 @@ struct GetFeedAPIService: GetFeedAPIProtocol {
                         }
                     }
                 }
-                
                 return onCompletion(feeds, recentFeeds, errorMessage)
             }
         }

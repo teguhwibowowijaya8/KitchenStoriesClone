@@ -15,7 +15,7 @@ struct WelcomeViewModel {
     ]
     
     let greetingsSubtitle = [
-        "Discover delicious reciped and stunning food stories",
+        "Discover delicious recipes and stunning food stories",
         "With our cooking videos and top tips",
         "With our international community"
     ]

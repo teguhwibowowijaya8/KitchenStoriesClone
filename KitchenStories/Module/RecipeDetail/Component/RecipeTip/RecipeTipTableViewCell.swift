@@ -31,6 +31,7 @@ class RecipeTipTableViewCell: UITableViewCell {
         didSet {
             topTipImageView.layer.cornerRadius = topTipImageView.bounds.width / 2
             topTipImageView.clipsToBounds = true
+            topTipImageView.contentMode = .scaleAspectFill
         }
     }
     
@@ -52,8 +53,7 @@ class RecipeTipTableViewCell: UITableViewCell {
     @IBOutlet weak var topTipDescriptionTextView: UITextView! {
         didSet {
             topTipDescriptionTextView.font = .systemFont(ofSize: 14)
-            topTipDescriptionTextView.contentInset = .zero
-            topTipDescriptionTextView.textContainerInset = .zero
+            topTipDescriptionTextView.removePadding()
         }
     }
     
@@ -70,10 +70,10 @@ class RecipeTipTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -86,30 +86,30 @@ class RecipeTipTableViewCell: UITableViewCell {
         recipeTopTip: RecipeTipCellParams?,
         isLoading: Bool
     ) {
-        if isLoading {
+        guard isLoading == false,
+              let recipeTopTip = recipeTopTip
+        else {
             showLoadingView()
             return
         }
         
-        if let recipeTopTip = recipeTopTip {
-            removeLoadingView()
-            
-            if recipeTopTip.totalTipsCount == 1 {
-                showAllTipsButton.isHidden = true
-            }
-            
-            if let topTipImageUrlString = recipeTopTip.topTipImageUrl {
-                topTipImageView.loadImageFromUrl(
-                    topTipImageUrlString,
-                    defaultImage: defaultTopTipImage,
-                    getImageNetworkService: getNetworkImageService
-                )
-            }
-            
-            tipsTitleLabel.attributedText = tipsTitleText(with: recipeTopTip.totalTipsCount)
-            topTipNameLabel.text = recipeTopTip.topTipName
-            topTipDescriptionTextView.text = recipeTopTip.topTipDescription
+        removeLoadingView()
+        
+        if recipeTopTip.totalTipsCount == 1 {
+            showAllTipsButton.isHidden = true
         }
+        
+        if let topTipImageUrlString = recipeTopTip.topTipImageUrl {
+            topTipImageView.loadImageFromUrl(
+                topTipImageUrlString,
+                defaultImage: defaultTopTipImage,
+                getImageNetworkService: getNetworkImageService
+            )
+        }
+        
+        tipsTitleLabel.attributedText = tipsTitleText(with: recipeTopTip.totalTipsCount)
+        topTipNameLabel.text = recipeTopTip.topTipName
+        topTipDescriptionTextView.text = recipeTopTip.topTipDescription
     }
     
     private func tipsTitleText(with tipsCount: Int) -> NSAttributedString {

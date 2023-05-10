@@ -29,7 +29,7 @@ protocol FetchDataProtocol {
 }
 
 struct FetchDataService: FetchDataProtocol {
-    private let apiKey = "d1be100eb3msh861d504d59b7fb9p1abaddjsn38aba13309ba"
+    private let apiKey = "3b43177826msha71efcee4b58031p11593fjsndec0036ea842"
     private let apiHost = "tasty.p.rapidapi.com"
     
     func fetch(
@@ -40,11 +40,9 @@ struct FetchDataService: FetchDataProtocol {
         request.httpMethod = "GET"
         request.setValue(apiKey, forHTTPHeaderField: "X-RapidAPI-Key")
         request.setValue(apiHost, forHTTPHeaderField: "X-RapidAPI-Host")
-        
+
         return URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("hereee error url: \(url.absoluteString)")
-                print("hereeeee pure error: \(error)")
                 return onCompletion(.failure(
                     .fetchError(error.localizedDescription)
                 ))

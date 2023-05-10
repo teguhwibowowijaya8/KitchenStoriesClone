@@ -9,5 +9,5 @@ import Foundation
 
 struct RecipeTipsModel: Codable {
     let count: Int
-    let result: [TipModel]
+    let results: [TipModel]
 }

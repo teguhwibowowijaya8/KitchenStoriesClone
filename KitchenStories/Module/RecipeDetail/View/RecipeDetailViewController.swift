@@ -62,6 +62,7 @@ class RecipeDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.prefersLargeTitles = false
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func setupViewModel() {
@@ -121,7 +122,6 @@ extension RecipeDetailViewController: RecipeDetailViewModelDelegate {
             }
         }
     }
-    
 }
 
 extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -331,7 +331,7 @@ extension RecipeDetailViewController {
         var ingredient: IngredientCellParams? = nil
 
         if let nutritions = recipeDetailViewModel.recipeDetail?.nutrition?.nutritions,
-           let nutrition = nutritions[indexPath.row+1] {
+           let nutrition = nutritions[indexPath.row] {
             ingredient = IngredientCellParams(
                 ingredientName: nutrition.title,
                 ingredientRatio: nutrition.value
@@ -358,11 +358,11 @@ extension RecipeDetailViewController {
         
         var recipeTopTip: RecipeTipCellParams? = nil
         if let recipeTips = recipeDetailViewModel.recipeTips {
-            let topTip = recipeTips.result[indexPath.row]
+            let topTip = recipeTips.results[indexPath.row]
             recipeTopTip = RecipeTipCellParams(
                 totalTipsCount: recipeTips.count,
                 topTipImageUrl: topTip.authorAvatarUrlString,
-                topTipName: topTip.authorName,
+                topTipName: topTip.author,
                 topTipDescription: topTip.tipBody
             )
         }
@@ -393,7 +393,8 @@ extension RecipeDetailViewController {
         
         var recipePreparation: RecipePreparationCellParams? = nil
         if let recipeDetail = recipeDetailViewModel.recipeDetail,
-           let instructions = recipeDetail.instructions {
+           let instructions = recipeDetail.instructions,
+           indexPath.row < instructions.count {
             let preparationOfIndex = instructions[indexPath.row]
             recipePreparation = RecipePreparationCellParams(
                 preparationNumber: preparationOfIndex.position,

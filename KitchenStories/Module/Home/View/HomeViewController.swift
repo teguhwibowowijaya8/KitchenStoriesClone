@@ -46,6 +46,9 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func setupViewModel() {
@@ -112,7 +115,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let feed: FeedModel
         
         if let feeds = homeViewModel.feeds?.results {

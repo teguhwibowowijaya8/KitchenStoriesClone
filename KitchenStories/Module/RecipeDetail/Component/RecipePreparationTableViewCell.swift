@@ -73,13 +73,12 @@ class RecipePreparationTableViewCell: UITableViewCell {
         addSubviews()
         setComponentConstraints()
         
-        if isLoading {
+        guard isLoading == false,
+              let recipePreparation = recipePreparation
+        else {
             showLoadingView()
             return
         }
-        
-        guard let recipePreparation = recipePreparation
-        else { return }
         
         removeLoadingView()
         

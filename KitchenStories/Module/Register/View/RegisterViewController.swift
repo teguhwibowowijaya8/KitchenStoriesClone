@@ -167,13 +167,16 @@ class RegisterViewController: UIViewController {
         
         let registerUser = RegisterUserModel(fullname: fullname, email: email, username: username, gender: gender)
         
-        disableForm()
+//        disableForm()
         registerViewModel?.registerUser(registerUser: registerUser, password: password)
     }
     
     private func disableForm() {
         registerEmailTextField.isUserInteractionEnabled = false
         registerPasswordTextField.isUserInteractionEnabled = false
+        registerGenderTextField.isUserInteractionEnabled = false
+        registerFullnameTextField.isUserInteractionEnabled = false
+        registerUsernameTextField.isUserInteractionEnabled = false
         registerButton.isUserInteractionEnabled = false
         loginButton.isUserInteractionEnabled = false
     }
@@ -215,6 +218,9 @@ extension RegisterViewController: RegisterViewModelDelegate {
     private func enableForm() {
         registerEmailTextField.isUserInteractionEnabled = true
         registerPasswordTextField.isUserInteractionEnabled = true
+        registerGenderTextField.isUserInteractionEnabled = true
+        registerFullnameTextField.isUserInteractionEnabled = true
+        registerUsernameTextField.isUserInteractionEnabled = true
         registerButton.isUserInteractionEnabled = true
         loginButton.isUserInteractionEnabled = true
     }

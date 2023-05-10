@@ -26,6 +26,7 @@ struct ParseDataService: ParseDataProtocol {
             let decodedData = try decoder.decode(model, from: data)
             return onCompletion(decodedData, nil)
         } catch let error {
+            print("decode error: \(error)")
             return onCompletion(nil, error.localizedDescription)
         }
     }

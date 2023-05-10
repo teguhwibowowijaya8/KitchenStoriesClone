@@ -124,7 +124,11 @@ class RecipeDetailViewModel {
         getRelatedRecipesService.relatedRecipes(recipeId: recipeId) { [weak self] relatedRecipes, errorMessage in
             if let errorMessage = errorMessage {
                 self?.relatedRecipesErrorMessage = errorMessage
-            } else if let relatedRecipes = relatedRecipes {
+            } else if let relatedRecipes = relatedRecipes,
+                        relatedRecipes.count > 0 &&
+                        relatedRecipes.results.count > 0 {
+                print("related recipes: \(relatedRecipes)")
+                print("related recipes count: \(relatedRecipes.count)")
                 self?.relatedRecipes = relatedRecipes
             }
             dispatchGroup.leave()
@@ -151,9 +155,9 @@ class RecipeDetailViewModel {
                 for (measurementIdx, measurement) in component.measurements.enumerated() {
                     guard measurement.quantity != "",
                           measurement.quantity != "0",
-                        let quantityDouble = measurement.quantity.numericValue()
+                          let quantityDouble = measurement.quantity.numericValue()
                     else { continue }
-
+                    
                     ingredientsPerServing?[sectionIdx].components[componentIdx].measurements[measurementIdx].quantityDouble = quantityDouble / Double(numServings)
                 }
             }
@@ -188,7 +192,7 @@ class RecipeDetailViewModel {
                 }
                 
             case .nutritionsInfoHeader:
-                guard recipeDetail.nutrition != nil
+                guard recipeDetail.nutrition != nil && recipeDetail.nutrition?.isNutritionAvailable == true
                 else { continue }
                 detailsSection.append(.nutritionsInfoHeader)
                 detailsSection.append(.nutritionsBody)

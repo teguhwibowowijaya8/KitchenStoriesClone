@@ -35,12 +35,6 @@ class HomeItemsTableViewCell: UITableViewCell {
         itemsCollectionView.dataSource = self
         itemsCollectionView.showsHorizontalScrollIndicator = false
         
-//        let featuredCell = UINib(nibName: FeaturedItemCollectionViewCell.identifier, bundle: nil)
-//        itemsCollectionView.register(featuredCell, forCellWithReuseIdentifier: FeaturedItemCollectionViewCell.identifier)
-        
-//        let carouselCell = UINib(nibName: CarouselItemCollectionViewCell.identifier, bundle: nil)
-//        itemsCollectionView.register(carouselCell, forCellWithReuseIdentifier: CarouselItemCollectionViewCell.identifier)
-        
         let recipeCardCell = UINib(nibName: RecipeCardCollectionViewCell.identifier, bundle: nil)
         itemsCollectionView.register(recipeCardCell, forCellWithReuseIdentifier: RecipeCardCollectionViewCell.identifier)
         

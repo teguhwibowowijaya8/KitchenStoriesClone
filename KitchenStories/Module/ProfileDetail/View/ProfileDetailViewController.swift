@@ -51,6 +51,15 @@ class ProfileDetailViewController: UIViewController {
         setComponentsConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     private func setupViewModel() {
         profileDetailViewModel = ProfileDetailViewModel(userProfile: userProfile)
     }

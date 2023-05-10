@@ -58,11 +58,13 @@ class RelatedRecipesTableViewCell: UITableViewCell {
         self.screenSize = screenSize
         self.isLoading = isLoading
         self.relatedRecipeMaxCount = maxShown
-        if let relatedRecipes = relatedRecipes {
-            self.relatedRecipes = relatedRecipes
-        }
         
         setupCollectionView()
+        
+        if let relatedRecipes = relatedRecipes {
+            self.relatedRecipes = relatedRecipes
+            self.relatedRecipesCollectionView.reloadData()
+        }
     }
     
     
