@@ -60,7 +60,10 @@ class ProfileViewController: UIViewController {
         profileTableView.dataSource = self
         profileTableView.separatorStyle = .none
         profileTableView.contentInsetAdjustmentBehavior = .never
-        profileTableView.sectionHeaderTopPadding = 0
+        
+        if #available(iOS 15.0, *) {
+            profileTableView.sectionHeaderTopPadding = 0
+        }
         
         profileTableView.register(ProfileAccountTableViewCell.self, forCellReuseIdentifier: ProfileAccountTableViewCell.identifier)
         profileTableView.register(ProfileSettingTableViewCell.self, forCellReuseIdentifier: ProfileSettingTableViewCell.identifier)

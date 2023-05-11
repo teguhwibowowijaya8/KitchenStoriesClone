@@ -34,12 +34,12 @@ struct GetRecipeDetailAPIService: GetRecipeDetailAPIProtocol {
             _ errorMessage: String?
         ) -> Void
     ) {
-        var detailUrl = URL(string: recipeDetailUrlString)
-        detailUrl?.append(queryItems: [
+        var detailUrl = URLComponents(string: recipeDetailUrlString)
+        detailUrl?.queryItems = [
             URLQueryItem(name: "id", value: "\(recipeId)")
-        ])
+        ]
         
-        getAPIService.getAPI(from: detailUrl, withModel: RecipeDetailModel.self) { apiData, errorMessage in
+        getAPIService.getAPI(from: detailUrl?.url, withModel: RecipeDetailModel.self) { apiData, errorMessage in
             if let errorMessage = errorMessage {
                 return onCompletion(nil, errorMessage)
             } else if let apiData = apiData {

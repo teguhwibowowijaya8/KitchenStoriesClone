@@ -47,7 +47,10 @@ class TabBarController: UITabBarController {
         
         tabBar.tintColor = .gray
         tabBar.standardAppearance = tabBarAppearence
-        tabBar.scrollEdgeAppearance = tabBarAppearence
+        
+        if #available(iOS 15.0, *) {
+            tabBar.scrollEdgeAppearance = tabBarAppearence
+        }
     }
 
     private func createViewController(

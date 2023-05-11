@@ -40,14 +40,16 @@ struct GetFeedAPIService: GetFeedAPIProtocol {
             _ errorMessage: String?
         ) -> Void
     ) {
-        var feedUrl = URL(string: feedsUrlString)
-        feedUrl?.append(queryItems: [
+        var feedUrl = URLComponents(string: feedsUrlString)
+        
+        feedUrl?.queryItems = [
             URLQueryItem(name: "size", value: "\(size)"),
             URLQueryItem(name: "from", value: "\(from)"),
             URLQueryItem(name: "vegetarian", value: "\(isVegetarian)"),
             URLQueryItem(name: "timezone", value: "+0700")
-        ])
-        getAPIService.getAPI(from: feedUrl, withModel: FeedResultsModel.self) { apiData, errorMessage in
+        ]
+        
+        getAPIService.getAPI(from: feedUrl?.url, withModel: FeedResultsModel.self) { apiData, errorMessage in
             if let errorMessage = errorMessage {
                 return onCompletion(nil, nil,errorMessage)
             } else if let apiData = apiData {

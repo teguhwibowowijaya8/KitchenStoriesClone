@@ -34,12 +34,12 @@ struct GetRelatedRecipesAPIService: GetRelatedRecipesAPIProtocol {
             _ errorMessage: String?
         ) -> Void
     ) {
-        var relatedRecipesUrl = URL(string: relatedRecipesUrlString)
-        relatedRecipesUrl?.append(queryItems: [
+        var relatedRecipesUrl = URLComponents(string: relatedRecipesUrlString)
+        relatedRecipesUrl?.queryItems = [
             URLQueryItem(name: "recipe_id", value: "\(recipeId)")
-        ])
+        ]
         
-        getAPIService.getAPI(from: relatedRecipesUrl, withModel: RelatedRecipesModel.self) { apiData, errorMessage in
+        getAPIService.getAPI(from: relatedRecipesUrl?.url, withModel: RelatedRecipesModel.self) { apiData, errorMessage in
             if let errorMessage = errorMessage {
                 return onCompletion(nil, errorMessage)
             } else if let apiData = apiData {
