@@ -75,6 +75,11 @@ class RecipeDetailViewController: UIViewController {
         recipeDetailTableView.delegate = self
         recipeDetailTableView.dataSource = self
         recipeDetailTableView.separatorStyle = .none
+        recipeDetailTableView.sectionHeaderHeight = .zero
+        
+        if #available(iOS 15.0, *) {
+            recipeDetailTableView.sectionHeaderTopPadding = 0
+        }
         
         registerTableViewCell()
     }
@@ -352,8 +357,8 @@ extension RecipeDetailViewController {
         
         var recipeTopTip: RecipeTipCellParams? = nil
         if let recipeTips = recipeDetailViewModel.recipeTips,
-            indexPath.row < recipeTips.results.count {
-            let topTip = recipeTips.results[indexPath.row]
+            indexPath.row < recipeTips.results.count,
+            let topTip = recipeTips.results.first {
             recipeTopTip = RecipeTipCellParams(
                 totalTipsCount: recipeTips.count,
                 topTipImageUrl: topTip.authorAvatarUrlString,
@@ -404,6 +409,29 @@ extension RecipeDetailViewController {
         recipePreparationCell.backgroundColor = preparationCellBackgroundColor
         
         return recipePreparationCell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch recipeDetailViewModel.detailsSection[section] {
+        case .ingredientsBody, .nutritionsInfoHeader, .addToGrocery, .relatedRecipesHeader:
+            let separatorView = UIView()
+            separatorView.backgroundColor = .gray
+            return separatorView
+            
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        switch recipeDetailViewModel.detailsSection[section] {
+        case .ingredientsBody, .nutritionsInfoHeader, .addToGrocery, .relatedRecipesHeader:
+            return 1
+            
+        default:
+            return .zero
+        }
     }
 }
 

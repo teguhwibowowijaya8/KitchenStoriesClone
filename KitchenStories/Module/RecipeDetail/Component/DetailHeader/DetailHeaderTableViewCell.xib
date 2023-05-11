@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -18,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="c4c-ex-rwV">
-                        <rect key="frame" x="10" y="15" width="407" height="524.33333333333337"/>
+                        <rect key="frame" x="10" y="15" width="407" height="519.33333333333337"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duU-RX-gn8">
                                 <rect key="frame" x="0.0" y="0.0" width="407" height="20.333333333333332"/>
@@ -88,7 +89,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tgs-sO-DV2">
-                                <rect key="frame" x="0.0" y="347.66666666666669" width="407" height="176.66666666666669"/>
+                                <rect key="frame" x="0.0" y="347.66666666666669" width="407" height="171.66666666666669"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Z3-n7-Hou">
                                         <rect key="frame" x="0.0" y="0.0" width="407" height="166.66666666666666"/>
@@ -104,7 +105,7 @@
                                     <constraint firstItem="2Z3-n7-Hou" firstAttribute="leading" secondItem="Tgs-sO-DV2" secondAttribute="leading" id="5uD-Ee-Vgm"/>
                                     <constraint firstItem="2Z3-n7-Hou" firstAttribute="top" secondItem="Tgs-sO-DV2" secondAttribute="top" id="GQm-ON-uBA"/>
                                     <constraint firstAttribute="trailing" secondItem="2Z3-n7-Hou" secondAttribute="trailing" id="SqG-sM-0Do"/>
-                                    <constraint firstAttribute="bottom" secondItem="2Z3-n7-Hou" secondAttribute="bottom" constant="10" id="pRs-rC-QCO"/>
+                                    <constraint firstAttribute="bottom" secondItem="2Z3-n7-Hou" secondAttribute="bottom" constant="5" id="pRs-rC-QCO"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -123,7 +124,7 @@
                     <constraint firstAttribute="trailing" secondItem="c4c-ex-rwV" secondAttribute="trailing" constant="10" id="NTq-9m-Kfh"/>
                     <constraint firstItem="bFw-tq-QPJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Rgq-9u-Zx4"/>
                     <constraint firstItem="c4c-ex-rwV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="Rk5-wV-nhD"/>
-                    <constraint firstItem="bFw-tq-QPJ" firstAttribute="top" secondItem="c4c-ex-rwV" secondAttribute="bottom" constant="5" id="SYJ-ds-YK1"/>
+                    <constraint firstItem="bFw-tq-QPJ" firstAttribute="top" secondItem="c4c-ex-rwV" secondAttribute="bottom" constant="10" id="SYJ-ds-YK1"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bFw-tq-QPJ" secondAttribute="bottom" id="eql-Di-CLk"/>
                 </constraints>
             </tableViewCellContentView>
@@ -138,9 +139,9 @@
                 <outlet property="recipeFeaturedInLabel" destination="F82-9a-ygs" id="mEj-kI-yTx"/>
                 <outlet property="recipeImageView" destination="bFw-tq-QPJ" id="F0j-rV-eh1"/>
                 <outlet property="recipeNameLabel" destination="duU-RX-gn8" id="RKJ-eX-BLC"/>
+                <outlet property="wouldMakeAgainContainerView" destination="brC-9Q-Rwu" id="DzV-H5-8OT"/>
                 <outlet property="wouldMakeAgainImageView" destination="6ZW-4q-7lO" id="ENF-f9-iNY"/>
                 <outlet property="wouldMakeAgainLabel" destination="yRT-Hi-PCx" id="NVd-ee-D30"/>
-                <outlet property="wouldMakeAgainStackView" destination="ZP6-OI-DNr" id="kq5-S5-nFd"/>
             </connections>
             <point key="canvasLocation" x="104.58015267175573" y="221.47887323943664"/>
         </tableViewCell>

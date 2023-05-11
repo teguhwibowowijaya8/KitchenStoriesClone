@@ -81,14 +81,15 @@ class HeaderTitleTableViewCell: UITableViewCell {
             paddingBottom: paddingBottom
         )
         
-        guard isLoading == false
+        guard isLoading == false,
+              let title = title
         else {
             showLoadingView()
             return
         }
         
         removeLoadingView()
-        if title != nil { headerTitleLabel.text = title }
+        headerTitleLabel.text = title
         headerSeeAllButton.isHidden = !showSeeAllButton
     }
     

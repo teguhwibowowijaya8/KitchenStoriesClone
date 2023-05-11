@@ -17,7 +17,7 @@ enum FeedType: String, Codable {
 
 struct FeedModel: Codable {
     let type: FeedType
-    let name: String?
+    var name: String?
     let category: String?
     let minItems: Int?
     let item: RecipeModel?

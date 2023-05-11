@@ -50,6 +50,7 @@ class RecipeCardCollectionViewCell: UICollectionViewCell {
             recipeIsLikedButton.setImage(isLikedImage(), for: .normal)
             recipeIsLikedButton.layer.cornerRadius = recipeIsLikedButton.frame.height / 2
             recipeIsLikedButton.backgroundColor = .white
+            recipeIsLikedButton.setTitle("", for: .normal)
         }
     }
     

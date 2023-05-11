@@ -52,7 +52,11 @@ struct GetFeedAPIService: GetFeedAPIProtocol {
         getAPIService.getAPI(from: feedUrl?.url, withModel: FeedResultsModel.self) { apiData, errorMessage in
             if let errorMessage = errorMessage {
                 return onCompletion(nil, nil,errorMessage)
-            } else if let apiData = apiData {
+            } else if var apiData = apiData {
+                if let firstFeed = apiData.results.first, firstFeed.name == nil || firstFeed.name == "" {
+                    apiData.results[0].name = "Featured"
+                }
+                
                 var recentFeeds = [RecipeModel]()
                 var feeds: FeedResultsModel?
                 for feed in apiData.results {

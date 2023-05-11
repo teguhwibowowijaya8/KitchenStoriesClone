@@ -199,7 +199,9 @@ class RecipeDetailViewModel {
                 continue
                 
             case .topTip:
-                guard recipeTips != nil
+                guard let recipeTips = recipeTips,
+                      recipeTips.count > 0,
+                      recipeTips.results.count > 1
                 else { continue }
                 detailsSection.append(.topTip)
                 
