@@ -115,15 +115,22 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let feed: FeedModel
+        var feed: FeedModel? = nil
+        var title: String? = nil
+        var showSeeAllButton = false
         
-        if let feeds = homeViewModel.feeds?.results,
-           indexPath.section < feeds.count {
-            feed = feeds[indexPath.section]
-        } else if let recentFeeds = homeViewModel.recentFeeds {
-            feed = recentFeeds
-        } else {
-            feed = homeViewModel.dummyFeeds.results[indexPath.section]
+        if let feeds = homeViewModel.feeds?.results {
+            if indexPath.section < feeds.count {
+                let feedItem = feeds[indexPath.section]
+                feed = feedItem
+                title = feedItem.name
+                showSeeAllButton = feedItem.itemList.count > feedItem.minimumShowItems
+            } else if indexPath.section == feeds.count,
+                let recentFeeds = homeViewModel.recentFeeds {
+                feed = recentFeeds
+                title = "Recent"
+                showSeeAllButton = recentFeeds.itemList.count > recentFeeds.minimumShowItems
+            }
         }
         
         switch HomeTableRowType(rawValue: indexPath.row) {
@@ -131,14 +138,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return feedsHeaderCell(
                 tableView,
                 cellForRowAt: indexPath,
-                feed: feed
+                title: title,
+                showSeeAllButton: showSeeAllButton
             )
             
         case .feedsBody:
+            let feedBody = feed ?? homeViewModel.dummyFeeds.results[indexPath.section]
             return feedsBodyCell(
                 tableView,
                 cellForRowAt: indexPath,
-                feed: feed
+                feed: feedBody
             )
             
         default:
@@ -159,28 +168,19 @@ extension HomeViewController {
     private func feedsHeaderCell(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath,
-        feed: FeedModel
+        title: String?,
+        showSeeAllButton: Bool
     ) -> UITableViewCell {
         guard let itemsHeaderCell = tableView.dequeueReusableCell(withIdentifier: HeaderTitleTableViewCell.identifier) as? HeaderTitleTableViewCell
         else { return UITableViewCell() }
         
-        let headerTitle: String
-        
-        if let title = feed.name {
-            headerTitle = title
-        } else {
-            let type = feed.type.rawValue
-            headerTitle = type.capitalized(with: .current)
-        }
-        
         itemsHeaderCell.setupCell(
-            title: headerTitle,
-            showSeeAllButton: feed.itemList.count > feed.minimumShowItems,
+            title: title,
+            showSeeAllButton: showSeeAllButton,
             isLoading: homeViewModel.isLoading,
             paddingTop: headerTopPadding,
             paddingBottom: headerBottomPadding
         )
-        itemsHeaderCell.delegate = self
         
         return itemsHeaderCell
     }

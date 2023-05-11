@@ -42,7 +42,7 @@ class IngredientTableViewCell: UITableViewCell {
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         
         containerStackView.axis = .horizontal
-        containerStackView.distribution = .fill
+        containerStackView.distribution = .fillProportionally
         containerStackView.alignment = .top
         containerStackView.spacing = 8
         
@@ -75,6 +75,7 @@ class IngredientTableViewCell: UITableViewCell {
         ingredientNameLabel.text = ingredient.ingredientName
         if let ingredientRatio = ingredient.ingredientRatio, ingredientRatio != "" {
             ingredientRatioLabel.text = ingredientRatio
+            ingredientRatioLabel.isHidden = false
         } else {
             ingredientRatioLabel.isHidden = true
         }

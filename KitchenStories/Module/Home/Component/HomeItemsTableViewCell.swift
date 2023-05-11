@@ -225,12 +225,14 @@ extension HomeItemsTableViewCell {
         
         var shoppableCellParams: ShopableItemCellParams?
         guard isLoading == false,
-              let feedItem = feed?.itemList[indexPath.row]
+              let feed = feed,
+              indexPath.row < feed.itemList.count
         else {
             shopableCell.setupCell(recipe: shoppableCellParams, isLoading: isLoading)
             return shopableCell
         }
         
+        let feedItem = feed.itemList[indexPath.row]
         shoppableCellParams = ShopableItemCellParams(
             imageUrlString: feedItem.thumbnailUrlString,
             recipeName: feedItem.name,
@@ -255,11 +257,14 @@ extension HomeItemsTableViewCell {
         
         var recipeCardParams: RecipeCardCellParams?
         guard isLoading == false,
-              let feedItem = feed?.itemList[indexPath.row]
+              let feed = feed,
+              indexPath.row < feed.itemList.count
         else {
             recipeCardCell.setupCell(recipe: recipeCardParams, isLoading: isLoading)
             return recipeCardCell
         }
+        
+        let feedItem = feed.itemList[indexPath.row]
         
         switch feedType {
         case .featured:

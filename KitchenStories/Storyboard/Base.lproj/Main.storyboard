@@ -71,11 +71,31 @@
                                     <constraint firstAttribute="bottom" secondItem="3Pz-R5-7x2" secondAttribute="bottom" id="hLg-ei-d1M"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Fgh-Ss-fEB">
+                                <rect key="frame" x="20" y="571.66666666666663" width="353" height="61"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="indonesia indonesia indonesia indonesia indonesia indonesia indonesia indonesia indoensia" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVu-6O-4Ei">
+                                        <rect key="frame" x="0.0" y="0.0" width="328.66666666666669" height="61"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="W" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RtE-zh-2eM">
+                                        <rect key="frame" x="336.66666666666669" y="0.0" width="16.333333333333314" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Fgh-Ss-fEB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="4Hq-nT-VGL"/>
                             <constraint firstItem="bUV-IV-c1a" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="KFk-Vm-WL5"/>
+                            <constraint firstItem="Fgh-Ss-fEB" firstAttribute="top" secondItem="0rz-7f-FNw" secondAttribute="bottom" constant="20" id="f6Z-yT-0Mq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Fgh-Ss-fEB" secondAttribute="trailing" constant="20" id="hJz-07-oEt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0rz-7f-FNw" secondAttribute="bottom" constant="10" id="l8i-dI-aZF"/>
                             <constraint firstItem="0rz-7f-FNw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="o43-Rx-t9N"/>
                             <constraint firstItem="0rz-7f-FNw" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="qD5-s0-dNm"/>

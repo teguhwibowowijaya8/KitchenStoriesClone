@@ -419,11 +419,18 @@ extension RecipeDetailViewController: NutritionInfoHeaderCellDelegate {
 extension RecipeDetailViewController: ServingStepperDelegate {
     func handleServingValueChanged(_ value: Int) {
         recipeDetailViewModel.changeServingNums(to: value)
-        var reloadSections = [Int]()
+        guard let ingredientsPerServing = recipeDetailViewModel.ingredientsPerServing
+        else { return }
+        
+        var reloadSections = [IndexPath]()
         for ingredientBodySection in recipeDetailViewModel.ingredientBodySectionIndexes {
-            reloadSections.append(ingredientBodySection.key)
+            for (index, _) in ingredientsPerServing[ingredientBodySection.value].components.enumerated() {
+                reloadSections.append(
+                    IndexPath(row: index, section: ingredientBodySection.key)
+                )
+            }
         }
-        recipeDetailTableView.reloadSections(IndexSet(reloadSections), with: .none)
+        recipeDetailTableView.reloadRows(at: reloadSections, with: .none)
     }
 }
 
