@@ -328,7 +328,7 @@ extension RecipeDetailViewController {
         else { return UITableViewCell() }
         
         var ingredient: IngredientCellParams? = nil
-
+        
         if let nutritions = recipeDetailViewModel.recipeDetail?.nutrition?.nutritions,
            let nutrition = nutritions[indexPath.row] {
             ingredient = IngredientCellParams(
@@ -357,8 +357,8 @@ extension RecipeDetailViewController {
         
         var recipeTopTip: RecipeTipCellParams? = nil
         if let recipeTips = recipeDetailViewModel.recipeTips,
-            indexPath.row < recipeTips.results.count,
-            let topTip = recipeTips.results.first {
+           indexPath.row < recipeTips.results.count,
+           let topTip = recipeTips.results.first {
             recipeTopTip = RecipeTipCellParams(
                 totalTipsCount: recipeTips.count,
                 topTipImageUrl: topTip.authorAvatarUrlString,
@@ -410,10 +410,13 @@ extension RecipeDetailViewController {
         
         return recipePreparationCell
     }
-    
+}
+
+//MARK: Recipe Detail Table Header
+extension RecipeDetailViewController {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch recipeDetailViewModel.detailsSection[section] {
-        case .ingredientsBody, .nutritionsInfoHeader, .addToGrocery, .relatedRecipesHeader:
+        case .ingredientsBody, .nutritionsInfoHeader, .addToGrocery, .relatedRecipesHeader, .topTip:
             let separatorView = UIView()
             separatorView.backgroundColor = .gray
             return separatorView

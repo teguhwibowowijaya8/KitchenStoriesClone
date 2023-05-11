@@ -143,11 +143,21 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             )
             
         case .feedsBody:
-            let feedBody = feed ?? homeViewModel.dummyFeeds.results[indexPath.section]
+            let feedBody: FeedModel
+            let isLoading: Bool
+            if let feed = feed {
+                feedBody = feed
+                isLoading = homeViewModel.isLoading
+            } else {
+                feedBody = homeViewModel.dummyFeeds.results[indexPath.section]
+                isLoading = true
+            }
+            
             return feedsBodyCell(
                 tableView,
                 cellForRowAt: indexPath,
-                feed: feedBody
+                feed: feedBody,
+                isLoading: isLoading
             )
             
         default:
@@ -188,7 +198,8 @@ extension HomeViewController {
     private func feedsBodyCell(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath,
-        feed: FeedModel
+        feed: FeedModel,
+        isLoading: Bool
     ) -> UITableViewCell {
         guard let itemsBodyCell = tableView.dequeueReusableCell(withIdentifier: HomeItemsTableViewCell.identifier) as? HomeItemsTableViewCell
         else { return UITableViewCell() }
@@ -198,7 +209,7 @@ extension HomeViewController {
         itemsBodyCell.setupCell(
             feed: feed,
             screenSize: screenSize,
-            isLoading: homeViewModel.isLoading
+            isLoading: isLoading
         )
         itemsBodyCell.delegate = self
         
